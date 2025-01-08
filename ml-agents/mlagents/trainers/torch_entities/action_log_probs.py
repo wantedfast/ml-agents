@@ -8,6 +8,12 @@ from mlagents_envs.base_env import _ActionTupleBase
 
 
 class MusTuple(_ActionTupleBase):
+    """
+    An object whose fields correspond to the mean of action data of continuous and discrete
+    spaces. Dimensions are of (n_agents, continuous_size) and (n_agents, discrete_size),
+    respectively. Note, this also holds when continuous or discrete size is
+    zero.
+    """
     @property
     def discrete_dtype(self) -> np.dtype:
         return np.float32
@@ -18,6 +24,12 @@ class MusTuple(_ActionTupleBase):
 
 
 class SigmasTuple(_ActionTupleBase):
+    """
+    An object whose fields correspond to the std of action data of continuous and discrete
+    spaces. Dimensions are of (n_agents, continuous_size) and (n_agents, discrete_size),
+    respectively. Note, this also holds when continuous or discrete size is
+    zero.
+    """
     @property
     def discrete_dtype(self) -> np.dtype:
         return np.float32
