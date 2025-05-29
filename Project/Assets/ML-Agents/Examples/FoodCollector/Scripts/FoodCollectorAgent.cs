@@ -40,7 +40,7 @@ public class FoodCollectorAgent : Agent
     {
         m_AgentRb = GetComponent<Rigidbody>();
         m_MyArea = area.GetComponent<FoodCollectorArea>();
-        m_FoodCollecterSettings = FindObjectOfType<FoodCollectorSettings>();
+        m_FoodCollecterSettings = FindFirstObjectByType<FoodCollectorSettings>();
         m_ResetParams = Academy.Instance.EnvironmentParameters;
         SetResetParameters();
     }

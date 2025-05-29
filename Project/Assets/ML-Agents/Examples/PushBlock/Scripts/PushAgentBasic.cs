@@ -54,7 +54,7 @@ public class PushAgentBasic : Agent
     protected override void Awake()
     {
         base.Awake();
-        m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
+        m_PushBlockSettings = FindFirstObjectByType<PushBlockSettings>();
     }
 
     public override void Initialize()
