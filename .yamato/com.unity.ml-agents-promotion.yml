@@ -1,5 +1,5 @@
 test_editors:
-  - version: 2023.2
+  - version: 6000.0
 test_platforms:
   - name: win
     type: Unity::VM
