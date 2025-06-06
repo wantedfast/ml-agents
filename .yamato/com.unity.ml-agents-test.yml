@@ -7,6 +7,12 @@ test_editors:
     - version: 2023.2
       testProject: DevProject
       enableNoDefaultPackages: !!bool true
+    - version: 6000.0
+      testProject: Project
+      enableNoDefaultPackages: !!bool true
+    - version: 6000.0
+      testProject: DevProject
+      enableNoDefaultPackages: !!bool true
 
 trunk_editor:
    # TODO: re-enable trunk tests after adding support for Unity 6. As of 12 Mar 2024, tests fail
