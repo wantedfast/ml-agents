@@ -3,7 +3,7 @@ pack:
   agent:
     type: Unity::VM
     image: ml-agents/ubuntu-ci:v1.0.0
-    flavor: b1.small
+    flavor: b1.medium
   commands:
     - |
       eval "$($HOME/anaconda/bin/conda shell.bash hook)"
