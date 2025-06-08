@@ -26,7 +26,7 @@ test_platforms:
       flavor: b1.large
     - name: linux
       type: Unity::VM
-      image: ml-agents/ml-agents-ubuntu-18.04:latest
+      image: ml-agents/ubuntu-ci:v1.0.0
       flavor: b1.large
 
 packages:
