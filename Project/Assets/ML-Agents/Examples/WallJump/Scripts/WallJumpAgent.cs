@@ -3,7 +3,7 @@
 using System.Collections;
 using UnityEngine;
 using Unity.MLAgents;
-using Unity.Sentis;
+using Unity.InferenceEngine;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgentsExamples;

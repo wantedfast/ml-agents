@@ -1,5 +1,16 @@
 {
   "dependencies": {
+    "com.unity.ai.inference": {
+      "version": "2.2.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.8.17",
+        "com.unity.collections": "2.4.3",
+        "com.unity.modules.imageconversion": "1.0.0"
+      },
+      "url": "https://artifactory.prd.cds.internal.unity3d.com/artifactory/api/npm/upm-candidates"
+    },
     "com.unity.burst": {
       "version": "1.8.19",
       "depth": 2,
@@ -95,7 +106,7 @@
       "depth": 0,
       "source": "local",
       "dependencies": {
-        "com.unity.sentis": "2.1.0",
+        "com.unity.ai.inference": "2.2.1",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
         "com.unity.modules.physics": "1.0.0"
@@ -128,17 +139,6 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
-      "url": "https://artifactory.prd.cds.internal.unity3d.com/artifactory/api/npm/upm-candidates"
-    },
-    "com.unity.sentis": {
-      "version": "2.1.2",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.burst": "1.8.17",
-        "com.unity.collections": "2.4.3",
-        "com.unity.modules.imageconversion": "1.0.0"
-      },
       "url": "https://artifactory.prd.cds.internal.unity3d.com/artifactory/api/npm/upm-candidates"
     },
     "com.unity.settings-manager": {
