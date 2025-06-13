@@ -9,12 +9,12 @@ and this project adheres to
 ## [Unreleased]
 ### Major Changes
 #### com.unity.ml-agents / com.unity.ml-agents.extensions (C#)
-- The minimum supported Unity version was updated to 6000.0.
+- The minimum supported Unity version was updated to 6000.0. (#6207)
 
 ## [3.0.0] - 2024-09-02
 ### Major Changes
 #### com.unity.ml-agents / com.unity.ml-agents.extensions (C#)
-- Upgraded to Sentis 2.1.0 ()
+- Upgraded to Sentis 2.1.0 (#6153)
 - Upgraded to Sentis 2.0.0 (#6137)
 - Upgraded to Sentis 1.3.0-pre.3 (#6070)
 - Upgraded to Sentis 1.3.0-exp.2 (#6013)
