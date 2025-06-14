@@ -9,7 +9,12 @@ and this project adheres to
 ## [Unreleased]
 ### Major Changes
 #### com.unity.ml-agents / com.unity.ml-agents.extensions (C#)
+- Upgraded to Inference Engine 2.2.1 (#6212)
 - The minimum supported Unity version was updated to 6000.0. (#6207)
+
+### Minor Changes
+#### ml-agents / ml-agents-envs
+- Bumped grpcio version to >=1.11.0,<=1.53.2 (#6208)
 
 ## [3.0.0] - 2024-09-02
 ### Major Changes
@@ -28,7 +33,6 @@ and this project adheres to
 - Added no-graphics-monitor. (#6014)
 
 #### ml-agents / ml-agents-envs
-- Upgraded grpcio version. (#6208)
 - Update Installation.md (#6004)
 - Updated Using-Virtual-Environment.md (#6033)
 

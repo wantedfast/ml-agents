@@ -710,7 +710,7 @@ vector observations to be used simultaneously.
 ### Important Changes
 
 - We no longer support TFS and are now using the
-  [Sentis](Sentis.md)
+  [Sentis](Inference-Engine.md)
 
 #### Steps to Migrate
 
