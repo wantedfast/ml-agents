@@ -33,7 +33,6 @@ test_coverage_{{ package.name }}_{{ platform.name }}_{{ editor.version }}_{{ edi
             NOT pull_request.draft AND
             (pull_request.changes.any match "com.unity.ml-agents/**" OR
              pull_request.changes.any match " {{ editor.testProject }}/**" OR
-            pull_request.changes.any match "com.unity.ml-agents/**" OR
             pull_request.changes.any match ".yamato/com.unity.ml-agents-coverage.yml")
       {% endif %}
 {% endfor %}
