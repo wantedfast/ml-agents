@@ -121,7 +121,7 @@ public CompressionSpec GetCompressionSpec()
 - The abstract method `SensorComponent.CreateSensor()` was replaced with `CreateSensors()`, which returns an `ISensor[]`.
 
 ### Match3 integration changes
-The Match-3 integration utilities were moved from `com.unity.ml-agents.extensions` to `com.unity.ml-agents`.
+The Match-3 integration utilities are now included in `com.unity.ml-agents`.
 
 The `AbstractBoard` interface was changed:
 * `AbstractBoard` no longer contains `Rows`, `Columns`, `NumCellTypes`, and `NumSpecialTypes` fields.
