@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 using Unity.MLAgents.Sensors;
 using Object = UnityEngine.Object;
 
-namespace Unity.MLAgents.Tests.Sensors
+namespace Unity.MLAgents.Tests
 {
     public class CountingGridSensorTests
     {

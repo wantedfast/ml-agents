@@ -1,8 +1,6 @@
 #if MLA_INPUT_TESTS
-using System;
 using System.Linq;
 using NUnit.Framework;
-using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
 using UnityEngine;

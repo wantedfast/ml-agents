@@ -3,7 +3,7 @@ using UnityEngine;
 using NUnit.Framework;
 using Unity.MLAgents.Sensors;
 
-namespace Unity.MLAgents.Tests.Sensors
+namespace Unity.MLAgents.Tests
 {
     public class ArticulationBodyPoseExtractorTests
     {

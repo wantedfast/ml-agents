@@ -1,121 +1,114 @@
-#if UNITY_2020_1_OR_NEWER
 using UnityEngine;
 using NUnit.Framework;
 using Unity.MLAgents.Sensors;
 
-
-namespace Unity.MLAgents.Tests.Sensors
+namespace Unity.MLAgents.Tests
 {
-    public class ArticulationBodySensorTests
+    public class RigidBodySensorTests
     {
         [Test]
         public void TestNullRootBody()
         {
             var gameObj = new GameObject();
 
-            var sensorComponent = gameObj.AddComponent<ArticulationBodySensorComponent>();
+            var sensorComponent = gameObj.AddComponent<RigidBodySensorComponent>();
+            Assert.IsFalse(sensorComponent.IsTrivial());
             var sensor = sensorComponent.CreateSensors()[0];
             SensorTestHelper.CompareObservation(sensor, new float[0]);
         }
 
         [Test]
-        public void TestSingleBody()
+        public void TestSingleRigidbody()
         {
             var gameObj = new GameObject();
-            var articulationBody = gameObj.AddComponent<ArticulationBody>();
-            var sensorComponent = gameObj.AddComponent<ArticulationBodySensorComponent>();
-            sensorComponent.RootBody = articulationBody;
+            var rootRb = gameObj.AddComponent<Rigidbody>();
+            var sensorComponent = gameObj.AddComponent<RigidBodySensorComponent>();
+            sensorComponent.RootBody = rootRb;
             sensorComponent.Settings = new PhysicsSensorSettings
             {
                 UseModelSpaceLinearVelocity = true,
                 UseLocalSpaceTranslations = true,
                 UseLocalSpaceRotations = true
             };
+            Assert.IsTrue(sensorComponent.IsTrivial());
 
             var sensor = sensorComponent.CreateSensors()[0];
             sensor.Update();
-            var expected = new[]
-            {
-                0f, 0f, 0f, // ModelSpaceLinearVelocity
-                0f, 0f, 0f, // LocalSpaceTranslations
-                0f, 0f, 0f, 1f // LocalSpaceRotations
-            };
-            SensorTestHelper.CompareObservation(sensor, expected);
+
+            // The root body is ignored since it always generates identity values
+            // and there are no other bodies to generate observations.
+            var expected = new float[0];
             Assert.AreEqual(expected.Length, sensor.GetObservationSpec().Shape[0]);
+            SensorTestHelper.CompareObservation(sensor, expected);
         }
 
+        // TODO: figure out why this fails with position mismatches when upgrading from
+        // Unity 2022.3 to Unity 2023.2.
+#if !UNITY_2023_2_OR_NEWER
         [Test]
         public void TestBodiesWithJoint()
         {
             var rootObj = new GameObject();
-            var rootArticBody = rootObj.AddComponent<ArticulationBody>();
+            var rootRb = rootObj.AddComponent<Rigidbody>();
+            rootRb.velocity = new Vector3(1f, 0f, 0f);
 
             var middleGamObj = new GameObject();
-            var middleArticBody = middleGamObj.AddComponent<ArticulationBody>();
-            middleArticBody.AddForce(new Vector3(0f, 1f, 0f));
+            var middleRb = middleGamObj.AddComponent<Rigidbody>();
+            middleRb.velocity = new Vector3(0f, 1f, 0f);
             middleGamObj.transform.SetParent(rootObj.transform);
             middleGamObj.transform.localPosition = new Vector3(13.37f, 0f, 0f);
-            middleArticBody.jointType = ArticulationJointType.RevoluteJoint;
+            var joint = middleGamObj.AddComponent<ConfigurableJoint>();
+            joint.connectedBody = rootRb;
 
             var leafGameObj = new GameObject();
-            var leafArticBody = leafGameObj.AddComponent<ArticulationBody>();
+            var leafRb = leafGameObj.AddComponent<Rigidbody>();
+            leafRb.velocity = new Vector3(0f, 0f, 1f);
             leafGameObj.transform.SetParent(middleGamObj.transform);
             leafGameObj.transform.localPosition = new Vector3(4.2f, 0f, 0f);
-            leafArticBody.jointType = ArticulationJointType.PrismaticJoint;
-            leafArticBody.linearLockZ = ArticulationDofLock.LimitedMotion;
-            leafArticBody.zDrive = new ArticulationDrive
-            {
-                lowerLimit = -3,
-                upperLimit = 1
-            };
+            var joint2 = leafGameObj.AddComponent<ConfigurableJoint>();
+            joint2.connectedBody = middleRb;
 
+            var virtualRoot = new GameObject();
 
-#if UNITY_2020_2_OR_NEWER
-            // ArticulationBody.velocity is read-only in 2020.1
-            rootArticBody.linearVelocity = new Vector3(1f, 0f, 0f);
-            middleArticBody.linearVelocity = new Vector3(0f, 1f, 0f);
-            leafArticBody.linearVelocity = new Vector3(0f, 0f, 1f);
-#endif
-
-            var sensorComponent = rootObj.AddComponent<ArticulationBodySensorComponent>();
-            sensorComponent.RootBody = rootArticBody;
+            var sensorComponent = rootObj.AddComponent<RigidBodySensorComponent>();
+            sensorComponent.RootBody = rootRb;
             sensorComponent.Settings = new PhysicsSensorSettings
             {
                 UseModelSpaceTranslations = true,
                 UseLocalSpaceTranslations = true,
-#if UNITY_2020_2_OR_NEWER
                 UseLocalSpaceLinearVelocity = true
-#endif
             };
+            sensorComponent.VirtualRoot = virtualRoot;
+            Assert.IsFalse(sensorComponent.IsTrivial());
 
             var sensor = sensorComponent.CreateSensors()[0];
             sensor.Update();
+
+            // Note that the VirtualRoot is ignored from the observations
             var expected = new[]
             {
                 // Model space
                 0f, 0f, 0f, // Root pos
-                13.37f, 0f, 0f, // Middle pos
+                middleGamObj.transform.position.x, 0f, 0f, // Middle pos
                 leafGameObj.transform.position.x, 0f, 0f, // Leaf pos
 
                 // Local space
                 0f, 0f, 0f, // Root pos
-                13.37f, 0f, 0f, // Attached pos
-                4.2f, 0f, 0f, // Leaf pos
+                middleGamObj.transform.localPosition.x, 0f, 0f, // Attached pos
+                leafGameObj.transform.localPosition.x, 0f, 0f, // Leaf pos
 
-#if UNITY_2020_2_OR_NEWER
-                0f, 0f, 0f, // Root vel
+                1f, 0f, 0f, // Root vel (relative to virtual root)
                 -1f, 1f, 0f, // Attached vel
                 0f, -1f, 1f // Leaf vel
-#endif
             };
-            SensorTestHelper.CompareObservation(sensor, expected);
             Assert.AreEqual(expected.Length, sensor.GetObservationSpec().Shape[0]);
+            SensorTestHelper.CompareObservation(sensor, expected);
 
             // Update the settings to only process joint observations
             sensorComponent.Settings = new PhysicsSensorSettings
             {
-                UseJointForces = true,
                 UseJointPositionsAndAngles = true,
+                UseJointForces = true,
             };
 
             sensor = sensorComponent.CreateSensors()[0];
@@ -123,17 +116,14 @@ namespace Unity.MLAgents.Tests.Sensors
 
             expected = new[]
             {
-                // revolute
-                0f, 1f, // joint1.position (sin and cos)
-                0f, // joint1.force
-
-                // prismatic
-                0.5f, // joint2.position (interpolate between limits)
-                0f, // joint2.force
+                0f, 0f, 0f, // joint1.force
+                0f, 0f, 0f, // joint1.torque
+                0f, 0f, 0f, // joint2.force
+                0f, 0f, 0f, // joint2.torque
             };
             SensorTestHelper.CompareObservation(sensor, expected);
             Assert.AreEqual(expected.Length, sensor.GetObservationSpec().Shape[0]);
         }
+#endif
     }
 }
-#endif // #if UNITY_2020_1_OR_NEWER

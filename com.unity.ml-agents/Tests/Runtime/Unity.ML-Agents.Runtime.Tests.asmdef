@@ -7,7 +7,9 @@
         "Unity.ML-Agents.Editor",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Unity.InferenceEngine"
+        "Unity.InferenceEngine",
+        "Unity.InputSystem",
+        "Unity.InputSystem.TestFramework"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -34,6 +36,16 @@
             "name": "com.unity.modules.physics2d",
             "expression": "1.0.0",
             "define": "MLA_UNITY_PHYSICS2D_MODULE"
+        },
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "1.1.0",
+            "define": "MLA_INPUT_SYSTEM"
+        },
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "1.1.0",
+            "define": "MLA_INPUT_TESTS"
         }
     ],
     "noEngineReferences": false
