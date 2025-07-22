@@ -2,7 +2,6 @@ using System.Collections.Generic;
 #if UNITY_2020_1_OR_NEWER
 using UnityEngine;
 #endif
-using Unity.MLAgents.Sensors;
 
 namespace Unity.MLAgents.Sensors
 {

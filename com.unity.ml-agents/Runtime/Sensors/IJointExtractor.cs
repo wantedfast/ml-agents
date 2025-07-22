@@ -1,7 +1,3 @@
-using Unity.MLAgents.Sensors;
-
-using System.Collections.Generic;
-
 namespace Unity.MLAgents.Sensors
 {
     /// <summary>

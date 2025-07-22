@@ -1,5 +1,4 @@
 using System;
-using Unity.MLAgents.Sensors;
 
 namespace Unity.MLAgents.Sensors
 {

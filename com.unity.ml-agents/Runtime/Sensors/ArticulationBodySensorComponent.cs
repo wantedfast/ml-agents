@@ -1,6 +1,5 @@
 #if UNITY_2020_1_OR_NEWER
 using UnityEngine;
-using Unity.MLAgents.Sensors;
 
 namespace Unity.MLAgents.Sensors
 {
