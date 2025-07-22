@@ -83,7 +83,9 @@ def set_version(
         # removed exp.1 tag from version strings since MLA package is a supported package again
         # package_version = f"{csharp_version}-exp.1"
         package_version = f"{csharp_version}"
-        print(f"Setting package version to {package_version} in {MLAGENTS_PACKAGE_JSON_PATH}")
+        print(
+            f"Setting package version to {package_version} in {MLAGENTS_PACKAGE_JSON_PATH}"
+        )
         set_package_version(package_version)
         print(f"Setting package version to {package_version} in {ACADEMY_PATH}")
         set_academy_version_string(package_version)
