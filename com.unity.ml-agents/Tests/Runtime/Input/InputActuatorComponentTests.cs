@@ -6,7 +6,7 @@ using Unity.MLAgents.Policies;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Unity.MLAgents.Tests.Actuators
+namespace Unity.MLAgents.Tests.Input
 {
     class TestProvider : MonoBehaviour, IInputActionAssetProvider
     {

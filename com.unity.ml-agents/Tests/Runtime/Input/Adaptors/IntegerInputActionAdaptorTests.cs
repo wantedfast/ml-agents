@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Unity.MLAgents.Actuators;
 using UnityEngine.InputSystem;
 
-namespace Unity.MLAgents.Tests.Actuators
+namespace Unity.MLAgents.Tests.Input
 {
     public class IntegerInputActionAdaptorTests : InputTestFixture
     {

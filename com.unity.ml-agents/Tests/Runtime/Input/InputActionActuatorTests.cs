@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
-namespace Unity.MLAgents.Tests.Actuators
+namespace Unity.MLAgents.Tests.Input
 {
     class TestAdaptor : IRLActionInputAdaptor
     {
