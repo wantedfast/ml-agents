@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.LowLevel;
 using UnityEditor;
 #endif
 
-namespace Unity.MLAgents.Actuators
+namespace Unity.MLAgents.Input
 {
     /// <summary>
     /// This interface is passed to InputActionActuators to allow them to write to InputEvents.

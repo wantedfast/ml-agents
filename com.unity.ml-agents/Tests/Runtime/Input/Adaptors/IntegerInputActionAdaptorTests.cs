@@ -1,6 +1,7 @@
 #if MLA_INPUT_TESTS
 using NUnit.Framework;
 using Unity.MLAgents.Actuators;
+using Unity.MLAgents.Input;
 using UnityEngine.InputSystem;
 
 namespace Unity.MLAgents.Tests.Input

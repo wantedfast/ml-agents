@@ -5,7 +5,7 @@ using Unity.MLAgents.Policies;
 using UnityEngine.InputSystem;
 using UnityEngine.Profiling;
 
-namespace Unity.MLAgents.Actuators
+namespace Unity.MLAgents.Input
 {
     /// <summary>
     /// This implementation of <see cref="IActuator"/> will send events from the ML-Agents training process, or from

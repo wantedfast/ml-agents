@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.LowLevel;
 
-namespace Unity.MLAgents.Actuators
+namespace Unity.MLAgents.Input
 {
     /// <summary>
     /// Translates data from a <see cref="UnityEngine.InputSystem.Controls.DoubleControl"/>.

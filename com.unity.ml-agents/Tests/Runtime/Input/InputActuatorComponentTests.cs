@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using Unity.MLAgents.Actuators;
+using Unity.MLAgents.Input;
 using Unity.MLAgents.Policies;
 using UnityEngine;
 using UnityEngine.InputSystem;

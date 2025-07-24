@@ -3,7 +3,7 @@ using Unity.MLAgents.Actuators;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
-namespace Unity.MLAgents.Actuators
+namespace Unity.MLAgents.Input
 {
     /// <summary>
     /// Implement this interface in order to customize how information is translated <see cref="InputControl"/>s

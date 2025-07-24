@@ -15,7 +15,7 @@ using UnityEngine.InputSystem.Utilities;
 using UnityEditor;
 #endif
 
-namespace Unity.MLAgents.Actuators
+namespace Unity.MLAgents.Input
 {
     /// <summary>
     /// Component class that handles the parsing of the <see cref="InputActionAsset"/> and translates that into
