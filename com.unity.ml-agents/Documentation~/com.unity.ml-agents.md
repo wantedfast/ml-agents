@@ -172,6 +172,12 @@ Currently the speed of the game physics can only be increased to 100x real-time.
 
 You can control the frequency of Academy stepping by calling `Academy.Instance.DisableAutomaticStepping()`, and then calling `Academy.Instance.EnvironmentStep()`.
 
+### Input System Integration
+
+ For the `InputActuatorComponent`
+  - Limited implementation of `InputControls`
+  - No way to customize the action space of the `InputActuatorComponent`
+
 ## Additional Resources
 
 * [GitHub repository]
