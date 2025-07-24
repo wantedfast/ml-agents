@@ -121,6 +121,8 @@ protected override void GetObjectData(GameObject detectedObject, int tagIndex, f
 
 The ML-Agents package integrates with the [Input System Package](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.1/manual/QuickStartGuide.html) through the `InputActuatorComponent`. This component sets up an action space for your `Agent` based on an `InputActionAsset` that is referenced by the `IInputActionAssetProvider` interface, or the `PlayerInput` component that may be living on your player controlled `Agent`. This means that if you have code outside of your agent that handles input, you will not need to implement the Heuristic function in agent as well. The `InputActuatorComponent` will handle this for you. You can now train and run inference on `Agents` with an action space defined by an `InputActionAsset`.
 
+Take a look at how we have implemented the C# code in the example Input Integration scene (located under Project/Assets/ML-Agents/Examples/PushBlockWithInput/). Once you have some familiarity, then the next step would be to add the InputActuatorComponent to your player Agent. The example we have implemented uses C# Events to send information from the Input System.
+
 #### Getting Started with Input System Integration
 1. Add the `com.unity.inputsystem` version 1.1.0-preview.3 or later to your project via the Package Manager window.
 2. If you have already setup an InputActionAsset skip to Step 3, otherwise follow these sub steps:
@@ -128,6 +130,7 @@ The ML-Agents package integrates with the [Input System Package](https://docs.un
     2. Handle the events from the Input System where you normally would (i.e. a script external to your Agent class).
 3. Add the InputSystemActuatorComponent to the GameObject that has the `PlayerInput` and `Agent` components attached.
 
+Additionally, see below for additional technical specifications on the C# code for the InputActuatorComponent.
 #### Technical Specifications
 
 ##### `IInputActionsAssetProvider` Interface
