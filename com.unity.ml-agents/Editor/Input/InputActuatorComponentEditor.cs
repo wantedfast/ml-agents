@@ -1,5 +1,4 @@
 #if MLA_INPUT_SYSTEM
-using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Input;
 using UnityEditor;
 
