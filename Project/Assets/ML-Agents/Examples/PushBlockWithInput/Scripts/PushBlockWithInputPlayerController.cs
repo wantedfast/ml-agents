@@ -1,5 +1,3 @@
-#if MLA_INPUT_SYSTEM
-using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -114,4 +112,3 @@ public class PushBlockWithInputPlayerController : MonoBehaviour, IInputActionAss
         return (m_PushBlockActions.asset, m_PushBlockActions);
     }
 }
-#endif
