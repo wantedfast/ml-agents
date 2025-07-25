@@ -1,7 +1,10 @@
-# ML-Agents Overview
+# Unity ML-Agents Toolkit
+
+<img src="images/image-banner.png" align="middle" width="3000"/>
+
 ML-agents enable games and simulations to serve as environments for training intelligent agents in Unity. Training can be done with reinforcement learning, imitation learning, neuroevolution, or any other methods. Trained agents can be used for many use cases, including controlling NPC behavior (in a variety of settings such as multi-agent and adversarial), automated testing of game builds and evaluating different game design decisions pre-release.
 
-The _ML-Agents_ package has a C# SDK for the [Unity ML-Agents Toolkit], which can be used outside of Unity. This package now contains comprehensive documentation including detailed training guides, Python API documentation, and advanced features. For a complete overview, see the [ML-Agents Overview](ML-Agents-Overview.md).
+The _ML-Agents_ package has a C# SDK for the [Unity ML-Agents Toolkit], which can be used outside of Unity. This package now contains comprehensive documentation including detailed training guides, Python API documentation, and advanced features.
 
 ## Capabilities
 The package allows you to convert any Unity scene into a learning environment and train character behaviors using a variety of machine-learning algorithms. Additionally, it allows you to embed these trained behaviors back into Unity scenes to control your characters. More specifically, the package provides the following core functionalities:
@@ -65,57 +68,60 @@ You can control the frequency of Academy stepping by calling `Academy.Instance.D
 
 ## Complete Documentation
 
-This package now includes comprehensive documentation for all aspects of ML-Agents:
+Welcome to the comprehensive Unity ML-Agents Toolkit documentation. This documentation is now fully integrated within the Unity package for easy access.
 
-### Core Documentation
+## Quick Navigation
+
+### Getting Started
 - **[Getting Started](Getting-Started.md)** - Step-by-step setup guide
-- **[ML-Agents Overview](ML-Agents-Overview.md)** - Complete feature overview
-- **[Installation](Installation.md)** - Detailed installation instructions
-- **[Learning Environment Design](Learning-Environment-Design.md)** - How to design learning environments
+- **[Installation](Installation.md)** - Complete installation instructions
+- **[ML-Agents Overview](ML-Agents-Overview.md)** - Comprehensive feature overview
+
+### Creating Learning Environments
+- **[Learning Environment Design](Learning-Environment-Design.md)** - Design principles
+- **[Creating New Learning Environments](Learning-Environment-Create-New.md)** - Step-by-step creation
+- **[Designing Agents](Learning-Environment-Design-Agents.md)** - Agent design guide
 - **[Learning Environment Examples](Learning-Environment-Examples.md)** - Example environments
 
-### Training & Configuration  
+### Training & Configuration
 - **[Training ML-Agents](Training-ML-Agents.md)** - Complete training guide
-- **[Training Configuration File](Training-Configuration-File.md)** - Configuration options
-- **[Using Tensorboard](Using-Tensorboard.md)** - Monitoring training progress
+- **[Training Configuration File](Training-Configuration-File.md)** - Configuration reference
+- **[Training Plugins](Training-Plugins.md)** - Extending training functionality
+- **[Using Tensorboard](Using-Tensorboard.md)** - Monitoring training
 
 ### Python APIs
 - **[Python Gym API](Python-Gym-API.md)** - OpenAI Gym interface
-- **[Python PettingZoo API](Python-PettingZoo-API.md)** - Multi-agent environments
-- **[Python LLAPI](Python-LLAPI.md)** - Low-level API
+- **[Python PettingZoo API](Python-PettingZoo-API.md)** - Multi-agent environments  
+- **[Python Low-Level API](Python-LLAPI.md)** - Low-level API access
 
 ### Advanced Features
-- **[Custom Side Channels](Custom-SideChannels.md)** - Custom communication channels
-- **[Training Plugins](Training-Plugins.md)** - Extending training functionality
+- **[Custom Side Channels](Custom-SideChannels.md)** - Custom communication
+- **[Inference Engine](Inference-Engine.md)** - Running trained models
 - **[Hugging Face Integration](Hugging-Face-Integration.md)** - Model sharing
-- **[Custom Grid Sensors](Custom-GridSensors.md)** - Custom Grid Sensors
-- **[Input System Integration](InputSystem-Integration.md)** - Input System Integration
+- **[Custom Grid Sensors](Custom-GridSensors.md)** - Custom grid sensors
+- **[Input System Integration](InputSystem-Integration.md)** - Unity Input System
 
-### Deployment & Cloud
+### Cloud & Deployment
 - **[Using Docker](Using-Docker.md)** - Containerized training
-- **[Training on Amazon Web Service](Training-on-Amazon-Web-Service.md)** - AWS deployment
-- **[Training on Microsoft Azure](Training-on-Microsoft-Azure.md)** - Azure deployment
+- **[Amazon Web Services](Training-on-Amazon-Web-Service.md)** - AWS deployment
+- **[Microsoft Azure](Training-on-Microsoft-Azure.md)** - Azure deployment
 
-### Reference
+### Reference & Support
 - **[FAQ](FAQ.md)** - Frequently asked questions
 - **[Limitations](Limitations.md)** - Known limitations
-- **[Migrating](Migrating.md)** - Migration guide for updates
-- **[Versioning](Versioning.md)** - Version compatibility
+- **[Migrating](Migrating.md)** - Migration between versions
+- **[Background: Machine Learning](Background-Machine-Learning.md)** - ML fundamentals
+- **[Background: Unity](Background-Unity.md)** - Unity concepts
+- **[Background: PyTorch](Background-PyTorch.md)** - PyTorch fundamentals
 
 ## Additional Resources
 
-* [GitHub repository]
-* [Unity Discussions]
-* [Discord]
-* [Website]
+For the most up-to-date information and community support, visit our [GitHub repository](https://github.com/Unity-Technologies/ml-agents).
 
-[github docs]: ML-Agents-Overview.md
-[installation instructions]: Installation.md
+* [Unity Discussions](https://discussions.unity.com/tag/ml-agents)
+* [Discord](https://discord.com/channels/489222168727519232/1202574086115557446)
+* [Website](https://unity-technologies.github.io/ml-agents/)
+
 [Unity Inference Engine]: https://docs.unity3d.com/Packages/com.unity.ai.inference@2.2/manual/index.html
-[python package]: Installation.md
-[GitHub repository]: https://github.com/Unity-Technologies/ml-agents
 [Execution Order of Event Functions]: https://docs.unity3d.com/Manual/ExecutionOrder.html
-[Unity Discussions]: https://discussions.unity.com/tag/ml-agents
-[Discord]: https://discord.com/channels/489222168727519232/1202574086115557446
-[Website]: https://unity-technologies.github.io/ml-agents/
 
