@@ -4,12 +4,11 @@
     "references": [
         "Unity.ML-Agents",
         "Unity.ML-Agents.Input",
-        "Unity.ML-Agents.CommunicatorObjects",
+        "Unity.InputSystem.TestFramework",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Unity.InferenceEngine",
         "Unity.InputSystem",
-        "Unity.InputSystem.TestFramework"
+        "Unity.InferenceEngine"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -18,16 +17,11 @@
     "precompiledReferences": [
         "nunit.framework.dll"
     ],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [
         "UNITY_INCLUDE_TESTS"
     ],
     "versionDefines": [
-        {
-            "name": "com.unity.inputsystem",
-            "expression": "1.1.0-preview.3",
-            "define": "MLA_INPUT_SYSTEM"
-        },
         {
             "name": "com.unity.inputsystem",
             "expression": "1.1.0-preview.3",
