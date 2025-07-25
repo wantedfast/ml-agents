@@ -3,6 +3,7 @@
     "rootNamespace": "",
     "references": [
         "Unity.ML-Agents",
+        "Unity.ML-Agents.Input",
         "Unity.ML-Agents.CommunicatorObjects",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

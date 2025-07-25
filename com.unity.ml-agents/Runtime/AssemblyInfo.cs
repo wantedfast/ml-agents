@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Unity.ML-Agents.Runtime.Utils.Tests")]
 [assembly: InternalsVisibleTo("Unity.ML-Agents.Runtime.Tests")]
 [assembly: InternalsVisibleTo("Unity.ML-Agents.Runtime.Input.Tests")]
+[assembly: InternalsVisibleTo("Unity.ML-Agents.Input")]
 [assembly: InternalsVisibleTo("Unity.ML-Agents.Editor")]
 [assembly: InternalsVisibleTo("Unity.ML-Agents.Pro")]
 [assembly: InternalsVisibleTo("Unity.ML-Agents.Pro.Tests")]
