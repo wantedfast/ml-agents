@@ -9,6 +9,7 @@ namespace Unity.MLAgents.Input
     /// <summary>
     /// Translates data from any control that extends from <see cref="InputControl{Vector2}"/>.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public class Vector2InputActionAdaptor : IRLActionInputAdaptor
     {
         /// <inheritdoc cref="IRLActionInputAdaptor.GetActionSpecForInputAction"/>

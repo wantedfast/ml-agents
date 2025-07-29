@@ -6,6 +6,7 @@ namespace Unity.MLAgents.Sensors
     /// <summary>
     /// Editor component that creates a PhysicsBodySensor for the Agent.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     public class RigidBodySensorComponent : SensorComponent
     {
         /// <summary>

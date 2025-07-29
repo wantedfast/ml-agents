@@ -14,6 +14,7 @@ namespace Unity.MLAgents.Input
     /// they will need to share the same instance of the <see cref="InputActionAsset"/> in order to get the simulated
     /// input.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public interface IInputActionAssetProvider
     {
         /// <summary>

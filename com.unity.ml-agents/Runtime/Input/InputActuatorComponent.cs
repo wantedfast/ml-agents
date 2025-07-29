@@ -23,6 +23,7 @@ namespace Unity.MLAgents.Input
     /// </summary>
     [RequireComponent(typeof(PlayerInput), typeof(IInputActionAssetProvider))]
     [AddComponentMenu("ML Agents/Input Actuator", (int)MenuGroup.Actuators)]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public class InputActuatorComponent : ActuatorComponent
     {
         InputActionAsset m_InputAsset;

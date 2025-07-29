@@ -14,6 +14,7 @@ namespace Unity.MLAgents.Input
     /// The way this interface should be used is to request the <see cref="InputEventPtr"/> by calling
     /// <see cref="GetEventForFrame"/> then call <see cref="EventProcessedInFrame"/> before returning from
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public class InputActuatorEventContext : IDisposable
     {
         /// <summary>

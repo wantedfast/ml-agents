@@ -13,6 +13,7 @@ namespace Unity.MLAgents.Input
     /// <see cref="Agent"/>'s <see cref="BehaviorParameters"/> indicate that the Agent is running in Heuristic Mode,
     /// this Actuator will write actions from the <see cref="InputSystem"/> to the <see cref="ActionBuffers"/> object.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public class InputActionActuator : IActuator, IBuiltInActuator
     {
         readonly BehaviorParameters m_BehaviorParameters;

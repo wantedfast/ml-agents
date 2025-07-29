@@ -10,6 +10,7 @@ namespace Unity.MLAgents.Input
     /// Class that translates data between the a <see cref="UnityEngine.InputSystem.Controls.ButtonControl"/> and
     /// the ML-Agents <see cref="ActionBuffers"/> object.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public class ButtonInputActionAdaptor : IRLActionInputAdaptor
     {
         /// <summary>

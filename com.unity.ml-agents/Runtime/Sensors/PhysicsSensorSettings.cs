@@ -5,6 +5,7 @@ namespace Unity.MLAgents.Sensors
     /// <summary>
     /// Settings that define the observations generated for physics-based sensors.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     [Serializable]
     public struct PhysicsSensorSettings
     {

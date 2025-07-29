@@ -9,6 +9,7 @@ namespace Unity.MLAgents.Input
     /// <summary>
     /// Translates data from a <see cref="UnityEngine.InputSystem.Controls.DoubleControl"/>.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public class DoubleInputActionAdaptor : IRLActionInputAdaptor
     {
         /// <inheritdoc cref="IRLActionInputAdaptor.GetActionSpecForInputAction"/>

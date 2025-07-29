@@ -3,6 +3,7 @@ namespace Unity.MLAgents.Sensors
     /// <summary>
     /// Interface for generating observations from a physical joint or constraint.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     public interface IJointExtractor
     {
         /// <summary>

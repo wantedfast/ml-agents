@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Unity.MLAgents.Sensors
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     public class ArticulationBodySensorComponent : SensorComponent
     {
         public ArticulationBody RootBody;

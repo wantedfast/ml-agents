@@ -9,6 +9,7 @@ namespace Unity.MLAgents.Input
     /// Implement this interface in order to customize how information is translated <see cref="InputControl"/>s
     /// and <see cref="ActionBuffers"/>.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public interface IRLActionInputAdaptor
     {
         /// <summary>
