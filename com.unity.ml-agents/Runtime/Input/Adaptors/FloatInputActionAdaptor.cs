@@ -8,6 +8,7 @@ namespace Unity.MLAgents.Input
     /// <summary>
     /// Translates data from any control that extends from <see cref="InputControl{Single}"/>.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public class FloatInputActionAdaptor : IRLActionInputAdaptor
     {
         /// <inheritdoc cref="IRLActionInputAdaptor.GetActionSpecForInputAction"/>

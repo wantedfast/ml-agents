@@ -8,6 +8,7 @@ namespace Unity.MLAgents.Sensors
     /// <summary>
     /// ISensor implementation that generates observations for a group of Rigidbodies or ArticulationBodies.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     public class PhysicsBodySensor : ISensor, IBuiltInSensor
     {
         ObservationSpec m_ObservationSpec;

@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Unity.MLAgents.Sensors
 {
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     public class RigidBodyJointExtractor : IJointExtractor
     {
         Rigidbody m_Body;

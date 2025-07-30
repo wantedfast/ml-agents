@@ -5,6 +5,7 @@ using UnityEditor;
 namespace Unity.MLAgents.Editor.Input
 {
     [CustomEditor(typeof(InputActuatorComponent))]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Editor.Input")]
     internal class InputActuatorComponentEditor : UnityEditor.Editor
     {
         const string k_ActionSpecName = "m_ActionSpec";

@@ -8,6 +8,7 @@ namespace Unity.MLAgents.Input
     /// <summary>
     /// Translates data from a <see cref="UnityEngine.InputSystem.Controls.IntegerControl"/>.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Input")]
     public class IntegerInputActionAdaptor : IRLActionInputAdaptor
     {
         // TODO need to figure out how we can infer the branch size from here.

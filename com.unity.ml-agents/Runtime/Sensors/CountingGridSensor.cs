@@ -5,6 +5,7 @@ namespace Unity.MLAgents.Sensors
     /// <summary>
     /// Grid-based sensor that counts the number of detctable objects.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     public class CountingGridSensor : GridSensorBase
     {
         /// <summary>

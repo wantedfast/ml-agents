@@ -6,6 +6,7 @@ namespace Unity.MLAgents.Editor
 {
     [CustomEditor(typeof(RigidBodySensorComponent))]
     [CanEditMultipleObjects]
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Editor")]
     internal class RigidBodySensorComponentEditor : UnityEditor.Editor
     {
         bool ShowHierarchy = true;
