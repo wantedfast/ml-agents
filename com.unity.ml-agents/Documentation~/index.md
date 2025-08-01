@@ -9,14 +9,12 @@ Note that the C# package does not contain the machine learning algorithms for tr
 
 ## Documentation structure
 
-| **Section**                                                         | **Description**                                                                       |
-|---------------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| [ML-Agents Theory](ML-Agents-Overview.md)                           |
-| [Get started](Get-Started.md)                                       | Learn how to install ML-Agents, and explore sample projects.                          |
-| [Learning Environments and Agents](Learning-Environments-Agents.md) | Learn about environments and agents, including how to create your own environment.    |
-| [Training](Training.md)                                             | Training workflow, config file, and monitoring tools.                                 |                                                                                    |
-|                                                                     |                                                                                       |
-|                                                                     |                                                                                       |
+| **Section**                                                           | **Description**                                                      |
+|-----------------------------------------------------------------------|----------------------------------------------------------------------|
+| [ML-Agents Theory](ML-Agents-Overview.md)                             | Learn about core concepts of ML-Agents.                              |
+| [Get started](Get-Started.md)                                         | Learn how to install ML-Agents and explore samples.                  |
+| [Learning Environments and Agents](Learning-Environments-Agents.md)   | Learn about Environments, Agents, and creating your own Environment. |
+| [Training](Training.md)                                               | Training workflow, config file, and monitoring tools.                |
 
 
 ## Community and Feedback (review needed)
