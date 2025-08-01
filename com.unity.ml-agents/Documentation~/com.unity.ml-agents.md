@@ -1,7 +1,4 @@
-# Unity ML-Agents Toolkit
-
-<img src="images/image-banner.png" align="middle" width="3000"/>
-
+# ML-Agents Overview
 ML-agents enable games and simulations to serve as environments for training intelligent agents in Unity. Training can be done with reinforcement learning, imitation learning, neuroevolution, or any other methods. Trained agents can be used for many use cases, including controlling NPC behavior (in a variety of settings such as multi-agent and adversarial), automated testing of game builds and evaluating different game design decisions pre-release.
 
 The _ML-Agents_ package has a C# SDK for the [Unity ML-Agents Toolkit], which can be used outside of Unity. This package now contains comprehensive documentation including detailed training guides, Python API documentation, and advanced features.
