@@ -1,4 +1,4 @@
-# ML-Agents Toolkit Overview
+# ML-Agents Theory
 
 Depending on your background (i.e. researcher, game developer, hobbyist), you
 may have very different questions on your mind at the moment. To make your
