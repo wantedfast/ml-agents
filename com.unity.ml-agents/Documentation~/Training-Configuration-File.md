@@ -1,24 +1,5 @@
 # Training Configuration File
 
-**Table of Contents**
-
-- [Training Configuration File](#training-configuration-file)
-  - [Common Trainer Configurations](#common-trainer-configurations)
-  - [Trainer-specific Configurations](#trainer-specific-configurations)
-    - [PPO-specific Configurations](#ppo-specific-configurations)
-    - [SAC-specific Configurations](#sac-specific-configurations)
-    - [MA-POCA-specific Configurations](#ma-poca-specific-configurations)
-  - [Reward Signals](#reward-signals)
-    - [Extrinsic Rewards](#extrinsic-rewards)
-    - [Curiosity Intrinsic Reward](#curiosity-intrinsic-reward)
-    - [GAIL Intrinsic Reward](#gail-intrinsic-reward)
-    - [RND Intrinsic Reward](#rnd-intrinsic-reward)
-  - [Behavioral Cloning](#behavioral-cloning)
-  - [Memory-enhanced Agents using Recurrent Neural Networks](#memory-enhanced-agents-using-recurrent-neural-networks)
-  - [Self-Play](#self-play)
-    - [Note on Reward Signals](#note-on-reward-signals)
-    - [Note on Swap Steps](#note-on-swap-steps)
-
 ## Common Trainer Configurations
 
 One of the first decisions you need to make regarding your training run is which

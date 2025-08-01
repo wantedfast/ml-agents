@@ -2,71 +2,62 @@
 
 <img src="images/image-banner.png" align="middle" width="3000"/>
 
-ML-agents enable games and simulations to serve as environments for training intelligent agents in Unity. Training can be done with reinforcement learning, imitation learning, neuroevolution, or any other methods. Trained agents can be used for many use cases, including controlling NPC behavior (in a variety of settings such as multi-agent and adversarial), automated testing of game builds and evaluating different game design decisions pre-release.
+ML-Agents enable games and simulations to serve as environments for training intelligent agents in Unity. Training can be done with reinforcement learning, imitation learning, neuroevolution, or any other methods. Trained agents can be used for many use cases, including controlling NPC behavior (in a variety of settings such as multi-agent and adversarial), automated testing of game builds and evaluating different game design decisions pre-release.
 
-The _ML-Agents_ package has a C# SDK for the [Unity ML-Agents Toolkit], which can be used outside of Unity. This package now contains comprehensive documentation including detailed training guides, Python API documentation, and advanced features.
+This documentation contains comprehensive instructions about [Unity ML-Agents Toolkit](https://github.com/Unity-Technologies/ml-agents) including the C# package, along with detailed training guides and Python API references.
+Note that the C# package does not contain the machine learning algorithms for training behaviors. The C# package only supports instrumenting a Unity scene, setting it up for training, and then embedding the trained model back into your Unity scene. The machine learning algorithms that orchestrate training are part of the companion Python package.
 
-## Capabilities
-The package allows you to convert any Unity scene into a learning environment and train character behaviors using a variety of machine-learning algorithms. Additionally, it allows you to embed these trained behaviors back into Unity scenes to control your characters. More specifically, the package provides the following core functionalities:
+## Documentation structure
 
-* Define Agents: entities, or characters, whose behavior will be learned. Agents are entities that generate observations (through sensors), take actions, and receive rewards from the environment.
-* Define Behaviors: entities that specify how an agent should act. Multiple agents can share the same Behavior and a scene may have multiple Behaviors.
-* Record demonstrations: To show the behaviors of an agent within the Editor. You can use demonstrations to help train a behavior for that agent.
-* Embed a trained behavior (aka: run your ML model) in the scene via the [Unity Inference Engine]. Embedded behaviors allow you to switch an Agent between learning and inference.
+| **Section**                                                         | **Description**                                                                       |
+|---------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| [ML-Agents Theory](ML-Agents-Overview.md)                           |
+| [Get started](Get-Started.md)                                       | Learn how to install ML-Agents, and explore sample projects.                          |
+| [Learning Environments and Agents](Learning-Environments-Agents.md) | Learn about environments and agents, including how to create your own environment.    |
+| [Training](Training.md)                                             | Training workflow, config file, and monitoring tools.                                 |                                                                                    |
+|                                                                     |                                                                                       |
+|                                                                     |                                                                                       |
 
-## Special Notes
-Note that the ML-Agents package does not contain the machine learning algorithms for training behaviors. The ML-Agents package only supports instrumenting a Unity scene, setting it up for training, and then embedding the trained model back into your Unity scene. The machine learning algorithms that orchestrate training are part of the companion Python package. For detailed training instructions, see [Training ML-Agents](Training-ML-Agents.md).
 
-## Package contents
+## Community and Feedback (review needed)
 
-The following table describes the package folder structure:
+The ML-Agents Toolkit is an open-source project, and we encourage and welcome
+contributions. If you wish to contribute, be sure to review our
+[contribution guidelines](../CONTRIBUTING.md) and
+[code of conduct](CODE_OF_CONDUCT.md).
 
-| **Location**           | **Description**                                                         |
-| ---------------------- | ----------------------------------------------------------------------- |
-| _Documentation~_       | Contains the documentation for the Unity package.                       |
-| _Editor_               | Contains utilities for Editor windows and drawers.                      |
-| _Plugins_              | Contains third-party DLLs.                                              |
-| _Runtime_              | Contains core C# APIs for integrating ML-Agents into your Unity scene.  |
-| _Runtime/Integrations_ | Contains utilities for integrating ML-Agents into specific game genres. |
-| _Tests_                | Contains the unit tests for the package.                                |
+For problems with the installation and setup of the ML-Agents Toolkit, or
+discussions about how to best setup or train your agents, please create a new
+thread on the
+[Unity ML-Agents forum](https://forum.unity.com/forums/ml-agents.453/) and make
+sure to include as much detail as possible. If you run into any other problems
+using the ML-Agents Toolkit or have a specific feature request, please
+[submit a GitHub issue](https://github.com/Unity-Technologies/ml-agents/issues).
 
-<a name="Installation"></a>
+Please tell us which samples you would like to see shipped with the ML-Agents Unity
+package by replying to
+[this forum thread](https://forum.unity.com/threads/feedback-wanted-shipping-sample-s-with-the-ml-agents-package.1073468/).
 
-## Installation
-To add the ML-Agents package to a Unity project:
 
-* Create a new Unity project with Unity 6000.0 (or later) or open an existing one.
-* To open the Package Manager, navigate to Window > Package Manager.
-* Click + and select Add package by name...
-* Enter com.unity.ml-agents
-  *Click Add to add the package to your project.
+Your opinion matters a great deal to us. Only by hearing your thoughts on the
+Unity ML-Agents Toolkit can we continue to improve and grow. Please take a few
+minutes to
+[let us know about it](https://unitysoftware.co1.qualtrics.com/jfe/form/SV_55pQKCZ578t0kbc).
 
-To install the companion Python package to enable training behaviors, follow the [Installation](Installation.md) instructions.
+For any other questions or feedback, connect directly with the ML-Agents team at
+ml-agents@unity3d.com.
 
-## Known Limitations
-
-### Training
-
-Training is limited to the Unity Editor and Standalone builds on Windows, MacOS,
-and Linux with the Mono scripting backend. Currently, training does not work
-with the IL2CPP scripting backend. Your environment will default to inference
-mode if training is not supported or is not currently running.
-
-### Inference
-
-Inference is executed via [Unity Inference Engine](https://docs.unity3d.com/Packages/com.unity.ai.inference@latest) on the end-user device. Therefore, it is subject to the performance limitations of the end-user CPU or GPU. Also, only models created with our trainers are supported for running ML-Agents with a neural network behavior.
-
-### Headless Mode
-
-If you enable Headless mode, you will not be able to collect visual observations from your agents.
-
-### Rendering Speed and Synchronization
-
-Currently the speed of the game physics can only be increased to 100x real-time. The Academy (the sentinel that controls the stepping of the game to make sure everything is synchronized, from collection of observations to applying actions generated from policy inference to the agent) also moves in time with `FixedUpdate()` rather than `Update()`, so game behavior implemented in Update() may be out of sync with the agent decision-making.  See [Execution Order of Event Functions] for more information.
-
-You can control the frequency of Academy stepping by calling `Academy.Instance.DisableAutomaticStepping()`, and then calling `Academy.Instance.EnvironmentStep()`.
+## Privacy
+In order to improve the developer experience for Unity ML-Agents Toolkit, we have added in-editor analytics.
+Please refer to "Information that is passively collected by Unity" in the
+[Unity Privacy Policy](https://unity3d.com/legal/privacy-policy).
 
 ## Additional Resources
 
-* [GitHub repository](https://github.com/Unity-Technologies/ml-agents).
+* [GitHub repository](https://github.com/Unity-Technologies/ml-agents)
 * [Unity Discussions](https://discussions.unity.com/tag/ml-agents)
+* [ML-Agents Unity course: Hummingbirds](https://learn.unity.com/course/ml-agents-hummingbirds)
+* [ML-Agents tutorials by CodeMonkeyUnity](https://www.youtube.com/playlist?list=PLzDRvYVwl53vehwiN_odYJkPBzcqFw110)
+* [Introduction to ML-Agents by Huggingface](https://huggingface.co/learn/deep-rl-course/en/unit5/introduction)
+* [Community created ML-Agents projects](https://discussions.unity.com/t/post-your-ml-agents-project/816756)
+* [Blog posts](Blog-posts.md)

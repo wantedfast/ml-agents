@@ -1,40 +1,12 @@
 # Training ML-Agents
 
-**Table of Contents**
-
-- [Training ML-Agents](#training-ml-agents)
-  - [Training with mlagents-learn](#training-with-mlagents-learn)
-    - [Starting Training](#starting-training)
-      - [Observing Training](#observing-training)
-      - [Stopping and Resuming Training](#stopping-and-resuming-training)
-      - [Loading an Existing Model](#loading-an-existing-model)
-  - [Training Configurations](#training-configurations)
-    - [Adding CLI Arguments to the Training Configuration file](#adding-cli-arguments-to-the-training-configuration-file)
-      - [Environment settings](#environment-settings)
-      - [Engine settings](#engine-settings)
-      - [Checkpoint settings](#checkpoint-settings)
-      - [Torch settings:](#torch-settings)
-    - [Behavior Configurations](#behavior-configurations)
-    - [Default Behavior Settings](#default-behavior-settings)
-    - [Environment Parameters](#environment-parameters)
-      - [Environment Parameter Randomization](#environment-parameter-randomization)
-        - [Supported Sampler Types](#supported-sampler-types)
-        - [Training with Environment Parameter Randomization](#training-with-environment-parameter-randomization)
-      - [Curriculum](#curriculum)
-        - [Training with a Curriculum](#training-with-a-curriculum)
-    - [Training Using Concurrent Unity Instances](#training-using-concurrent-unity-instances)
-
-For a broad overview of reinforcement learning, imitation learning and all the
-training scenarios, methods and options within the ML-Agents Toolkit, see
-[ML-Agents Toolkit Overview](ML-Agents-Overview.md).
-
 Once your learning environment has been created and is ready for training, the
 next step is to initiate a training run. Training in the ML-Agents Toolkit is
 powered by a dedicated Python package, `mlagents`. This package exposes a
 command `mlagents-learn` that is the single entry point for all training
 workflows (e.g. reinforcement leaning, imitation learning, curriculum learning).
 Its implementation can be found at
-[ml-agents/mlagents/trainers/learn.py](../ml-agents/mlagents/trainers/learn.py).
+[ml-agents/mlagents/trainers/learn.py](../../ml-agents/mlagents/trainers/learn.py).
 
 ## Training with mlagents-learn
 
@@ -79,7 +51,7 @@ where
   your training runs.
 
 See the
-[Getting Started Guide](Getting-Started.md#training-a-new-model-with-reinforcement-learning)
+[Getting Started Guide](Sample.md#training-a-new-model-with-reinforcement-learning)
 for a sample execution of the `mlagents-learn` command.
 
 #### Observing Training
@@ -122,7 +94,7 @@ artifacts), then use the `--force` flag.
 You can also use this mode to run inference of an already-trained model in
 Python by using both the `--resume` and `--inference` flags. Note that if you
 want to run inference in Unity, you should use the
-[Inference Engine](Getting-Started.md#running-a-pre-trained-model).
+[Inference Engine](Sample.md#running-a-pre-trained-model).
 
 Additionally, if the network architecture changes, you may still load an existing model,
 but ML-Agents will only load the parts of the model it can load and ignore all others. For instance,
@@ -144,7 +116,7 @@ The Unity ML-Agents Toolkit provides a wide range of training scenarios, methods
 and options. As such, specific training runs may require different training
 configurations and may generate different artifacts and TensorBoard statistics.
 This section offers a detailed guide into how to manage the different training
-set-ups withing the toolkit.
+set-ups within the toolkit.
 
 More specifically, this section offers a detailed guide on the command-line
 flags for `mlagents-learn` that control the training configurations:
@@ -158,9 +130,9 @@ ML-Agents Toolkit involves tuning the training hyperparameters and
 configuration. This guide contains some best practices for tuning the training
 process when the default parameters don't seem to be giving the level of
 performance you would like. We provide sample configuration files for our
-example environments in the [config/](../config/) directory. The
+example environments in the [config/](../../config/) directory. The
 `config/ppo/3DBall.yaml` was used to train the 3D Balance Ball in the
-[Getting Started](Getting-Started.md) guide. That configuration file uses the
+[Getting Started](Sample.md) guide. That configuration file uses the
 PPO trainer, but we also have configuration files for SAC and GAIL.
 
 Additionally, the set of configurations you provide depend on the training

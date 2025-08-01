@@ -7,7 +7,7 @@ and [Tutorials page](https://unity3d.com/learn/tutorials). The
 is a fantastic resource to learn all the basic concepts of Unity to get started
 with the ML-Agents Toolkit:
 
-- [Editor](https://docs.unity3d.com/Manual/UsingTheEditor.html)
+- [Editor](https://docs.unity3d.com/Manual/sprite/sprite-editor/use-editor.html)
 - [Scene](https://docs.unity3d.com/Manual/CreatingScenes.html)
 - [GameObject](https://docs.unity3d.com/Manual/GameObjects.html)
 - [Rigidbody](https://docs.unity3d.com/ScriptReference/Rigidbody.html)

@@ -8,11 +8,6 @@ the scene. We have a dedicated page on
 instrument observations, actions and rewards, define teams for multi-agent
 scenarios and record agent demonstrations for imitation learning.
 
-To help on-board to the entire set of functionality provided by the ML-Agents
-Toolkit, we recommend exploring our [API documentation](API-Reference.md).
-Additionally, our [example environments](Learning-Environment-Examples.md) are a
-great resource as they provide sample usage of almost all of our features.
-
 ## The Simulation and Training Process
 
 Training and simulation proceed in steps orchestrated by the ML-Agents Academy
@@ -123,7 +118,7 @@ for curriculum learning and environment parameter randomization for details.
 We recommend modifying the environment from the Agent's `OnEpisodeBegin()`
 function by leveraging `Academy.Instance.EnvironmentParameters`. See the
 WallJump example environment for a sample usage (specifically,
-[WallJumpAgent.cs](../Project/Assets/ML-Agents/Examples/WallJump/Scripts/WallJumpAgent.cs)
+[WallJumpAgent.cs](../../Project/Assets/ML-Agents/Examples/WallJump/Scripts/WallJumpAgent.cs)
 ).
 
 ## Agent
@@ -163,5 +158,5 @@ environments. These statistics are aggregated and generated during the training
 process. To record statistics, see the `StatsRecorder` C# class.
 
 See the FoodCollector example environment for a sample usage (specifically,
-[FoodCollectorSettings.cs](../Project/Assets/ML-Agents/Examples/FoodCollector/Scripts/FoodCollectorSettings.cs)
+[FoodCollectorSettings.cs](../../Project/Assets/ML-Agents/Examples/FoodCollector/Scripts/FoodCollectorSettings.cs)
 ).

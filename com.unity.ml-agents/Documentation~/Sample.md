@@ -1,4 +1,4 @@
-# Getting Started Guide
+# Running an Example Environment
 
 This guide walks through the end-to-end process of opening one of our
 [example environments](Learning-Environment-Examples.md) in Unity, training an
@@ -25,14 +25,8 @@ Let's get started!
 
 ## Installation
 
-If you haven't already, follow the [installation instructions](Installation.md).
-Afterwards, open the Unity Project that contains all the example environments:
-
-1. Open the Package Manager Window by navigating to `Window -> Package Manager`
-   in the menu.
-1. Navigate to the ML-Agents Package and click on it.
-1. Find the `3D Ball` sample and click `Import`.
-1. In the **Project** window, go to the
+If you haven't already, follow the Local Installation for Development section in [installation instructions](Installation.md).
+Afterward, open the Unity Project that contains all the example environments. In the **Project** window, go to the
    `Assets/ML-Agents/Examples/3DBall/Scenes` folder and open the `3DBall` scene
    file.
 
@@ -249,17 +243,3 @@ which is similar to the steps described [above](#running-a-pre-trained-model).
 1. Drag the `<behavior_name>.onnx` file from the Project window of the Editor to
    the **Model** placeholder in the **Ball3DAgent** inspector window.
 1. Press the **Play** button at the top of the Editor.
-
-## Next Steps
-
-- For more information on the ML-Agents Toolkit, in addition to helpful
-  background, check out the [ML-Agents Toolkit Overview](ML-Agents-Overview.md)
-  page.
-- For a "Hello World" introduction to creating your own Learning Environment,
-  check out the
-  [Making a New Learning Environment](Learning-Environment-Create-New.md) page.
-- For an overview on the more complex example environments that are provided in
-  this toolkit, check out the
-  [Example Environments](Learning-Environment-Examples.md) page.
-- For more information on the various training options available, check out the
-  [Training ML-Agents](Training-ML-Agents.md) page.

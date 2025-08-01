@@ -1,46 +1,5 @@
 # Agents
 
-**Table of Contents:**
-
-- [Agents](#agents)
-  - [Decisions](#decisions)
-  - [Observations and Sensors](#observations-and-sensors)
-    - [Generating Observations](#generating-observations)
-      - [Agent.CollectObservations()](#agentcollectobservations)
-      - [Observable Fields and Properties](#observable-fields-and-properties)
-      - [ISensor interface and SensorComponents](#isensor-interface-and-sensorcomponents)
-    - [Vector Observations](#vector-observations)
-      - [One-hot encoding categorical information](#one-hot-encoding-categorical-information)
-      - [Normalization](#normalization)
-      - [Stacking](#stacking)
-      - [Vector Observation Summary \& Best Practices](#vector-observation-summary--best-practices)
-    - [Visual Observations](#visual-observations)
-      - [Visual Observation Summary \& Best Practices](#visual-observation-summary--best-practices)
-    - [Raycast Observations](#raycast-observations)
-      - [RayCast Observation Summary \& Best Practices](#raycast-observation-summary--best-practices)
-    - [Grid Observations](#grid-observations)
-      - [Grid Observation Summary \& Best Practices](#grid-observation-summary--best-practices)
-    - [Variable Length Observations](#variable-length-observations)
-      - [Variable Length Observation Summary \& Best Practices](#variable-length-observation-summary--best-practices)
-    - [Goal Signal](#goal-signal)
-      - [Goal Signal Summary \& Best Practices](#goal-signal-summary--best-practices)
-  - [Actions and Actuators](#actions-and-actuators)
-    - [Continuous Actions](#continuous-actions)
-    - [Discrete Actions](#discrete-actions)
-      - [Masking Discrete Actions](#masking-discrete-actions)
-    - [IActuator interface and ActuatorComponents](#iactuator-interface-and-actuatorcomponents)
-    - [Actions Summary \& Best Practices](#actions-summary--best-practices)
-  - [Rewards](#rewards)
-    - [Examples](#examples)
-    - [Rewards Summary \& Best Practices](#rewards-summary--best-practices)
-  - [Agent Properties](#agent-properties)
-  - [Destroying an Agent](#destroying-an-agent)
-  - [Defining Multi-agent Scenarios](#defining-multi-agent-scenarios)
-    - [Teams for Adversarial Scenarios](#teams-for-adversarial-scenarios)
-    - [Groups for Cooperative Scenarios](#groups-for-cooperative-scenarios)
-      - [Cooperative Behaviors Notes and Best Practices](#cooperative-behaviors-notes-and-best-practices)
-  - [Recording Demonstrations](#recording-demonstrations)
-
 An agent is an entity that can observe its environment, decide on the best
 course of action using those observations, and execute those actions within its
 environment. Agents can be created in Unity by extending the `Agent` class. The
@@ -51,7 +10,7 @@ of the agent's current state toward accomplishing its tasks.
 An Agent passes its observations to its Policy. The Policy then makes a decision
 and passes the chosen action back to the agent. Your agent code must execute the
 action, for example, move the agent in one direction or another. In order to
-[train an agent using reinforcement learning](Learning-Environment-Design.md),
+train an agent using reinforcement learning,
 your agent must calculate a reward value at each action. The reward is used to
 discover the optimal decision-making policy.
 

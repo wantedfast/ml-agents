@@ -1,52 +1,5 @@
 # ML-Agents Toolkit Overview
 
-**Table of Contents**
-
-- [Running Example: Training NPC Behaviors](#running-example-training-npc-behaviors)
-- [Key Components](#key-components)
-- [Training Modes](#training-modes)
-  - [Built-in Training and Inference](#built-in-training-and-inference)
-    - [Cross-Platform Inference](#cross-platform-inference)
-  - [Custom Training and Inference](#custom-training-and-inference)
-- [Flexible Training Scenarios](#flexible-training-scenarios)
-- [Training Methods: Environment-agnostic](#training-methods-environment-agnostic)
-  - [A Quick Note on Reward Signals](#a-quick-note-on-reward-signals)
-  - [Deep Reinforcement Learning](#deep-reinforcement-learning)
-    - [Curiosity for Sparse-reward Environments](#curiosity-for-sparse-reward-environments)
-    - [RND for Sparse-reward Environments](#rnd-for-sparse-reward-environments)
-  - [Imitation Learning](#imitation-learning)
-    - [GAIL (Generative Adversarial Imitation Learning)](#gail-generative-adversarial-imitation-learning)
-    - [Behavioral Cloning (BC)](#behavioral-cloning-bc)
-    - [Recording Demonstrations](#recording-demonstrations)
-  - [Summary](#summary)
-- [Training Methods: Environment-specific](#training-methods-environment-specific)
-  - [Training in Competitive Multi-Agent Environments with Self-Play](#training-in-competitive-multi-agent-environments-with-self-play)
-  - [Training in Cooperative Multi-Agent Environments with MA-POCA](#training-in-cooperative-multi-agent-environments-with-ma-poca)
-  - [Solving Complex Tasks using Curriculum Learning](#solving-complex-tasks-using-curriculum-learning)
-  - [Training Robust Agents using Environment Parameter Randomization](#training-robust-agents-using-environment-parameter-randomization)
-- [Model Types](#model-types)
-  - [Learning from Vector Observations](#learning-from-vector-observations)
-  - [Learning from Cameras using Convolutional Neural Networks](#learning-from-cameras-using-convolutional-neural-networks)
-  - [Learning from Variable Length Observations using Attention](#learning-from-variable-length-observations-using-attention)
-  - [Memory-enhanced Agents using Recurrent Neural Networks](#memory-enhanced-agents-using-recurrent-neural-networks)
-- [Additional Features](#additional-features)
-- [Summary and Next Steps](#summary-and-next-steps)
-
-**The Unity Machine Learning Agents Toolkit** (ML-Agents Toolkit) is an
-open-source project that enables games and simulations to serve as environments
-for training intelligent agents. Agents can be trained using reinforcement
-learning, imitation learning, neuroevolution, or other machine learning methods
-through a simple-to-use Python API. We also provide implementations (based on
-PyTorch) of state-of-the-art algorithms to enable game developers and
-hobbyists to easily train intelligent agents for 2D, 3D and VR/AR games. These
-trained agents can be used for multiple purposes, including controlling NPC
-behavior (in a variety of settings such as multi-agent and adversarial),
-automated testing of game builds and evaluating different game design decisions
-pre-release. The ML-Agents Toolkit is mutually beneficial for both game
-developers and AI researchers as it provides a central platform where advances
-in AI can be evaluated on Unity’s rich environments and then made accessible to
-the wider research and game developer communities.
-
 Depending on your background (i.e. researcher, game developer, hobbyist), you
 may have very different questions on your mind at the moment. To make your
 transition to the ML-Agents Toolkit easier, we provide several background pages
@@ -271,7 +224,7 @@ being sent to the Python API, they will be fed into their (internal, embedded)
 model to generate the _optimal_ action for each medic to take at every point in
 time.
 
-The [Getting Started Guide](Getting-Started.md) tutorial covers this training
+The [Getting Started Guide](Sample.md) tutorial covers this training
 mode with the **3D Balance Ball** sample environment.
 
 #### Cross-Platform Inference
@@ -281,9 +234,7 @@ It is important to note that the ML-Agents Toolkit leverages the
 Unity scene such that an agent can take the _optimal_ action at each step. Given
 that Inference Engine supports all Unity runtime platforms, this
 means that any model you train with the ML-Agents Toolkit can be embedded into
-your Unity application that runs on any platform. See our
-[dedicated blog post](https://blogs.unity3d.com/2019/03/01/unity-ml-agents-toolkit-v0-7-a-leap-towards-cross-platform-inference/)
-for additional information.
+your Unity application that runs on any platform.
 
 ### Custom Training and Inference
 
@@ -589,7 +540,7 @@ For further reading on this issue in particular, see the paper
 [Stabilising Experience Replay for Deep Multi-Agent Reinforcement Learning](https://arxiv.org/pdf/1702.08887.pdf).
 
 See our
-[Designing Agents](Learning-Environment-Design-Agents.md#defining-teams-for-multi-agent-scenarios)
+[Designing Agents](Learning-Environment-Design-Agents.md#defining-multi-agent-scenarios)
 page for more information on setting up teams in your Unity scene. Also, read
 our
 [blog post on self-play](https://blogs.unity3d.com/2020/02/28/training-intelligent-adversaries-using-self-play-with-ml-agents/)
@@ -667,7 +618,7 @@ is not possible to directly replicate the results here using that environment.]_
 The ML-Agents Toolkit supports modifying custom environment parameters during
 the training process to aid in learning. This allows elements of the environment
 related to difficulty or complexity to be dynamically adjusted based on training
-progress. The [Training ML-Agents](Training-ML-Agents.md#curriculum-learning)
+progress. The [Training ML-Agents](Training-ML-Agents.md#curriculum)
 page has more information on defining training curriculums.
 
 ### Training Robust Agents using Environment Parameter Randomization
@@ -720,7 +671,7 @@ scenarios such as training a self-driving car which requires multiple cameras
 with different viewpoints, or a navigational agent which might need to integrate
 aerial and first-person visuals. You can learn more about adding visual
 observations to an agent
-[here](Learning-Environment-Design-Agents.md#multiple-visual-observations).
+[here](Learning-Environment-Design-Agents.md#visual-observations).
 
 When visual observations are utilized, the ML-Agents Toolkit leverages
 convolutional neural networks (CNN) to learn from the input images. We offer
@@ -793,28 +744,3 @@ training process.
   [create custom side channels](Custom-SideChannels.md) to manage data transfer
   between Unity and Python that is unique to their training workflow and/or
   environment.
-- **Custom Samplers** - We enable developers to
-  [create custom sampling methods](Training-ML-Agents.md#defining-a-new-sampler-type)
-  for Environment Parameter Randomization. This enables users to customize this
-  training method for their particular environment.
-
-## Summary and Next Steps
-
-To briefly summarize: The ML-Agents Toolkit enables games and simulations built
-in Unity to serve as the platform for training intelligent agents. It is
-designed to enable a large variety of training modes and scenarios and comes
-packed with several features to enable researchers and developers to leverage
-(and enhance) machine learning within Unity.
-
-In terms of next steps:
-
-- For a walkthrough of running ML-Agents with a simple scene, check out the
-  [Getting Started](Getting-Started.md) guide.
-- For a "Hello World" introduction to creating your own Learning Environment,
-  check out the
-  [Making a New Learning Environment](Learning-Environment-Create-New.md) page.
-- For an overview on the more complex example environments that are provided in
-  this toolkit, check out the
-  [Example Environments](Learning-Environment-Examples.md) page.
-- For more information on the various training options available, check out the
-  [Training ML-Agents](Training-ML-Agents.md) page.
