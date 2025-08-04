@@ -8,7 +8,7 @@ interfacing with a Unity environment via Python.
 ## Installation and Examples
 
 The PettingZoo wrapper is part of the `mlagents_envs` package. Please refer to the
-[mlagents_envs installation instructions](ML-Agents-Envs-README.md).
+[mlagents_envs installation instructions](../../ml-agents-envs/README.md).
 
 [[Colab] PettingZoo Wrapper Example](https://colab.research.google.com/github/Unity-Technologies/ml-agents/blob/develop-python-api-ga/ml-agents-envs/colabs/Colab_PettingZoo.ipynb)
 

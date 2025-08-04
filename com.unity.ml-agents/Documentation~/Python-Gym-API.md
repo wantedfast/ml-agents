@@ -12,7 +12,7 @@ Unity environment via Python.
 ## Installation
 
 The gym wrapper is part of the `mlagents_envs` package. Please refer to the
-[mlagents_envs installation instructions](ML-Agents-Envs-README.md).
+[mlagents_envs installation instructions](../../ml-agents-envs/README.md).
 
 
 ## Using the Gym Wrapper
@@ -87,7 +87,7 @@ pip install git+git://github.com/openai/baselines
 Next, create a file called `train_unity.py`. Then create an `/envs/` directory
 and build the environment to that directory. For more information on
 building Unity environments, see
-[here](../docs/Learning-Environment-Executable.md). Note that because of
+[here](Learning-Environment-Executable.md). Note that because of
 limitations of the DQN baseline, the environment must have a single visual
 observation, a single discrete action and a single Agent in the scene.
 Add the following code to the `train_unity.py` file:
@@ -253,7 +253,7 @@ method with the following code.
 
 `<path-to-environment>` is the path to your built Unity executable. For more
 information on building Unity environments, see
-[here](../docs/Learning-Environment-Executable.md), and note the Limitations
+[here](Learning-Environment-Executable.md), and note the Limitations
 section below.
 
 Note that we are not using the preprocessor from Dopamine, as it uses many

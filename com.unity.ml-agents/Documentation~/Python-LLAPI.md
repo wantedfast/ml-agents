@@ -39,7 +39,7 @@ The key objects in the Python API include:
   DecisionSteps and TerminalSteps as well as the expected action shapes.
 
 These classes are all defined in the
-[base_env](../ml-agents-envs/mlagents_envs/base_env.py) script.
+[base_env](../../ml-agents-envs/mlagents_envs/base_env.py) script.
 
 An Agent "Behavior" is a group of Agents identified by a `BehaviorName` that
 share the same observations and action types (described in their

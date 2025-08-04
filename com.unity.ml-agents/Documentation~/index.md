@@ -15,6 +15,8 @@ Note that the C# package does not contain the machine learning algorithms for tr
 | [Get started](Get-Started.md)                                       | Learn how to install ML-Agents and explore samples.                  |
 | [Learning Environments and Agents](Learning-Environments-Agents.md) | Learn about Environments, Agents, and creating your own Environment. |
 | [Training](Training.md)                                             | Training workflow, config file, and monitoring tools.                |
+| [Python APIs](Python-APIs.md)                                       | Gym, PettingZoo, and low-level Python interfaces.                    |
+| [Advanced Features](Advanced-Features.md)                           | Custom sensors, side channels, and specialized integrations.         |
 
 
 ## Community and Feedback (review needed)
@@ -58,4 +60,5 @@ Please refer to "Information that is passively collected by Unity" in the
 * [ML-Agents tutorials by CodeMonkeyUnity](https://www.youtube.com/playlist?list=PLzDRvYVwl53vehwiN_odYJkPBzcqFw110)
 * [Introduction to ML-Agents by Huggingface](https://huggingface.co/learn/deep-rl-course/en/unit5/introduction)
 * [Community created ML-Agents projects](https://discussions.unity.com/t/post-your-ml-agents-project/816756)
+* [ML-Agents models on Huggingface](https://huggingface.co/models?library=ml-agents)
 * [Blog posts](Blog-posts.md)
