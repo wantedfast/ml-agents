@@ -16,10 +16,11 @@ Note that the C# package does not contain the machine learning algorithms for tr
 | [Learning Environments and Agents](Learning-Environments-Agents.md) | Learn about Environments, Agents, and creating your own Environment. |
 | [Training](Training.md)                                             | Training workflow, config file, and monitoring tools.                |
 | [Python APIs](Python-APIs.md)                                       | Gym, PettingZoo, and low-level Python interfaces.                    |
+| Python Tutorial with Google Colab                                   | Interactive tutorials for using ML-Agents with Google Colab.         |
 | [Advanced Features](Advanced-Features.md)                           | Custom sensors, side channels, and specialized integrations.         |
 | [Cloud & Deployment](Cloud-Deployment.md)                           | Legacy cloud deployment guides (deprecated).                         |
+| [Reference & Support](Reference-Support.md)                         | FAQ, troubleshooting, and migration guides.                          |
 | [Background](Background.md)                                         | Machine Learning, Unity, and PyTorch fundamentals.                   |
-| [Reference & Support](Reference-Support.md)                         | FAQ, troubleshooting, migration guides, and background materials.    |
 
 ## Community and Feedback (review needed)
 
