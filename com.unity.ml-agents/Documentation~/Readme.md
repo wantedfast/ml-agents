@@ -45,7 +45,7 @@ descriptions of all these features. Or go straight to our [web docs](https://uni
 ## Releases & Documentation
 
 **Our latest, stable release is `Release 22`. Click
-[here](Getting-Started.md)
+[here](Sample.md)
 to get started with the latest release of ML-Agents.**
 
 **You can also check out our new [web docs](https://unity-technologies.github.io/ml-agents/)!**

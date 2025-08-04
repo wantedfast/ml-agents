@@ -1,7 +1,7 @@
 # Making a New Learning Environment
 
 This tutorial walks through the process of creating a Unity Environment from
-scratch. We recommend first reading the [running an example](Sample.md)
+scratch. We recommend first reading the [Running an Example](Sample.md)
 guide to understand the concepts presented here first in an already-built
 environment.
 
@@ -378,7 +378,7 @@ from the platform.
 ## Training the Environment
 
 The process is the same as described in the
-[sample guide](Sample.md).
+[Running an Example](Sample.md) guide.
 
 The hyperparameters for training are specified in a configuration file that you
 pass to the `mlagents-learn` program. Create a new `rollerball_config.yaml` file

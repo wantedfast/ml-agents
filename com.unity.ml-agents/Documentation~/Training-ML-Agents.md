@@ -51,8 +51,8 @@ where
   your training runs.
 
 See the
-[Getting Started Guide](Sample.md#training-a-new-model-with-reinforcement-learning)
-for a sample execution of the `mlagents-learn` command.
+[Running an Example](Sample.md#training-a-new-model-with-reinforcement-learning)
+guide for a sample execution of the `mlagents-learn` command.
 
 #### Observing Training
 
@@ -132,7 +132,7 @@ process when the default parameters don't seem to be giving the level of
 performance you would like. We provide sample configuration files for our
 example environments in the [config/](../../config/) directory. The
 `config/ppo/3DBall.yaml` was used to train the 3D Balance Ball in the
-[Getting Started](Sample.md) guide. That configuration file uses the
+[Running an Example](Sample.md) guide. That configuration file uses the
 PPO trainer, but we also have configuration files for SAC and GAIL.
 
 Additionally, the set of configurations you provide depend on the training

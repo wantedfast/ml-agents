@@ -224,7 +224,7 @@ being sent to the Python API, they will be fed into their (internal, embedded)
 model to generate the _optimal_ action for each medic to take at every point in
 time.
 
-The [Getting Started Guide](Sample.md) tutorial covers this training
+The [Running an Example](Sample.md) guide covers this training
 mode with the **3D Balance Ball** sample environment.
 
 #### Cross-Platform Inference
