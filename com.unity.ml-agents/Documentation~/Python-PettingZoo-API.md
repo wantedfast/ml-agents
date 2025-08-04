@@ -14,7 +14,7 @@ The PettingZoo wrapper is part of the `mlagents_envs` package. Please refer to t
 
 This colab notebook demonstrates the example usage of the wrapper, including installation,
 basic usages, and an example with our
-[Striker vs Goalie environment](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Learning-Environment-Examples.md#strikers-vs-goalie)
+[Striker vs Goalie environment](Learning-Environment-Examples.md#strikers-vs-goalie)
 which is a multi-agents environment with multiple different behavior names.
 
 ## API interface
