@@ -16,10 +16,10 @@
   * [Python Gym API](Python-Gym-API.md)
   * [Python PettingZoo API](Python-PettingZoo-API.md)
   * [Python Low-Level API](Python-LLAPI.md)
-* [Python Tutorial with Google Colab]
-  * [Using a UnityEnvironment]
-  * [Q-Learning with a UnityEnvironment]
-  * [Using Side Channels on a UnityEnvironment]
+* [Python Tutorial with Google Colab](Tutorial-Colab.md)
+  * [Using a UnityEnvironment](https://colab.research.google.com/github/Unity-Technologies/ml-agents/blob/release_22_docs/colab/Colab_UnityEnvironment_1_Run.ipynb)
+  * [Q-Learning with a UnityEnvironment](https://colab.research.google.com/github/Unity-Technologies/ml-agents/blob/release_22_docs/colab/Colab_UnityEnvironment_2_Train.ipynb)
+  * [Using Side Channels on a UnityEnvironment](https://colab.research.google.com/github/Unity-Technologies/ml-agents/blob/release_22_docs/colab/Colab_UnityEnvironment_3_SideChannel.ipynb)
 * [Advanced Features](Advanced-Features.md)
   * [Custom Side Channels](Custom-SideChannels.md)
   * [Custom Grid Sensors](Custom-GridSensors.md)
