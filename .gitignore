@@ -54,6 +54,9 @@
 /docs/html
 /com.unity.ml-agents/Documentation~/html
 
+# MkDocs build output
+/site/
+
 # Mac hidden files
 *.DS_Store
 */.ipynb_checkpoints
