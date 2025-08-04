@@ -16,42 +16,50 @@
   * [Python Gym API](Python-Gym-API.md)
   * [Python PettingZoo API](Python-PettingZoo-API.md)
   * [Python Low-Level API](Python-LLAPI.md)
+* [Python Tutorial with Google Colab]
+  * [Using a UnityEnvironment]
+  * [Q-Learning with a UnityEnvironment]
+  * [Using Side Channels on a UnityEnvironment]
 * [Advanced Features](Advanced-Features.md)
   * [Custom Side Channels](Custom-SideChannels.md)
   * [Custom Grid Sensors](Custom-GridSensors.md)
   * [Input System Integration](InputSystem-Integration.md)
   * [Inference Engine](Inference-Engine.md)
   * [Hugging Face Integration](Hugging-Face-Integration.md)
-* [Cloud & Deployment (deprecated)]()
+* [Cloud & Deployment (deprecated)](Cloud-Deployment.md)
   * [Using Docker](Using-Docker.md)
   * [Amazon Web Services](Training-on-Amazon-Web-Service.md)
   * [Microsoft Azure](Training-on-Microsoft-Azure.md)
-* [Reference & Support]()
+* [Reference & Support](Reference-Support.md)
   * [FAQ](FAQ.md)
   * [Limitations](Limitations.md)
   * [Migrating](Migrating.md)
-  * [Background: Machine Learning](Background-Machine-Learning.md)
-  * [Background: Unity](Background-Unity.md)
-  * [Background: PyTorch](Background-PyTorch.md)
+  * [versioning](Versioning.md)
+  * [ML-Agents Glossary](Glossary.md)
+* [Background](Background.md)
+  * [Machine Learning](Background-Machine-Learning.md)
+  * [Unity](Background-Unity.md)
+  * [PyTorch](Background-PyTorch.md)
+  * [ELO](ELO-Rating-System.md)
 
 ## Next Steps
 
 
 multienv vs multi instances
-colab
+Using an Executable Environment
+ML-Agents Package Settings
+Profiling Trainers
+How to use the Unity Environment Registry
+Python API Documentation
+Python-On-Off-Policy-Trainer-Documentation
+Custom Trainer Plugin
+Customizing Training via Plugins
 
 
 [the Agent documentation](Learning-Environment-Design-Agents.md#decisions)
 Hyperparameters are explained in [the training configuration file documentation](Training-Configuration-File.md)
 
-## Help
 
-If you run into any problems regarding ML-Agents, refer to our [FAQ](FAQ.md) and
-our [Limitations](Limitations.md) pages. If you can't find anything please
-[submit an issue](https://github.com/Unity-Technologies/ml-agents/issues) and
-make sure to cite relevant information on OS, Python version, and exact error
-message (whenever possible).
-package
 ## Capabilities
 The package allows you to convert any Unity scene into a learning environment and train character behaviors using a variety of machine-learning algorithms. Additionally, it allows you to embed these trained behaviors back into Unity scenes to control your characters. More specifically, the package provides the following core functionalities:
 

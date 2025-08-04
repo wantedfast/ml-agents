@@ -113,13 +113,11 @@ good policies can be difficult (and/or time-consuming) for complex environments.
 
 <div style="text-align: center"><img src="images/rl_cycle.png" alt="The reinforcement learning lifecycle."></div>
 
-[Learning a policy](https://blogs.unity3d.com/2017/08/22/unity-ai-reinforcement-learning-with-q-learning/)
-usually requires many trials and iterative policy updates. More specifically,
+Learning a policy usually requires many trials and iterative policy updates. More specifically,
 the robot is placed in several fire situations and over time learns an optimal
 policy which allows it to put out fires more effectively. Obviously, we cannot
 expect to train a robot repeatedly in the real world, particularly when fires
-are involved. This is precisely why the use of
-[Unity as a simulator](https://blogs.unity3d.com/2018/01/23/designing-safer-cities-through-simulations/)
+are involved. This is precisely why the use of Unity as a simulator
 serves as the perfect training grounds for learning such behaviors. While our
 discussion of reinforcement learning has centered around robots, there are
 strong parallels between robots and characters in a game. In fact, in many ways,
