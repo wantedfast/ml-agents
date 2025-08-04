@@ -55,9 +55,6 @@ Unity ML-Agents Toolkit can we continue to improve and grow. Please take a few
 minutes to
 [let us know about it](https://unitysoftware.co1.qualtrics.com/jfe/form/SV_55pQKCZ578t0kbc).
 
-For any other questions or feedback, connect directly with the ML-Agents team at
-ml-agents@unity3d.com.
-
 ## Privacy
 In order to improve the developer experience for Unity ML-Agents Toolkit, we have added in-editor analytics.
 Please refer to "Information that is passively collected by Unity" in the
