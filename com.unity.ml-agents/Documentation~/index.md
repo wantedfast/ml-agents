@@ -9,19 +9,27 @@ Note that the C# package does not contain the machine learning algorithms for tr
 
 ## Documentation structure
 
-| **Section**                                                         | **Description**                                                      |
-|---------------------------------------------------------------------|----------------------------------------------------------------------|
-| [ML-Agents Theory](ML-Agents-Overview.md)                           | Learn about core concepts of ML-Agents.                              |
-| [Get started](Get-Started.md)                                       | Learn how to install ML-Agents and explore samples.                  |
-| [Learning Environments and Agents](Learning-Environments-Agents.md) | Learn about Environments, Agents, and creating your own Environment. |
-| [Training](Training.md)                                             | Training workflow, config file, and monitoring tools.                |
-| [Python APIs](Python-APIs.md)                                       | Gym, PettingZoo, and low-level Python interfaces.                    |
-| Python Tutorial with Google Colab                                   | Interactive tutorials for using ML-Agents with Google Colab.         |
-| [Advanced Features](Advanced-Features.md)                           | Custom sensors, side channels, and specialized integrations.         |
-| [Cloud & Deployment](Cloud-Deployment.md)                           | Legacy cloud deployment guides (deprecated).                         |
-| [Reference & Support](Reference-Support.md)                         | FAQ, troubleshooting, and migration guides.                          |
-| [Background](Background.md)                                         | Machine Learning, Unity, and PyTorch fundamentals.                   |
+| **Section**                                                           | **Description**                                                                                       |
+|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| [ML-Agents Theory](ML-Agents-Overview.md)                             | Learn about core concepts of ML-Agents.                                                               |
+| [Get started](Get-Started.md)                                         | Learn how to install ML-Agents and explore samples.                                                   |
+| [Learning Environments and Agents](Learning-Environments-Agents.md)   | Learn about Environments, Agents, creating environments, and using executable builds.                |
+| [Training](Training.md)                                               | Training workflow, config file, monitoring tools, custom plugins, and profiling.                      |
+| [Python APIs](Python-APIs.md)                                         | Gym, PettingZoo, low-level interfaces, and trainer documentation.                                     |
+| [Python Tutorial with Google Colab](Tutorial-Colab.md)                | Interactive tutorials for using ML-Agents with Google Colab.                                          |
+| [Advanced Features](Advanced-Features.md)                             | Custom sensors, side channels, package settings, environment registry, and input system integrations. |
+| [Cloud & Deployment](Cloud-Deployment.md)                             | Legacy cloud deployment guides (deprecated).                                                          |
+| [Reference & Support](Reference-Support.md)                           | FAQ, troubleshooting, and migration guides.                                                           |
+| [Background](Background.md)                                           | Machine Learning, Unity, PyTorch fundamentals, virtual environments, and ELO rating systems.         |
 
+## Capabilities
+The package allows you to convert any Unity scene into a learning environment and train character behaviors using a variety of machine-learning algorithms. Additionally, it allows you to embed these trained behaviors back into Unity scenes to control your characters. More specifically, the package provides the following core functionalities:
+
+* Define Agents: entities, or characters, whose behavior will be learned. Agents are entities that generate observations (through sensors), take actions, and receive rewards from the environment.
+* Define Behaviors: entities that specify how an agent should act. Multiple agents can share the same Behavior and a scene may have multiple Behaviors.
+* Record demonstrations: To show the behaviors of an agent within the Editor. You can use demonstrations to help train a behavior for that agent.
+* Embed a trained behavior (aka: run your ML model) in the scene via the [Inference Engine](https://docs.unity3d.com/Packages/com.unity.ai.inference@latest). Embedded behaviors allow you to switch an Agent between learning and inference.
+* 
 ## Community and Feedback (review needed)
 
 The ML-Agents Toolkit is an open-source project, and we encourage and welcome

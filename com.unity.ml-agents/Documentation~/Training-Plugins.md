@@ -14,7 +14,7 @@ starting point.
 
 ### setup.py
 If you don't already have a `setup.py` file for your python code, you'll need to add one. `ml-agents-plugin-examples`
-has a [minimal example](../ml-agents-plugin-examples/setup.py) of this.
+has a [minimal example](../../ml-agents-plugin-examples/setup.py) of this.
 
 In the call to `setup()`, you'll need to add to the `entry_points` dictionary for each plugin interface that you
 implement. The form of this is `{entry point name}={plugin module}:{plugin function}`. For example, in
