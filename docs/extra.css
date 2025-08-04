@@ -1,3 +1,42 @@
+/* Deprecation notice styling */
+.deprecation-banner {
+    display: block;
+    background: #ff6b6b;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    margin: 0;
+}
+
+.deprecation-banner:hover {
+    background: #ff5252;
+    text-decoration: underline;
+    color: white;
+}
+
+/* Center heading */
+.center {
+    text-align: center;
+}
+
+/* Add banner automatically */
+body {
+    margin-top: 0;
+}
+
+body::before {
+    content: "";
+    display: block;
+    height: 0;
+}
+
 .wy-nav-top, .wy-side-nav-search {
     background: #439b47;
 }
