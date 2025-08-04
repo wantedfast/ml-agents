@@ -14,7 +14,7 @@ starting point.
 
 ### setup.py
 If you don't already have a `setup.py` file for your python code, you'll need to add one. `ml-agents-plugin-examples`
-has a [minimal example](../../ml-agents-plugin-examples/setup.py) of this.
+has a [minimal example](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents-plugin-examples/setup.py) of this.
 
 In the call to `setup()`, you'll need to add to the `entry_points` dictionary for each plugin interface that you
 implement. The form of this is `{entry point name}={plugin module}:{plugin function}`. For example, in
@@ -56,4 +56,4 @@ emission.
 
 #### Registration
 The `StatsWriter` registration function takes a `RunOptions` argument and returns a list of `StatsWriter`s. An
-example implementation is provided in [`mlagents_plugin_examples`](../ml-agents-plugin-examples/mlagents_plugin_examples/example_stats_writer.py)
+example implementation is provided in [`mlagents_plugin_examples`](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents-plugin-examples/mlagents_plugin_examples/example_stats_writer.py)

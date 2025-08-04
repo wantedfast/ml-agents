@@ -151,8 +151,8 @@ conda install "grpcio=1.48.2" -c conda-forge
 Note, you need to have the matching version of
 the Unity packages with the particular release of the python packages. You can find the release history [here](https://github.com/Unity-Technologies/ml-agents/releases)
 
-By installing the `mlagents` package, the dependencies listed in the
-[setup.py file](../../ml-agents/setup.py) are also installed. These include
+When you install the `mlagents` package, the dependencies listed in the
+[setup.py file](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents/setup.py) are also installed. These include
 [PyTorch](Background-PyTorch.md).
 
 If you intend to make modifications to `mlagents` or `mlagents_envs`, you should

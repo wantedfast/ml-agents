@@ -2,7 +2,7 @@
 
 [![docs badge](https://img.shields.io/badge/docs-reference-blue.svg)](https://github.com/Unity-Technologies/ml-agents/tree/release_22_docs/docs/)
 
-[![license badge](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE.md)
+[![license badge](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/Unity-Technologies/ml-agents/blob/release_22/LICENSE.md)
 
 ([latest release](https://github.com/Unity-Technologies/ml-agents/releases/tag/latest_release))
 ([all releases](https://github.com/Unity-Technologies/ml-agents/releases))
@@ -174,7 +174,7 @@ We have also published a series of blog posts that are relevant for ML-Agents:
 The ML-Agents Toolkit is an open-source project and we encourage and welcome
 contributions. If you wish to contribute, be sure to review our
 [contribution guidelines](CONTRIBUTING.md) and
-[code of conduct](CODE_OF_CONDUCT.md).
+[code of conduct](https://github.com/Unity-Technologies/ml-agents/blob/release_22/CODE_OF_CONDUCT.md).
 
 For problems with the installation and setup of the ML-Agents Toolkit, or
 discussions about how to best setup or train your agents, please create a new

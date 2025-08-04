@@ -6,7 +6,7 @@ powered by a dedicated Python package, `mlagents`. This package exposes a
 command `mlagents-learn` that is the single entry point for all training
 workflows (e.g. reinforcement leaning, imitation learning, curriculum learning).
 Its implementation can be found at
-[ml-agents/mlagents/trainers/learn.py](../../ml-agents/mlagents/trainers/learn.py).
+[ml-agents/mlagents/trainers/learn.py](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents/mlagents/trainers/learn.py).
 
 ## Training with mlagents-learn
 
@@ -130,7 +130,7 @@ ML-Agents Toolkit involves tuning the training hyperparameters and
 configuration. This guide contains some best practices for tuning the training
 process when the default parameters don't seem to be giving the level of
 performance you would like. We provide sample configuration files for our
-example environments in the [config/](../../config/) directory. The
+example environments in the [config/](https://github.com/Unity-Technologies/ml-agents/tree/release_22/config/) directory. The
 `config/ppo/3DBall.yaml` was used to train the 3D Balance Ball in the
 [Running an Example](Sample.md) guide. That configuration file uses the
 PPO trainer, but we also have configuration files for SAC and GAIL.

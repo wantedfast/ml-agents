@@ -118,7 +118,7 @@ for curriculum learning and environment parameter randomization for details.
 We recommend modifying the environment from the Agent's `OnEpisodeBegin()`
 function by leveraging `Academy.Instance.EnvironmentParameters`. See the
 WallJump example environment for a sample usage (specifically,
-[WallJumpAgent.cs](../../Project/Assets/ML-Agents/Examples/WallJump/Scripts/WallJumpAgent.cs)
+[WallJumpAgent.cs](https://github.com/Unity-Technologies/ml-agents/blob/release_22/Project/Assets/ML-Agents/Examples/WallJump/Scripts/WallJumpAgent.cs)
 ).
 
 ## Agent
@@ -158,5 +158,5 @@ environments. These statistics are aggregated and generated during the training
 process. To record statistics, see the `StatsRecorder` C# class.
 
 See the FoodCollector example environment for a sample usage (specifically,
-[FoodCollectorSettings.cs](../../Project/Assets/ML-Agents/Examples/FoodCollector/Scripts/FoodCollectorSettings.cs)
+[FoodCollectorSettings.cs](https://github.com/Unity-Technologies/ml-agents/blob/release_22/Project/Assets/ML-Agents/Examples/FoodCollector/Scripts/FoodCollectorSettings.cs)
 ).

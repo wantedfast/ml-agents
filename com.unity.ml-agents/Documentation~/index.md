@@ -35,7 +35,7 @@ The package allows you to convert any Unity scene into a learning environment an
 The ML-Agents Toolkit is an open-source project, and we encourage and welcome
 contributions. If you wish to contribute, be sure to review our
 [contribution guidelines](CONTRIBUTING.md) and
-[code of conduct](CODE_OF_CONDUCT.md).
+[code of conduct](https://github.com/Unity-Technologies/ml-agents/blob/release_22/CODE_OF_CONDUCT.md).
 
 For problems with the installation and setup of the ML-Agents Toolkit, or
 discussions about how to best setup or train your agents, please create a new
