@@ -50,21 +50,3 @@
   * [PyTorch](Background-PyTorch.md)
   * [Using Virtual Environment](Using-Virtual-Environment.md)
   * [ELO](ELO-Rating-System.md)
-
-
-  
-
-
-multienv vs multi instances
-
-
-
-
-
-
-
-
-
-
-
-
