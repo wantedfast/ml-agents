@@ -4,7 +4,7 @@ Our developer-facing C# classes have been documented to be compatible with
 Doxygen for auto-generating HTML documentation.
 
 To generate the API reference, download Doxygen and run the following command
-within the `docs/` directory:
+within the `Documentation~/` directory:
 
 ```sh
 doxygen dox-ml-agents.conf

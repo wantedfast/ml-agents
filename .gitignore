@@ -52,6 +52,7 @@
 
 # Generated doc folders
 /docs/html
+/com.unity.ml-agents/Documentation~/html
 
 # Mac hidden files
 *.DS_Store
