@@ -5,8 +5,8 @@ next step is to initiate a training run. Training in the ML-Agents Toolkit is
 powered by a dedicated Python package, `mlagents`. This package exposes a
 command `mlagents-learn` that is the single entry point for all training
 workflows (e.g. reinforcement leaning, imitation learning, curriculum learning).
-Its implementation can be found at
-[ml-agents/mlagents/trainers/learn.py](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents/mlagents/trainers/learn.py).
+Its implementation can be found
+[here](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents/mlagents/trainers/learn.py).
 
 ## Training with mlagents-learn
 
@@ -130,13 +130,13 @@ ML-Agents Toolkit involves tuning the training hyperparameters and
 configuration. This guide contains some best practices for tuning the training
 process when the default parameters don't seem to be giving the level of
 performance you would like. We provide sample configuration files for our
-example environments in the [config/](https://github.com/Unity-Technologies/ml-agents/tree/release_22/config/) directory. The
+example environments in the [config](https://github.com/Unity-Technologies/ml-agents/tree/release_22/config/) directory. The
 `config/ppo/3DBall.yaml` was used to train the 3D Balance Ball in the
 [Running an Example](Sample.md) guide. That configuration file uses the
 PPO trainer, but we also have configuration files for SAC and GAIL.
 
 Additionally, the set of configurations you provide depend on the training
-functionalities you use (see [ML-Agents Toolkit Overview](ML-Agents-Overview.md)
+functionalities you use (see [ML-Agents Theory](ML-Agents-Overview.md)
 for a description of all the training functionalities). Each functionality you
 add typically has its own training configurations. For instance:
 
@@ -481,8 +481,7 @@ Below is a list of the `sampler_type` values supported by the toolkit.
     `interval_2_max`], ...]
   - **parameters** - `intervals`
 
-The implementation of the samplers can be found in the
-[Samplers.cs file](https://github.com/Unity-Technologies/ml-agents/blob/main/com.unity.ml-agents/Runtime/Sampler.cs).
+The implementation of the samplers can be found [here](https://github.com/Unity-Technologies/ml-agents/blob/main/com.unity.ml-agents/Runtime/Sampler.cs).
 
 ##### Training with Environment Parameter Randomization
 
