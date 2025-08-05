@@ -1,17 +1,4 @@
-# Table of Contents
-
-* [mlagents\_envs.envs.unity\_gym\_env](#mlagents_envs.envs.unity_gym_env)
-  * [UnityGymException](#mlagents_envs.envs.unity_gym_env.UnityGymException)
-  * [UnityToGymWrapper](#mlagents_envs.envs.unity_gym_env.UnityToGymWrapper)
-    * [\_\_init\_\_](#mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.__init__)
-    * [reset](#mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.reset)
-    * [step](#mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.step)
-    * [render](#mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.render)
-    * [close](#mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.close)
-    * [seed](#mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.seed)
-  * [ActionFlattener](#mlagents_envs.envs.unity_gym_env.ActionFlattener)
-    * [\_\_init\_\_](#mlagents_envs.envs.unity_gym_env.ActionFlattener.__init__)
-    * [lookup\_action](#mlagents_envs.envs.unity_gym_env.ActionFlattener.lookup_action)
+# Python Gym API Documentation
 
 <a name="mlagents_envs.envs.unity_gym_env"></a>
 # mlagents\_envs.envs.unity\_gym\_env
