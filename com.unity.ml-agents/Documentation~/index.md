@@ -13,14 +13,14 @@ Note that the C# package does not contain the machine learning algorithms for tr
 |-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
 | [ML-Agents Theory](ML-Agents-Overview.md)                             | Learn about core concepts of ML-Agents.                                                               |
 | [Get started](Get-Started.md)                                         | Learn how to install ML-Agents and explore samples.                                                   |
-| [Learning Environments and Agents](Learning-Environments-Agents.md)   | Learn about Environments, Agents, creating environments, and using executable builds.                |
+| [Learning Environments and Agents](Learning-Environments-Agents.md)   | Learn about Environments, Agents, creating environments, and using executable builds.                 |
 | [Training](Training.md)                                               | Training workflow, config file, monitoring tools, custom plugins, and profiling.                      |
 | [Python APIs](Python-APIs.md)                                         | Gym, PettingZoo, low-level interfaces, and trainer documentation.                                     |
 | [Python Tutorial with Google Colab](Tutorial-Colab.md)                | Interactive tutorials for using ML-Agents with Google Colab.                                          |
 | [Advanced Features](Advanced-Features.md)                             | Custom sensors, side channels, package settings, environment registry, and input system integrations. |
 | [Cloud & Deployment](Cloud-Deployment.md)                             | Legacy cloud deployment guides (deprecated).                                                          |
 | [Reference & Support](Reference-Support.md)                           | FAQ, troubleshooting, migration guides, and C# API reference.                                         |
-| [Background](Background.md)                                           | Machine Learning, Unity, PyTorch fundamentals, virtual environments, and ELO rating systems.         |
+| [Background](Background.md)                                           | Machine Learning, Unity, PyTorch fundamentals, virtual environments, and ELO rating systems.          |
 
 ## Capabilities
 The package allows you to convert any Unity scene into a learning environment and train character behaviors using a variety of machine-learning algorithms. Additionally, it allows you to embed these trained behaviors back into Unity scenes to control your characters. More specifically, the package provides the following core functionalities:
