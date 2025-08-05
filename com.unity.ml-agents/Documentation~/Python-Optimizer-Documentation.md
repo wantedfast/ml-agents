@@ -1,12 +1,4 @@
-# Table of Contents
-
-* [mlagents.trainers.optimizer.torch\_optimizer](#mlagents.trainers.optimizer.torch_optimizer)
-  * [TorchOptimizer](#mlagents.trainers.optimizer.torch_optimizer.TorchOptimizer)
-    * [create\_reward\_signals](#mlagents.trainers.optimizer.torch_optimizer.TorchOptimizer.create_reward_signals)
-    * [get\_trajectory\_value\_estimates](#mlagents.trainers.optimizer.torch_optimizer.TorchOptimizer.get_trajectory_value_estimates)
-* [mlagents.trainers.optimizer.optimizer](#mlagents.trainers.optimizer.optimizer)
-  * [Optimizer](#mlagents.trainers.optimizer.optimizer.Optimizer)
-    * [update](#mlagents.trainers.optimizer.optimizer.Optimizer.update)
+# Python Optimizer
 
 <a name="mlagents.trainers.optimizer.torch_optimizer"></a>
 # mlagents.trainers.optimizer.torch\_optimizer
