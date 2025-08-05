@@ -1,4 +1,4 @@
-* [ML-Agents package](index.md)
+* [ML-Agents Package](index.md)
 * [ML-Agents Theory](ML-Agents-Overview.md)
 * [Get started](Get-Started.md)
   * [Installation](Installation.md)

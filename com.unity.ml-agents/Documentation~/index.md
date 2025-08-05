@@ -30,7 +30,7 @@ The package allows you to convert any Unity scene into a learning environment an
 * Record demonstrations: To show the behaviors of an agent within the Editor. You can use demonstrations to help train a behavior for that agent.
 * Embed a trained behavior (aka: run your ML model) in the scene via the [Inference Engine](https://docs.unity3d.com/Packages/com.unity.ai.inference@latest). Embedded behaviors allow you to switch an Agent between learning and inference.
 
-## Community and Feedback (review needed)
+## Community and Feedback
 
 The ML-Agents Toolkit is an open-source project, and we encourage and welcome
 contributions. If you wish to contribute, be sure to review our
