@@ -1,4 +1,4 @@
-Use the following topics to learn about training in ML-Agents. 
+Use the following topics to learn about training in ML-Agents.
 
 
 | **Section**                                                   | **Description**                        |

@@ -41,8 +41,8 @@ developer communities.
 - Wrap Unity learning environments as a [PettingZoo](Python-PettingZoo-API.md) environment
 
 ## Releases & Documentation
- 
-> **⚠️ Documentation Migration Notice**  
+
+> **⚠️ Documentation Migration Notice**
 > We have moved to [Unity Package documentation](https://docs.unity3d.com/Packages/com.unity.ml-agents@latest) as the **primary developer documentation** and have **deprecated** the maintenance of [web docs](https://unity-technologies.github.io/ml-agents/). Please use the Unity Package documentation for the most up-to-date information.
 
 The table below shows our latest release, including our `develop` branch which is
@@ -57,9 +57,9 @@ under active development and may be unstable. A few helpful guidelines:
 - The `com.unity.ml-agents` package is [verified](https://docs.unity3d.com/2020.1/Documentation/Manual/pack-safe.html)
   for Unity 2020.1 and later. Verified packages releases are numbered 1.0.x.
 
-|        **Version**         | **Release Date** | **Source** |                                                **Documentation**                                                 | **Download** | **Python Package** | **Unity Package** |
-|:--------------------------:|:------:|:-------------:|:----------------------------------------------------------------------------------------------------------------:|:------------:|:------------:|:------------:|
-| **Release 22** | **October 5, 2024** | **[source](https://github.com/Unity-Technologies/ml-agents/tree/release_22)** |                           **[docs](https://unity-technologies.github.io/ml-agents/)**                            | **[download](https://github.com/Unity-Technologies/ml-agents/archive/release_22.zip)** | **[1.1.0](https://pypi.org/project/mlagents/1.1.0/)** | **[3.0.0](https://docs.unity3d.com/Packages/com.unity.ml-agents@3.0/manual/index.html)** |
+| **Version** | **Release Date** | **Source** | **Documentation** | **Download** | **Python Package** | **Unity Package** |
+|:-----------:|:---------------:|:----------:|:-----------------:|:------------:|:------------------:|:-----------------:|
+| **Release 22** | **October 5, 2024** | **[source](https://github.com/Unity-Technologies/ml-agents/tree/release_22)** | **[docs](https://unity-technologies.github.io/ml-agents/)** | **[download](https://github.com/Unity-Technologies/ml-agents/archive/release_22.zip)** | **[1.1.0](https://pypi.org/project/mlagents/1.1.0/)** | **[3.0.0](https://docs.unity3d.com/Packages/com.unity.ml-agents@3.0/manual/index.html)** |
 | **develop (unstable)** | -- | [source](https://github.com/Unity-Technologies/ml-agents/tree/develop) | [docs](https://github.com/Unity-Technologies/ml-agents/tree/develop/com.unity.ml-agents/Documentation~/index.md) | [download](https://github.com/Unity-Technologies/ml-agents/archive/develop.zip) | -- | -- |
 
 

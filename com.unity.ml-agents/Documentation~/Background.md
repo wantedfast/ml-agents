@@ -1,6 +1,6 @@
 # Background
 
-This section provides foundational knowledge to help you understand the technologies and concepts that power the ML-Agents Toolkit. 
+This section provides foundational knowledge to help you understand the technologies and concepts that power the ML-Agents Toolkit.
 
 | **Topic**                                          | **Description**                                                               |
 |----------------------------------------------------|-------------------------------------------------------------------------------|

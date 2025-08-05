@@ -15,6 +15,6 @@ You can control the frequency of Academy stepping by calling `Academy.Instance.D
 
 ### Input System Integration
 
-For `InputActuatorComponent` (see [Input System Integration](InputSystem-Integration.md) for more information): 
+For `InputActuatorComponent` (see [Input System Integration](InputSystem-Integration.md) for more information):
 - Limited implementation of `InputControls`
 - No way to customize the action space of the `InputActuatorComponent`
