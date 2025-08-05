@@ -1,29 +1,4 @@
-# Table of Contents
-
-* [mlagents\_envs.envs.pettingzoo\_env\_factory](#mlagents_envs.envs.pettingzoo_env_factory)
-  * [PettingZooEnvFactory](#mlagents_envs.envs.pettingzoo_env_factory.PettingZooEnvFactory)
-    * [env](#mlagents_envs.envs.pettingzoo_env_factory.PettingZooEnvFactory.env)
-* [mlagents\_envs.envs.unity\_aec\_env](#mlagents_envs.envs.unity_aec_env)
-  * [UnityAECEnv](#mlagents_envs.envs.unity_aec_env.UnityAECEnv)
-    * [\_\_init\_\_](#mlagents_envs.envs.unity_aec_env.UnityAECEnv.__init__)
-    * [step](#mlagents_envs.envs.unity_aec_env.UnityAECEnv.step)
-    * [observe](#mlagents_envs.envs.unity_aec_env.UnityAECEnv.observe)
-    * [last](#mlagents_envs.envs.unity_aec_env.UnityAECEnv.last)
-* [mlagents\_envs.envs.unity\_parallel\_env](#mlagents_envs.envs.unity_parallel_env)
-  * [UnityParallelEnv](#mlagents_envs.envs.unity_parallel_env.UnityParallelEnv)
-    * [\_\_init\_\_](#mlagents_envs.envs.unity_parallel_env.UnityParallelEnv.__init__)
-    * [reset](#mlagents_envs.envs.unity_parallel_env.UnityParallelEnv.reset)
-* [mlagents\_envs.envs.unity\_pettingzoo\_base\_env](#mlagents_envs.envs.unity_pettingzoo_base_env)
-  * [UnityPettingzooBaseEnv](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv)
-    * [observation\_spaces](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.observation_spaces)
-    * [observation\_space](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.observation_space)
-    * [action\_spaces](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.action_spaces)
-    * [action\_space](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.action_space)
-    * [side\_channel](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.side_channel)
-    * [reset](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.reset)
-    * [seed](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.seed)
-    * [render](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.render)
-    * [close](#mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.close)
+# Python PettingZoo API Documentation
 
 <a name="mlagents_envs.envs.pettingzoo_env_factory"></a>
 # mlagents\_envs.envs.pettingzoo\_env\_factory
