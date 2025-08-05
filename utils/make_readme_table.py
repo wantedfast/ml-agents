@@ -107,7 +107,6 @@ class ReleaseInfo(NamedTuple):
             StrictVersion(self.csharp_version).version
             return "https://docs.unity3d.com/Packages/com.unity.ml-agents@latest"
         except ValueError:
-            # Fallback to deprecated web docs with warning
             return "https://unity-technologies.github.io/ml-agents/ (DEPRECATED)"
 
     @property
