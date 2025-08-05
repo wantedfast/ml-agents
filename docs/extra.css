@@ -1,4 +1,4 @@
-/* Deprecation notice styling */
+/* Deprecation banner styling */
 .deprecation-banner {
     display: block;
     background: #ff6b6b;
@@ -21,22 +21,7 @@
     color: white;
 }
 
-/* Center heading */
-.center {
-    text-align: center;
-}
-
-/* Add banner automatically */
-body {
-    margin-top: 0;
-}
-
-body::before {
-    content: "";
-    display: block;
-    height: 0;
-}
-
+/* Original ML-Agents styling */
 .wy-nav-top, .wy-side-nav-search {
     background: #439b47;
 }
