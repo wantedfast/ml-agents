@@ -107,7 +107,7 @@ class ReleaseInfo(NamedTuple):
             StrictVersion(self.csharp_version).version
             return "https://docs.unity3d.com/Packages/com.unity.ml-agents@latest"
         except ValueError:
-            return "https://unity-technologies.github.io/ml-agents/ (DEPRECATED)"
+            return "https://unity-technologies.github.io/ml-agents/  (DEPRECATED)"
 
     @property
     def package_link(self):
