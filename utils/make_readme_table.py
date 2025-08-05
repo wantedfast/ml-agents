@@ -96,10 +96,13 @@ class ReleaseInfo(NamedTuple):
         if self.is_verified:
             return "https://github.com/Unity-Technologies/ml-agents/blob/release_2_verified_docs/docs/Readme.md"
 
+        if self.csharp_version == 'develop':
+            return "https://github.com/Unity-Technologies/ml-agents/tree/develop/com.unity.ml-agents/Documentation~/index.md"
+
         # Prioritize Unity Package documentation over web docs
         try:
             v = StrictVersion(self.csharp_version).version
-            return f"https://docs.unity3d.com/Packages/com.unity.ml-agents@{v[0]}.{v[1]}/manual/index.html"
+            return f"https://docs.unity3d.com/Packages/com.unity.ml-agents@latest"
         except ValueError:
             # Fallback to deprecated web docs with warning
             return "https://unity-technologies.github.io/ml-agents/ (DEPRECATED)"
