@@ -66,7 +66,6 @@ Please refer to "Information that is passively collected by Unity" in the
 * [Unity Discussions](https://discussions.unity.com/tag/ml-agents)
 * [ML-Agents tutorials by CodeMonkeyUnity](https://www.youtube.com/playlist?list=PLzDRvYVwl53vehwiN_odYJkPBzcqFw110)
 * [Introduction to ML-Agents by Huggingface](https://huggingface.co/learn/deep-rl-course/en/unit5/introduction)
-* [Teach Huggy the Dog to fetch the stick](https://huggingface.co/learn/deep-rl-course/en/unitbonus1/how-huggy-works)
 * [Community created ML-Agents projects](https://discussions.unity.com/t/post-your-ml-agents-project/816756)
 * [ML-Agents models on Huggingface](https://huggingface.co/models?library=ml-agents)
 * [Blog posts](Blog-posts.md)
