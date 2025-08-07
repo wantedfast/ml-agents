@@ -24,6 +24,7 @@
   * [Python Low-Level API](Python-LLAPI.md)
   * [Python Low-Level API Documentation](Python-LLAPI-Documentation.md)
   * [On/Off Policy Trainer Documentation](Python-On-Off-Policy-Trainer-Documentation.md)
+  * [Python Optimizer Documentation](Python-Optimizer-Documentation.md)
 * [Python Tutorial with Google Colab](Tutorial-Colab.md)
   * [Using a UnityEnvironment](https://colab.research.google.com/github/Unity-Technologies/ml-agents/blob/release_22_docs/colab/Colab_UnityEnvironment_1_Run.ipynb)
   * [Q-Learning with a UnityEnvironment](https://colab.research.google.com/github/Unity-Technologies/ml-agents/blob/release_22_docs/colab/Colab_UnityEnvironment_2_Train.ipynb)
