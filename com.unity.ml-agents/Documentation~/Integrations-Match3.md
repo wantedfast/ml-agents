@@ -23,7 +23,7 @@ The `AbstractBoard` is the bridge between ML-Agents and your game. It allows ML-
 
 These are handled by implementing the abstract methods of `AbstractBoard`.
 
-##### `public abstract BoardSize GetMaxBoardSize()`
+#### `public abstract BoardSize GetMaxBoardSize()`
 Returns the largest `BoardSize` that the game can use. This is used to determine the sizes of observations and sensors,
 so don't make it larger than necessary.
 
