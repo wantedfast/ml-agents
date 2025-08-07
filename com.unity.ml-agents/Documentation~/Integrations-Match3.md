@@ -51,7 +51,7 @@ Check whether the particular `Move` is valid for the game.
 The actual results will depend on the rules of the game, but we provide the `SimpleIsMoveValid()` method
 that handles basic match3 rules with no special or immovable pieces.
 
-##### `public abstract bool MakeMove(Move m)`
+#### `public abstract bool MakeMove(Move m)`
 Instruct the game to make the given move. Returns true if the move was made.
 Note that during training, a move that was marked as invalid may occasionally still be
 requested. If this happens, it is safe to do nothing and request another move.
