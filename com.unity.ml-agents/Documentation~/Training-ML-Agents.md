@@ -460,7 +460,7 @@ environment_parameters:
 | `sampler_type`               | A string identifier for the type of sampler to use for this `Environment Parameter`.                                                                                                                                                                                                    |
 | `sampler_parameters` | The parameters for a given `sampler_type`. Samplers of different types can have different `sampler_parameters` |
 
-##### Supported Sampler Types
+**Supported Sampler Types**
 
 Below is a list of the `sampler_type` values supported by the toolkit.
 
