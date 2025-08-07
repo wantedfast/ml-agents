@@ -483,7 +483,7 @@ Below is a list of the `sampler_type` values supported by the toolkit.
 
 The implementation of the samplers can be found [here](https://github.com/Unity-Technologies/ml-agents/blob/main/com.unity.ml-agents/Runtime/Sampler.cs).
 
-##### Training with Environment Parameter Randomization
+**Training with Environment Parameter Randomization**
 
 After the sampler configuration is defined, we proceed by launching `mlagents-learn`
 and specify trainer configuration with  parameter randomization enabled. For example,
