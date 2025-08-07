@@ -9,8 +9,7 @@ Service for training ML-Agents environments.
 ## Pre-configured AMI
 
 We've prepared a pre-configured AMI for you with the ID: `ami-016ff5559334f8619`
-in the `us-east-1` region. It was created as a modification of
-[Deep Learning AMI (Ubuntu)](https://aws.amazon.com/marketplace/pp/B077GCH38C).
+in the `us-east-1` region. It was created as a modification of Deep Learning AMI (Ubuntu).
 The AMI has been tested with p2.xlarge instance. Furthermore, if you want to
 train without headless mode, you need to enable X Server.
 
@@ -52,9 +51,7 @@ $ export DISPLAY=:0
 
 You could also choose to configure your own instance. To begin with, you will
 need an EC2 instance which contains the latest Nvidia drivers, CUDA9, and cuDNN.
-In this tutorial we used the
-[Deep Learning AMI (Ubuntu)](https://aws.amazon.com/marketplace/pp/B077GCH38C)
-listed under AWS Marketplace with a p2.xlarge instance.
+In this tutorial we used the Deep Learning AMI (Ubuntu) listed under AWS Marketplace with a p2.xlarge instance.
 
 ### Installing the ML-Agents Toolkit on the instance
 
