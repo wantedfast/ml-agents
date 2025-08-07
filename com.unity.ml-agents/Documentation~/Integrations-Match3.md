@@ -27,7 +27,7 @@ These are handled by implementing the abstract methods of `AbstractBoard`.
 Returns the largest `BoardSize` that the game can use. This is used to determine the sizes of observations and sensors,
 so don't make it larger than necessary.
 
-##### `public virtual BoardSize GetCurrentBoardSize()`
+#### `public virtual BoardSize GetCurrentBoardSize()`
 Returns the current size of the board. Each field on this BoardSize must be less than or equal to the corresponding
 field returned by `GetMaxBoardSize()`. This method is optional; if your always use the same size board, you don't
 need to override it.
