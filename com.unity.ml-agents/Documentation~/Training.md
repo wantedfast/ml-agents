@@ -1,3 +1,5 @@
+# Training
+
 Use the following topics to learn about training in ML-Agents.
 
 
