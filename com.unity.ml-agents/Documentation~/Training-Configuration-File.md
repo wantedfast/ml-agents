@@ -199,7 +199,9 @@ iterations of training to compensate for the sparsity of reward.
 As an example, in a 2v1 scenario, if we want the swap to occur x=4 times during
 team-change=200000 steps, the swap_steps for the team of one agent is:
 
-swap_steps = (1 / 2) \* (200000 / 4) = 25000 The swap_steps for the team of two
+swap_steps = (1 / 2) \* (200000 / 4) = 25000 
+
+The swap_steps for the team of two
 agents is:
 
 swap_steps = (2 / 1) \* (200000 / 4) = 100000 
