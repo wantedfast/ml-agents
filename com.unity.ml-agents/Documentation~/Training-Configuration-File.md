@@ -202,7 +202,9 @@ team-change=200000 steps, the swap_steps for the team of one agent is:
 swap_steps = (1 / 2) \* (200000 / 4) = 25000 The swap_steps for the team of two
 agents is:
 
-swap_steps = (2 / 1) \* (200000 / 4) = 100000 Note, with equal team sizes, the
+swap_steps = (2 / 1) \* (200000 / 4) = 100000 
+
+Note, with equal team sizes, the
 first term is equal to 1 and swap_steps can be calculated by just dividing the
 total steps by the desired number of swaps.
 
