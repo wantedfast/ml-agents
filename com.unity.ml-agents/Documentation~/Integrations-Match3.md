@@ -36,7 +36,7 @@ If the current board size is smaller than the maximum board size, `GetCellType()
 called for cells outside the current board size, and `IsValidMove` won't be called for moves that would go outside of
 the current board size.
 
-##### `public abstract int GetCellType(int row, int col)`
+#### `public abstract int GetCellType(int row, int col)`
 Returns the "color" of piece at the given row and column.
 This should be between 0 and BoardSize.NumCellTypes-1 (inclusive).
 The actual order of the values doesn't matter.
