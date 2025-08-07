@@ -94,7 +94,7 @@ project by:
 If you are going to follow the examples from our documentation, you can open the
 `Project` folder in Unity and start tinkering immediately.
 
-### Install `mlagents-envs` and `mlagents`
+### Install Python package
 
 Installing the `mlagents` Python package involves installing other Python
 packages that `mlagents` depends on. So you may run into installation issues if
@@ -104,7 +104,33 @@ Virtual Environments. Virtual Environments provide a mechanism for isolating the
 dependencies for each project and are supported on Mac / Windows / Linux. We
 offer a dedicated [guide on Virtual Environments](Using-Virtual-Environment.md).
 
-#### (Windows) Installing PyTorch
+#### Installing `mlagents` from PyPi
+
+You can install the ML-Agents Python package directly from PyPi. This is the recommended approach if you installed the C# package via the Package Manager registry.
+
+**Important:** Ensure you install a Python package version that matches your Unity package version. Check the [release history](https://github.com/Unity-Technologies/ml-agents/releases) to find compatible versions.
+
+To install, activate your virtual environment and run the following command:
+
+```shell
+python -m pip install mlagents==1.1.0
+```
+
+which will install the latest version of ML-Agents Python packages and associated dependencies available on PyPi.
+If building the wheel for `grpcio` fails, run the following command before installing `mlagents` with pip:
+
+```shell
+conda install "grpcio=1.48.2" -c conda-forge
+```
+
+When you install the Python package, the dependencies listed in the
+[setup.py file](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents/setup.py) are also installed. These include
+[PyTorch](Background-PyTorch.md).
+
+
+#### Advanced: Local Installation for Development
+
+##### (Windows) Installing PyTorch
 
 On Windows, you'll have to install the PyTorch package separately prior to
 installing ML-Agents in order to make sure the cuda-enabled version is used,
@@ -119,7 +145,7 @@ Note that on Windows, you may also need Microsoft's
 Visual C++ Redistributable if you don't have it already. See the [PyTorch installation guide](https://pytorch.org/get-started/locally/)
 for more installation options and versions.
 
-#### Installing `mlagents`
+##### All Platforms
 
 To install the `mlagents` Python package, activate your virtual environment and
 run from the command line:
@@ -135,29 +161,9 @@ repository. If you installed this correctly, you should be able to run
 `mlagents-learn --help`, after which you will see the command
 line parameters you can use with `mlagents-learn`.
 
-You can also install the python package from PyPi by executing the following command:
 
-```shell
-python -m pip install mlagents==1.1.0
-```
 
-which will install the latest version of ML-Agents and associated dependencies available on PyPi.
-If building the wheel for `grpcio` fails, run the following command before installing `mlagents` with pip:
-
-```shell
-conda install "grpcio=1.48.2" -c conda-forge
-```
-
-Note, you need to have the matching version of
-the Unity packages with the particular release of the python packages. You can find the release history [here](https://github.com/Unity-Technologies/ml-agents/releases)
-
-When you install the `mlagents` package, the dependencies listed in the
-[setup.py file](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents/setup.py) are also installed. These include
-[PyTorch](Background-PyTorch.md).
-
-If you intend to make modifications to `mlagents` or `mlagents_envs`, you should
-install the packages from the cloned repository rather than from PyPi. To do
-this, you will need to install `mlagents` and `mlagents_envs` separately. From
+If you intend to make modifications to `mlagents` or `mlagents_envs`, from
 the repository's root directory, run:
 
 ```sh
