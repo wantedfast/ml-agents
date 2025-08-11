@@ -19,7 +19,7 @@ Note that the C# package does not contain the machine learning algorithms for tr
 | [Python Tutorial with Google Colab](Tutorial-Colab.md)                | Interactive tutorials for using ML-Agents with Google Colab.                                          |
 | [Advanced Features](Advanced-Features.md)                             | Custom sensors, side channels, package settings, environment registry, and input system integrations. |
 | [Cloud & Deployment](Cloud-Deployment.md)                             | Legacy cloud deployment guides (deprecated).                                                          |
-| [Reference & Support](Reference-Support.md)                           | FAQ, troubleshooting, migration guides, and C# API reference.                                         |
+| [Reference & Support](Reference-Support.md)                           | FAQ, troubleshooting, and migration guides.                                                           |
 | [Background](Background.md)                                           | Machine Learning, Unity, PyTorch fundamentals, virtual environments, and ELO rating systems.          |
 
 ## Capabilities
