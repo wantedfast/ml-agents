@@ -11,12 +11,11 @@ and this project adheres to
 #### com.unity.ml-agents (C#)
 - Upgraded to Inference Engine 2.2.1 (#6212)
 - The minimum supported Unity version was updated to 6000.0. (#6207)
-- Merge the extension package com.unity.ml-agents.extensions to the main package com.unity.ml-agents. (#6227)
-- Move to Unity Package documentation as the primary developer documentation. (#6232)
+- Merged the extension package com.unity.ml-agents.extensions to the main package com.unity.ml-agents. (#6227)
 
 ### Minor Changes
 #### com.unity.ml-agents (C#)
-- Remove broken sample from the package (#6230)
+- Removed broken sample from the package (#6230)
 
 #### ml-agents / ml-agents-envs
 - Bumped grpcio version to >=1.11.0,<=1.53.2 (#6208)
@@ -29,6 +28,7 @@ and this project adheres to
 - Upgraded to Sentis 1.3.0-pre.3 (#6070)
 - Upgraded to Sentis 1.3.0-exp.2 (#6013)
 - The minimum supported Unity version was updated to 2023.2. (#6071)
+- Moved to Unity Package documentation as the primary developer documentation. (#6232)
 
 #### ml-agents / ml-agents-envs
 - Upgraded to PyTorch 2.1.1. (#6013)
