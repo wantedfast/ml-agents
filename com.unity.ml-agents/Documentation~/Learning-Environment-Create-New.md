@@ -94,7 +94,7 @@ Then, edit the new `RollerAgent` script:
    using Unity.MLAgents.Actuators;
    ```
 then change the base class from `MonoBehaviour` to `Agent`.
-1. Delete `Update()` since we are not using it, but keep `Start()`.
+3. Delete `Update()` since we are not using it, but keep `Start()`.
 
 So far, these are the basic steps that you would use to add ML-Agents to any Unity project. Next, we will add the logic that will let our Agent learn to roll to the cube using reinforcement learning. More specifically, we will need to extend three methods from the `Agent` base class:
 

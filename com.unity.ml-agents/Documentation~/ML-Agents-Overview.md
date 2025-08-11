@@ -245,8 +245,7 @@ Unlike other platforms, where the agent’s observation might be limited to a si
 When visual observations are utilized, the ML-Agents Toolkit leverages convolutional neural networks (CNN) to learn from the input images. We offer three network architectures:
 
 - a simple encoder which consists of two convolutional layers
-- the implementation proposed by
-[Mnih et al.](https://www.nature.com/articles/nature14236), consisting of three convolutional layers,
+- the implementation proposed by [Mnih et al.](https://www.nature.com/articles/nature14236), consisting of three convolutional layers,
 - the [IMPALA Resnet](https://arxiv.org/abs/1802.01561) consisting of three stacked layers, each with two residual blocks, making a much larger network than the other two.
 
 The choice of the architecture depends on the visual complexity of the scene and the available computational resources.

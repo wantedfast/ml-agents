@@ -21,9 +21,3 @@ By clicking the gear on the top right you'll see all available settings listed i
 This allows you to create different settings for different scenarios. For example, you can create two separate settings for training and inference, and specify which one you want to use according to what you're currently running.
 
 ![Multiple Settings](images/multiple-settings.png)
-
-
-
-
-
-

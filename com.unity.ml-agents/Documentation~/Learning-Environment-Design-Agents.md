@@ -8,23 +8,16 @@ The `Policy` class abstracts out the decision making logic from the Agent itself
 
 When you create an Agent, you should usually extend the base Agent class. This includes implementing the following methods:
 
-- `Agent.OnEpisodeBegin()` — Called at the beginning of an Agent's episode,
-including at the beginning of the simulation.
-- `Agent.CollectObservations(VectorSensor sensor)` — Called every step that the Agent
-requests a decision. This is one possible way for collecting the Agent's observations of the environment; see [Generating Observations](#generating-observations) below for more options.
-- `Agent.OnActionReceived()` — Called every time the Agent receives an action to
-take. Receives the action chosen by the Agent. It is also common to assign a reward in this method.
-- `Agent.Heuristic()` - When the `Behavior Type` is set to `Heuristic Only` in
-the Behavior Parameters of the Agent, the Agent will use the `Heuristic()` method to generate the actions of the Agent. As such, the `Heuristic()` method writes to the array of floats provided to the Heuristic method as argument. __Note__: Do not create a new float array of action in the `Heuristic()` method, as this will prevent writing floats to the original action array.
+- `Agent.OnEpisodeBegin()` — Called at the beginning of an Agent's episode, including at the beginning of the simulation.
+- `Agent.CollectObservations(VectorSensor sensor)` — Called every step that the Agent requests a decision. This is one possible way for collecting the Agent's observations of the environment; see [Generating Observations](#generating-observations) below for more options.
+- `Agent.OnActionReceived()` — Called every time the Agent receives an action to take. Receives the action chosen by the Agent. It is also common to assign a reward in this method.
+- `Agent.Heuristic()` - When the `Behavior Type` is set to `Heuristic Only` in the Behavior Parameters of the Agent, the Agent will use the `Heuristic()` method to generate the actions of the Agent. As such, the `Heuristic()` method writes to the array of floats provided to the Heuristic method as argument. __Note__: Do not create a new float array of action in the `Heuristic()` method, as this will prevent writing floats to the original action array.
 
 As a concrete example, here is how the Ball3DAgent class implements these methods:
 
-- `Agent.OnEpisodeBegin()` — Resets the agent cube and ball to their starting
-positions. The function randomizes the reset values so that the training generalizes to more than a specific starting position and agent cube orientation.
-- `Agent.CollectObservations(VectorSensor sensor)` — Adds information about the
-orientation of the agent cube, the ball velocity, and the relative position between the ball and the cube. Since the  `CollectObservations()` method calls `VectorSensor.AddObservation()` such that vector size adds up to 8, the Behavior Parameters of the Agent are set with vector observation space with a state size of 8.
-- `Agent.OnActionReceived()` — The action results
-in a small change in the agent cube's rotation at each step. In this example, an Agent receives a small positive reward for each step it keeps the ball on the agent cube's head and a larger, negative reward for dropping the ball. An Agent's episode is also ended when it drops the ball so that it will reset with a new ball for the next simulation step.
+- `Agent.OnEpisodeBegin()` — Resets the agent cube and ball to their starting positions. The function randomizes the reset values so that the training generalizes to more than a specific starting position and agent cube orientation.
+- `Agent.CollectObservations(VectorSensor sensor)` — Adds information about the orientation of the agent cube, the ball velocity, and the relative position between the ball and the cube. Since the  `CollectObservations()` method calls `VectorSensor.AddObservation()` such that vector size adds up to 8, the Behavior Parameters of the Agent are set with vector observation space with a state size of 8.
+- `Agent.OnActionReceived()` — The action results in a small change in the agent cube's rotation at each step. In this example, an Agent receives a small positive reward for each step it keeps the ball on the agent cube's head and a larger, negative reward for dropping the ball. An Agent's episode is also ended when it drops the ball so that it will reset with a new ball for the next simulation step.
 - `Agent.Heuristic()` - Converts the keyboard inputs into actions.
 
 ## Decisions
@@ -36,16 +29,12 @@ In order for an agent to learn, the observations should include all the informat
 
 ### Generating Observations
 ML-Agents provides multiple ways for an Agent to make observations:
-  1. Overriding the `Agent.CollectObservations()` method and passing the
-observations to the provided `VectorSensor`.
-  1. Adding the `[Observable]` attribute to fields and properties on the Agent.
-  1. Implementing the `ISensor` interface, using a `SensorComponent` attached to
-the Agent to create the `ISensor`.
+  1. Overriding the `Agent.CollectObservations()` method and passing the observations to the provided `VectorSensor`.
+  2. Adding the `[Observable]` attribute to fields and properties on the Agent.
+  3. Implementing the `ISensor` interface, using a `SensorComponent` attached to the Agent to create the `ISensor`.
 
 #### Agent.CollectObservations()
-Agent.CollectObservations() is best used for aspects of the environment which are numerical and non-visual. The Policy class calls the
-`CollectObservations(VectorSensor sensor)` method of each Agent. Your
-implementation of this function must call `VectorSensor.AddObservation` to add vector observations.
+Agent.CollectObservations() is best used for aspects of the environment which are numerical and non-visual. The Policy class calls the `CollectObservations(VectorSensor sensor)` method of each Agent. Your implementation of this function must call `VectorSensor.AddObservation` to add vector observations.
 
 The `VectorSensor.AddObservation` method provides a number of overloads for adding common types of data to your observation vector. You can add Integers and booleans directly to the observation vector, as well as some common Unity data types such as `Vector2`, `Vector3`, and `Quaternion`.
 
@@ -90,8 +79,7 @@ public class Ball3DHardAgent : Agent {
     }
 }
 ```
-`ObservableAttribute` currently supports most basic types (e.g. floats, ints,
-bools), as well as `Vector2`, `Vector3`, `Vector4`, `Quaternion`, and enums.
+`ObservableAttribute` currently supports most basic types (e.g. floats, ints, bools), as well as `Vector2`, `Vector3`, `Vector4`, `Quaternion`, and enums.
 
 The behavior of `ObservableAttribute`s are controlled by the "Observable Attribute Handling" in the Agent's `Behavior Parameters`. The possible values for this are:
  * **Ignore** (default) - All ObservableAttributes on the Agent will be ignored. If there are no ObservableAttributes on the Agent, this will result in the fastest initialization time.
@@ -102,9 +90,7 @@ The behavior of `ObservableAttribute`s are controlled by the "Observable Attribu
 
 Internally, ObservableAttribute uses reflection to determine which members of the Agent have ObservableAttributes, and also uses reflection to access the fields or invoke the properties at runtime. This may be slower than using CollectObservations or an ISensor, although this might not be enough to noticeably affect performance.
 
-**NOTE**: you do not need to adjust the Space Size in the Agent's
-`Behavior Parameters` when you add `[Observable]` fields or properties to an
-Agent, since their size can be computed before they are used.
+**NOTE**: you do not need to adjust the Space Size in the Agent's `Behavior Parameters` when you add `[Observable]` fields or properties to an Agent, since their size can be computed before they are used.
 
 #### ISensor interface and SensorComponents
 The `ISensor` interface is generally intended for advanced users. The `Write()` method is used to actually generate the observation, but some other methods such as returning the shape of the observations must also be implemented.
@@ -616,8 +602,7 @@ Multi Agent Groups should be used with the MA-POCA trainer, which is explicitly 
 
 See the [Cooperative Push Block](Learning-Environment-Examples.md#cooperative-push-block) environment for an example of how to use Multi Agent Groups, and the [Dungeon Escape](Learning-Environment-Examples.md#dungeon-escape) environment for an example of how the Multi Agent Group can be used with agents that are removed from the scene mid-episode.
 
-**NOTE**: Groups differ from Teams (for competitive settings) in the following way - Agents
-working together should be added to the same Group, while agents playing against each other should be given different Team Ids. If in the Scene there is one playing field and two teams, there should be two Groups, one for each team, and each team should be assigned a different Team Id. If this playing field is duplicated many times in the Scene (e.g. for training speedup), there should be two Groups _per playing field_, and two unique Team Ids _for the entire Scene_. In environments with both Groups and Team Ids configured, MA-POCA and self-play can be used together for training. In the diagram below, there are two agents on each team, and two playing fields where teams are pitted against each other. All the blue agents should share a Team Id (and the orange ones a different ID), and there should be four group managers, one per pair of agents.
+**NOTE**: Groups differ from Teams (for competitive settings) in the following way - Agents working together should be added to the same Group, while agents playing against each other should be given different Team Ids. If in the Scene there is one playing field and two teams, there should be two Groups, one for each team, and each team should be assigned a different Team Id. If this playing field is duplicated many times in the Scene (e.g. for training speedup), there should be two Groups _per playing field_, and two unique Team Ids _for the entire Scene_. In environments with both Groups and Team Ids configured, MA-POCA and self-play can be used together for training. In the diagram below, there are two agents on each team, and two playing fields where teams are pitted against each other. All the blue agents should share a Team Id (and the orange ones a different ID), and there should be four group managers, one per pair of agents.
 
 <p align="center"> <img src="images/groupmanager_teamid.png" alt="Group Manager vs Team Id" width="650" border="10" /> </p>
 
