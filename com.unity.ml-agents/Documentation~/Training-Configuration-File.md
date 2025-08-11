@@ -2,10 +2,7 @@
 
 ## Common Trainer Configurations
 
-One of the first decisions you need to make regarding your training run is which
-trainer to use: PPO, SAC, or POCA. There are some training configurations that are
-common to both trainers (which we review now) and others that depend on the
-choice of the trainer (which we review on subsequent sections).
+One of the first decisions you need to make regarding your training run is which trainer to use: PPO, SAC, or POCA. There are some training configurations that are common to both trainers (which we review now) and others that depend on the choice of the trainer (which we review on subsequent sections).
 
 | **Setting**              | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | :----------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -31,10 +28,7 @@ choice of the trainer (which we review on subsequent sections).
 
 ## Trainer-specific Configurations
 
-Depending on your choice of a trainer, there are additional trainer-specific
-configurations. We present them below in two separate tables, but keep in mind
-that you only need to include the configurations for the trainer selected (i.e.
-the `trainer` setting above).
+Depending on your choice of a trainer, there are additional trainer-specific configurations. We present them below in two separate tables, but keep in mind that you only need to include the configurations for the trainer selected (i.e. the `trainer` setting above).
 
 ### PPO-specific Configurations
 
@@ -62,24 +56,15 @@ the `trainer` setting above).
 ### MA-POCA-specific Configurations
 MA-POCA uses the same configurations as PPO, and there are no additional POCA-specific parameters.
 
-**NOTE**: Reward signals other than Extrinsic Rewards have not been extensively tested with MA-POCA,
-though they can still be added and used for training on a your-mileage-may-vary basis.
+**NOTE**: Reward signals other than Extrinsic Rewards have not been extensively tested with MA-POCA, though they can still be added and used for training on a your-mileage-may-vary basis.
 
 ## Reward Signals
 
-The `reward_signals` section enables the specification of settings for both
-extrinsic (i.e. environment-based) and intrinsic reward signals (e.g. curiosity
-and GAIL). Each reward signal should define at least two parameters, `strength`
-and `gamma`, in addition to any class-specific hyperparameters. Note that to
-remove a reward signal, you should delete its entry entirely from
-`reward_signals`. At least one reward signal should be left defined at all
-times. Provide the following configurations to design the reward signal for your
-training run.
+The `reward_signals` section enables the specification of settings for both extrinsic (i.e. environment-based) and intrinsic reward signals (e.g. curiosity and GAIL). Each reward signal should define at least two parameters, `strength` and `gamma`, in addition to any class-specific hyperparameters. Note that to remove a reward signal, you should delete its entry entirely from `reward_signals`. At least one reward signal should be left defined at all times. Provide the following configurations to design the reward signal for your training run.
 
 ### Extrinsic Rewards
 
-Enable these settings to ensure that your training run incorporates your
-environment-based reward signal:
+Enable these settings to ensure that your training run incorporates your environment-based reward signal:
 
 | **Setting**             | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -99,8 +84,7 @@ To enable curiosity, provide these settings:
 
 ### GAIL Intrinsic Reward
 
-To enable GAIL (assuming you have recorded demonstrations), provide these
-settings:
+To enable GAIL (assuming you have recorded demonstrations), provide these settings:
 
 | **Setting**             | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -114,8 +98,7 @@ settings:
 
 ### RND Intrinsic Reward
 
-Random Network Distillation (RND) is only available for the PyTorch trainers.
-To enable RND, provide these settings:
+Random Network Distillation (RND) is only available for the PyTorch trainers. To enable RND, provide these settings:
 
 | **Setting**                  | **Description**                                                                                                                                                                                                                                                                                                                       |
 | :--------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -127,9 +110,7 @@ To enable RND, provide these settings:
 
 ## Behavioral Cloning
 
-To enable Behavioral Cloning as a pre-training option (assuming you have
-recorded demonstrations), provide the following configurations under the
-`behavioral_cloning` section:
+To enable Behavioral Cloning as a pre-training option (assuming you have recorded demonstrations), provide the following configurations under the `behavioral_cloning` section:
 
 | **Setting**          | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | :------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -142,8 +123,7 @@ recorded demonstrations), provide the following configurations under the
 
 ## Memory-enhanced Agents using Recurrent Neural Networks
 
-You can enable your agents to use memory by adding a `memory` section under `network_settings`,
-and setting `memory_size` and `sequence_length`:
+You can enable your agents to use memory by adding a `memory` section under `network_settings`, and setting `memory_size` and `sequence_length`:
 
 | **Setting**       | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | :---------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -152,25 +132,15 @@ and setting `memory_size` and `sequence_length`:
 
 A few considerations when deciding to use memory:
 
-- LSTM does not work well with continuous actions. Please use
-  discrete actions for better results.
-- Adding a recurrent layer increases the complexity of the neural network, it is
-  recommended to decrease `num_layers` when using recurrent.
+- LSTM does not work well with continuous actions. Please use discrete actions for better results.
+- Adding a recurrent layer increases the complexity of the neural network, it is recommended to decrease `num_layers` when using recurrent.
 - It is required that `memory_size` be divisible by 2.
 
 ## Self-Play
 
-Training with self-play adds additional confounding factors to the usual issues
-faced by reinforcement learning. In general, the tradeoff is between the skill
-level and generality of the final policy and the stability of learning. Training
-against a set of slowly or unchanging adversaries with low diversity results in
-a more stable learning process than training against a set of quickly changing
-adversaries with high diversity. With this context, this guide discusses the
-exposed self-play hyperparameters and intuitions for tuning them.
+Training with self-play adds additional confounding factors to the usual issues faced by reinforcement learning. In general, the tradeoff is between the skill level and generality of the final policy and the stability of learning. Training against a set of slowly or unchanging adversaries with low diversity results in a more stable learning process than training against a set of quickly changing adversaries with high diversity. With this context, this guide discusses the exposed self-play hyperparameters and intuitions for tuning them.
 
-If your environment contains multiple agents that are divided into teams, you
-can leverage our self-play training option by providing these configurations for
-each Behavior:
+If your environment contains multiple agents that are divided into teams, you can leverage our self-play training option by providing these configurations for each Behavior:
 
 | **Setting**                       | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -182,36 +152,20 @@ each Behavior:
 
 ### Note on Reward Signals
 
-We make the assumption that the final reward in a trajectory corresponds to the
-outcome of an episode. A final reward of +1 indicates winning, -1 indicates
-losing and 0 indicates a draw. The ELO calculation (discussed below) depends on
-this final reward being either +1, 0, -1.
+We make the assumption that the final reward in a trajectory corresponds to the outcome of an episode. A final reward of +1 indicates winning, -1 indicates losing and 0 indicates a draw. The ELO calculation (discussed below) depends on this final reward being either +1, 0, -1.
 
-The reward signal should still be used as described in the documentation for the
-other trainers. However, we encourage users to be a bit more conservative when
-shaping reward functions due to the instability and non-stationarity of learning
-in adversarial games. Specifically, we encourage users to begin with the
-simplest possible reward function (+1 winning, -1 losing) and to allow for more
-iterations of training to compensate for the sparsity of reward.
+The reward signal should still be used as described in the documentation for the other trainers. However, we encourage users to be a bit more conservative when shaping reward functions due to the instability and non-stationarity of learning in adversarial games. Specifically, we encourage users to begin with the simplest possible reward function (+1 winning, -1 losing) and to allow for more iterations of training to compensate for the sparsity of reward.
 
 ### Note on Swap Steps
 
-As an example, in a 2v1 scenario, if we want the swap to occur x=4 times during
-team-change=200000 steps, the swap_steps for the team of one agent is:
+As an example, in a 2v1 scenario, if we want the swap to occur x=4 times during team-change=200000 steps, the swap_steps for the team of one agent is:
 
 swap_steps = (1 / 2) \* (200000 / 4) = 25000
 
-The swap_steps for the team of two
-agents is:
+The swap_steps for the team of two agents is:
 
 swap_steps = (2 / 1) \* (200000 / 4) = 100000
 
-Note, with equal team sizes, the
-first term is equal to 1 and swap_steps can be calculated by just dividing the
-total steps by the desired number of swaps.
+Note, with equal team sizes, the first term is equal to 1 and swap_steps can be calculated by just dividing the total steps by the desired number of swaps.
 
-A larger value of swap_steps means that an agent will play against the same
-fixed opponent for a longer number of training iterations. This results in a
-more stable training scenario, but leaves the agent open to the risk of
-overfitting it's behavior for this particular opponent. Thus, when a new
-opponent is swapped, the agent may lose more often than expected.
+A larger value of swap_steps means that an agent will play against the same fixed opponent for a longer number of training iterations. This results in a more stable training scenario, but leaves the agent open to the risk of overfitting it's behavior for this particular opponent. Thus, when a new opponent is swapped, the agent may lose more often than expected.

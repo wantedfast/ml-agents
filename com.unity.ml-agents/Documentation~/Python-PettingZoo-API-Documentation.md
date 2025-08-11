@@ -57,8 +57,7 @@ Initializes a Unity AEC environment wrapper.
  | step(action: Any) -> None
 ```
 
-Sets the action of the active agent and get the observation, reward, done
-and info of the next agent.
+Sets the action of the active agent and get the observation, reward, done and info of the next agent.
 
 **Arguments**:
 
@@ -175,8 +174,7 @@ The action space of the current agent.
  | side_channel() -> Dict[str, Any]
 ```
 
-The side channels of the environment. You can access the side channels
-of an environment with `env.side_channel[<name-of-channel>]`.
+The side channels of the environment. You can access the side channels of an environment with `env.side_channel[<name-of-channel>]`.
 
 <a name="mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.reset"></a>
 #### reset
@@ -206,10 +204,7 @@ Reseeds the environment (making the resulting environment deterministic).
 
 NOT SUPPORTED.
 
-Displays a rendered frame from the environment, if supported.
-Alternate render modes in the default environments are `'rgb_array'`
-which returns a numpy array and is supported by all environments outside of classic,
-and `'ansi'` which returns the strings printed (specific to classic environments).
+Displays a rendered frame from the environment, if supported. Alternate render modes in the default environments are `'rgb_array'` which returns a numpy array and is supported by all environments outside of classic, and `'ansi'` which returns the strings printed (specific to classic environments).
 
 <a name="mlagents_envs.envs.unity_pettingzoo_base_env.UnityPettingzooBaseEnv.close"></a>
 #### close

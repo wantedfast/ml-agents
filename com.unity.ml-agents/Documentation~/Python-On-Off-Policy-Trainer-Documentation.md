@@ -55,8 +55,7 @@ Adds policy to trainer.
 class OffPolicyTrainer(RLTrainer)
 ```
 
-The SACTrainer is an implementation of the SAC algorithm, with support
-for discrete actions and recurrent networks.
+The SACTrainer is an implementation of the SAC algorithm, with support for discrete actions and recurrent networks.
 
 <a name="mlagents.trainers.trainer.off_policy_trainer.OffPolicyTrainer.__init__"></a>
 #### \_\_init\_\_
@@ -84,8 +83,7 @@ Responsible for collecting experiences and training an off-policy model.
  | save_model() -> None
 ```
 
-Saves the final training model to memory
-Overrides the default to save the replay buffer.
+Saves the final training model to memory Overrides the default to save the replay buffer.
 
 <a name="mlagents.trainers.trainer.off_policy_trainer.OffPolicyTrainer.save_replay_buffer"></a>
 #### save\_replay\_buffer
@@ -133,8 +131,7 @@ This class is the base class for trainers that use Reward Signals.
  | end_episode() -> None
 ```
 
-A signal that the Episode has ended. The buffer must be reset.
-Get only called when the academy resets.
+A signal that the Episode has ended. The buffer must be reset. Get only called when the academy resets.
 
 <a name="mlagents.trainers.trainer.rl_trainer.RLTrainer.create_optimizer"></a>
 #### create\_optimizer
@@ -162,8 +159,7 @@ Saves the policy associated with this trainer.
  | advance() -> None
 ```
 
-Steps the trainer, taking in trajectories and updates if ready.
-Will block and wait briefly if there are no trajectories.
+Steps the trainer, taking in trajectories and updates if ready. Will block and wait briefly if there are no trajectories.
 
 <a name="mlagents.trainers.trainer.trainer"></a>
 # mlagents.trainers.trainer.trainer
@@ -250,9 +246,7 @@ the step count of the trainer
  | threaded() -> bool
 ```
 
-Whether or not to run the trainer in a thread. True allows the trainer to
-update the policy while the environment is taking steps. Set to False to
-enforce strict on-policy updates (i.e. don't update the policy when taking steps.)
+Whether or not to run the trainer in a thread. True allows the trainer to update the policy while the environment is taking steps. Set to False to enforce strict on-policy updates (i.e. don't update the policy when taking steps.)
 
 <a name="mlagents.trainers.trainer.trainer.Trainer.should_still_train"></a>
 #### should\_still\_train
@@ -262,9 +256,7 @@ enforce strict on-policy updates (i.e. don't update the policy when taking steps
  | should_still_train() -> bool
 ```
 
-Returns whether or not the trainer should train. A Trainer could
-stop training if it wasn't training to begin with, or if max_steps
-is reached.
+Returns whether or not the trainer should train. A Trainer could stop training if it wasn't training to begin with, or if max_steps is reached.
 
 <a name="mlagents.trainers.trainer.trainer.Trainer.reward_buffer"></a>
 #### reward\_buffer
@@ -274,9 +266,7 @@ is reached.
  | reward_buffer() -> Deque[float]
 ```
 
-Returns the reward buffer. The reward buffer contains the cumulative
-rewards of the most recent episodes completed by agents using this
-trainer.
+Returns the reward buffer. The reward buffer contains the cumulative rewards of the most recent episodes completed by agents using this trainer.
 
 **Returns**:
 
@@ -300,8 +290,7 @@ Saves model file(s) for the policy or policies associated with this trainer.
  | end_episode()
 ```
 
-A signal that the Episode has ended. The buffer must be reset.
-Get only called when the academy resets.
+A signal that the Episode has ended. The buffer must be reset. Get only called when the academy resets.
 
 <a name="mlagents.trainers.trainer.trainer.Trainer.create_policy"></a>
 #### create\_policy
@@ -348,10 +337,7 @@ Policy associated with name_behavior_id
  | advance() -> None
 ```
 
-Advances the trainer. Typically, this means grabbing trajectories
-from all subscribed trajectory queues (self.trajectory_queues), and updating
-a policy using the steps in them, and if needed pushing a new policy onto the right
-policy queues (self.policy_queues).
+Advances the trainer. Typically, this means grabbing trajectories from all subscribed trajectory queues (self.trajectory_queues), and updating a policy using the steps in them, and if needed pushing a new policy onto the right policy queues (self.policy_queues).
 
 <a name="mlagents.trainers.trainer.trainer.Trainer.publish_policy_queue"></a>
 #### publish\_policy\_queue
@@ -360,8 +346,7 @@ policy queues (self.policy_queues).
  | publish_policy_queue(policy_queue: AgentManagerQueue[Policy]) -> None
 ```
 
-Adds a policy queue to the list of queues to publish to when this Trainer
-makes a policy update
+Adds a policy queue to the list of queues to publish to when this Trainer makes a policy update
 
 **Arguments**:
 
@@ -408,9 +393,7 @@ class RewardSignalSettings()
  | structure(d: Mapping, t: type) -> Any
 ```
 
-Helper method to structure a Dict of RewardSignalSettings class. Meant to be registered with
-cattr.register_structure_hook() and called with cattr.structure(). This is needed to handle
-the special Enum selection of RewardSignalSettings classes.
+Helper method to structure a Dict of RewardSignalSettings class. Meant to be registered with cattr.register_structure_hook() and called with cattr.structure(). This is needed to handle the special Enum selection of RewardSignalSettings classes.
 
 <a name="mlagents.trainers.settings.ParameterRandomizationSettings"></a>
 ## ParameterRandomizationSettings Objects
@@ -437,9 +420,7 @@ Helper method to output sampler stats to console.
  | structure(d: Union[Mapping, float], t: type) -> "ParameterRandomizationSettings"
 ```
 
-Helper method to a ParameterRandomizationSettings class. Meant to be registered with
-cattr.register_structure_hook() and called with cattr.structure(). This is needed to handle
-the special Enum selection of ParameterRandomizationSettings classes.
+Helper method to a ParameterRandomizationSettings class. Meant to be registered with cattr.register_structure_hook() and called with cattr.structure(). This is needed to handle the special Enum selection of ParameterRandomizationSettings classes.
 
 <a name="mlagents.trainers.settings.ParameterRandomizationSettings.unstructure"></a>
 #### unstructure
@@ -449,8 +430,7 @@ the special Enum selection of ParameterRandomizationSettings classes.
  | unstructure(d: "ParameterRandomizationSettings") -> Mapping
 ```
 
-Helper method to a ParameterRandomizationSettings class. Meant to be registered with
-cattr.register_unstructure_hook() and called with cattr.unstructure().
+Helper method to a ParameterRandomizationSettings class. Meant to be registered with cattr.register_unstructure_hook() and called with cattr.unstructure().
 
 <a name="mlagents.trainers.settings.ParameterRandomizationSettings.apply"></a>
 #### apply
@@ -460,8 +440,7 @@ cattr.register_unstructure_hook() and called with cattr.unstructure().
  | apply(key: str, env_channel: EnvironmentParametersChannel) -> None
 ```
 
-Helper method to send sampler settings over EnvironmentParametersChannel
-Calls the appropriate sampler type set method.
+Helper method to send sampler settings over EnvironmentParametersChannel Calls the appropriate sampler type set method.
 
 **Arguments**:
 
@@ -492,8 +471,7 @@ Helper method to output sampler stats to console.
  | apply(key: str, env_channel: EnvironmentParametersChannel) -> None
 ```
 
-Helper method to send sampler settings over EnvironmentParametersChannel
-Calls the constant sampler type set method.
+Helper method to send sampler settings over EnvironmentParametersChannel Calls the constant sampler type set method.
 
 **Arguments**:
 
@@ -524,8 +502,7 @@ Helper method to output sampler stats to console.
  | apply(key: str, env_channel: EnvironmentParametersChannel) -> None
 ```
 
-Helper method to send sampler settings over EnvironmentParametersChannel
-Calls the uniform sampler type set method.
+Helper method to send sampler settings over EnvironmentParametersChannel Calls the uniform sampler type set method.
 
 **Arguments**:
 
@@ -556,8 +533,7 @@ Helper method to output sampler stats to console.
  | apply(key: str, env_channel: EnvironmentParametersChannel) -> None
 ```
 
-Helper method to send sampler settings over EnvironmentParametersChannel
-Calls the gaussian sampler type set method.
+Helper method to send sampler settings over EnvironmentParametersChannel Calls the gaussian sampler type set method.
 
 **Arguments**:
 
@@ -588,8 +564,7 @@ Helper method to output sampler stats to console.
  | apply(key: str, env_channel: EnvironmentParametersChannel) -> None
 ```
 
-Helper method to send sampler settings over EnvironmentParametersChannel
-Calls the multirangeuniform sampler type set method.
+Helper method to send sampler settings over EnvironmentParametersChannel Calls the multirangeuniform sampler type set method.
 
 **Arguments**:
 
@@ -604,8 +579,7 @@ Calls the multirangeuniform sampler type set method.
 class CompletionCriteriaSettings()
 ```
 
-CompletionCriteriaSettings contains the information needed to figure out if the next
-lesson must start.
+CompletionCriteriaSettings contains the information needed to figure out if the next lesson must start.
 
 <a name="mlagents.trainers.settings.CompletionCriteriaSettings.need_increment"></a>
 #### need\_increment
@@ -614,8 +588,7 @@ lesson must start.
  | need_increment(progress: float, reward_buffer: List[float], smoothing: float) -> Tuple[bool, float]
 ```
 
-Given measures, this method returns a boolean indicating if the lesson
-needs to change now, and a float corresponding to the new smoothed value.
+Given measures, this method returns a boolean indicating if the lesson needs to change now, and a float corresponding to the new smoothed value.
 
 <a name="mlagents.trainers.settings.Lesson"></a>
 ## Lesson Objects
@@ -625,10 +598,7 @@ needs to change now, and a float corresponding to the new smoothed value.
 class Lesson()
 ```
 
-Gathers the data of one lesson for one environment parameter including its name,
-the condition that must be fulfilled for the lesson to be completed and a sampler
-for the environment parameter. If the completion_criteria is None, then this is
-the last lesson in the curriculum.
+Gathers the data of one lesson for one environment parameter including its name, the condition that must be fulfilled for the lesson to be completed and a sampler for the environment parameter. If the completion_criteria is None, then this is the last lesson in the curriculum.
 
 <a name="mlagents.trainers.settings.EnvironmentParameterSettings"></a>
 ## EnvironmentParameterSettings Objects
@@ -638,8 +608,7 @@ the last lesson in the curriculum.
 class EnvironmentParameterSettings()
 ```
 
-EnvironmentParameterSettings is an ordered list of lessons for one environment
-parameter.
+EnvironmentParameterSettings is an ordered list of lessons for one environment parameter.
 
 <a name="mlagents.trainers.settings.EnvironmentParameterSettings.structure"></a>
 #### structure
@@ -649,9 +618,7 @@ parameter.
  | structure(d: Mapping, t: type) -> Dict[str, "EnvironmentParameterSettings"]
 ```
 
-Helper method to structure a Dict of EnvironmentParameterSettings class. Meant
-to be registered with cattr.register_structure_hook() and called with
-cattr.structure().
+Helper method to structure a Dict of EnvironmentParameterSettings class. Meant to be registered with cattr.register_structure_hook() and called with cattr.structure().
 
 <a name="mlagents.trainers.settings.TrainerSettings"></a>
 ## TrainerSettings Objects
@@ -669,8 +636,7 @@ class TrainerSettings(ExportableSettings)
  | structure(d: Mapping, t: type) -> Any
 ```
 
-Helper method to structure a TrainerSettings class. Meant to be registered with
-cattr.register_structure_hook() and called with cattr.structure().
+Helper method to structure a TrainerSettings class. Meant to be registered with cattr.register_structure_hook() and called with cattr.structure().
 
 <a name="mlagents.trainers.settings.CheckpointSettings"></a>
 ## CheckpointSettings Objects
@@ -687,8 +653,7 @@ class CheckpointSettings()
  | prioritize_resume_init() -> None
 ```
 
-Prioritize explicit command line resume/init over conflicting yaml options.
-if both resume/init are set at one place use resume
+Prioritize explicit command line resume/init over conflicting yaml options. if both resume/init are set at one place use resume
 
 <a name="mlagents.trainers.settings.RunOptions"></a>
 ## RunOptions Objects
@@ -706,8 +671,7 @@ class RunOptions(ExportableSettings)
  | from_argparse(args: argparse.Namespace) -> "RunOptions"
 ```
 
-Takes an argparse.Namespace as specified in `parse_command_line`, loads input configuration files
-from file paths, and converts to a RunOptions instance.
+Takes an argparse.Namespace as specified in `parse_command_line`, loads input configuration files from file paths, and converts to a RunOptions instance.
 
 **Arguments**:
 
@@ -715,5 +679,4 @@ from file paths, and converts to a RunOptions instance.
 
 **Returns**:
 
-RunOptions representing the passed in arguments, with trainer config, curriculum and sampler
-configs loaded from files.
+RunOptions representing the passed in arguments, with trainer config, curriculum and sampler configs loaded from files.

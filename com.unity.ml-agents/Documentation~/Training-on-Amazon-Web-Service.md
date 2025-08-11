@@ -1,20 +1,14 @@
 # Training on Amazon Web Service
 
-:warning: **Note:** We no longer use this guide ourselves and so it may not work
-correctly. We've decided to keep it up just in case it is helpful to you.
+:warning: **Note:** We no longer use this guide ourselves and so it may not work correctly. We've decided to keep it up just in case it is helpful to you.
 
-This page contains instructions for setting up an EC2 instance on Amazon Web
-Service for training ML-Agents environments.
+This page contains instructions for setting up an EC2 instance on Amazon Web Service for training ML-Agents environments.
 
 ## Pre-configured AMI
 
-We've prepared a pre-configured AMI for you with the ID: `ami-016ff5559334f8619`
-in the `us-east-1` region. It was created as a modification of Deep Learning AMI (Ubuntu).
-The AMI has been tested with p2.xlarge instance. Furthermore, if you want to
-train without headless mode, you need to enable X Server.
+We've prepared a pre-configured AMI for you with the ID: `ami-016ff5559334f8619` in the `us-east-1` region. It was created as a modification of Deep Learning AMI (Ubuntu). The AMI has been tested with p2.xlarge instance. Furthermore, if you want to train without headless mode, you need to enable X Server.
 
-After launching your EC2 instance using the ami and ssh into it, run the
-following commands to enable it:
+After launching your EC2 instance using the ami and ssh into it, run the following commands to enable it:
 
 ```sh
 # Start the X Server, press Enter to come to the command line
@@ -49,9 +43,7 @@ $ export DISPLAY=:0
 
 ## Configuring your own instance
 
-You could also choose to configure your own instance. To begin with, you will
-need an EC2 instance which contains the latest Nvidia drivers, CUDA9, and cuDNN.
-In this tutorial we used the Deep Learning AMI (Ubuntu) listed under AWS Marketplace with a p2.xlarge instance.
+You could also choose to configure your own instance. To begin with, you will need an EC2 instance which contains the latest Nvidia drivers, CUDA9, and cuDNN. In this tutorial we used the Deep Learning AMI (Ubuntu) listed under AWS Marketplace with a p2.xlarge instance.
 
 ### Installing the ML-Agents Toolkit on the instance
 
@@ -73,18 +65,9 @@ After launching your EC2 instance using the ami and ssh into it:
 
 ### Setting up X Server (optional)
 
-X Server setup is only necessary if you want to do training that requires visual
-observation input. _Instructions here are adapted from this
-[Medium post](https://medium.com/towards-data-science/how-to-run-unity-on-amazon-cloud-or-without-monitor-3c10ce022639)
-on running general Unity applications in the cloud._
+X Server setup is only necessary if you want to do training that requires visual observation input. _Instructions here are adapted from this [Medium post](https://medium.com/towards-data-science/how-to-run-unity-on-amazon-cloud-or-without-monitor-3c10ce022639) on running general Unity applications in the cloud._
 
-Current limitations of the Unity Engine require that a screen be available to
-render to when using visual observations. In order to make this possible when
-training on a remote server, a virtual screen is required. We can do this by
-installing Xorg and creating a virtual screen. Once installed and created, we
-can display the Unity environment in the virtual environment, and train as we
-would on a local machine. Ensure that `headless` mode is disabled when building
-linux executables which use visual observations.
+Current limitations of the Unity Engine require that a screen be available to render to when using visual observations. In order to make this possible when training on a remote server, a virtual screen is required. We can do this by installing Xorg and creating a virtual screen. Once installed and created, we can display the Unity environment in the virtual environment, and train as we would on a local machine. Ensure that `headless` mode is disabled when building linux executables which use visual observations.
 
 #### Install and setup Xorg:
 
@@ -190,13 +173,10 @@ $ nvidia-smi
 
 ## Training on EC2 instance
 
-1. In the Unity Editor, load a project containing an ML-Agents environment (you
-   can use one of the example environments if you have not created your own).
+1. In the Unity Editor, load a project containing an ML-Agents environment (you can use one of the example environments if you have not created your own).
 2. Open the Build Settings window (menu: File > Build Settings).
-3. Select Linux as the Target Platform, and x86_64 as the target architecture
-   (the default x86 currently does not work).
-4. Check Headless Mode if you have not setup the X Server. (If you do not use
-   Headless Mode, you have to setup the X Server to enable training.)
+3. Select Linux as the Target Platform, and x86_64 as the target architecture (the default x86 currently does not work).
+4. Check Headless Mode if you have not setup the X Server. (If you do not use Headless Mode, you have to set up the X Server to enable training.)
 5. Click Build to build the Unity environment executable.
 6. Upload the executable to your EC2 instance within `ml-agents` folder.
 7. Change the permissions of the executable.
@@ -227,10 +207,9 @@ $ nvidia-smi
    env = UnityEnvironment(<your_env>)
    ```
 
-   Where `<your_env>` corresponds to the path to your environment executable.
+Where `<your_env>` corresponds to the path to your environment executable.
 
-   You should receive a message confirming that the environment was loaded
-   successfully.
+You should receive a message confirming that the environment was loaded successfully.
 
 10. Train your models
 
@@ -242,8 +221,7 @@ $ nvidia-smi
 
 ### The <Executable_Name>\_Data folder hasn't been copied cover
 
-If you've built your Linux executable, but forget to copy over the corresponding
-<Executable_Name>\_Data folder, you will see error message like the following:
+If you've built your Linux executable, but forget to copy over the corresponding <Executable_Name>\_Data folder, you will see error message like the following:
 
 ```sh
 Set current directory to /home/ubuntu/ml-agents/ml-agents
@@ -257,10 +235,7 @@ There is no data folder
 
 ### Unity Environment not responding
 
-If you didn't setup X Server or hasn't launched it properly, or your environment
-somehow crashes, or you haven't `chmod +x` your Unity Environment, all of these
-will cause connection between Unity and Python to fail. Then you will see
-something like this:
+If you didn't setup X Server or hasn't launched it properly, or your environment somehow crashes, or you haven't `chmod +x` your Unity Environment, all of these will cause connection between Unity and Python to fail. Then you will see something like this:
 
 ```console
 Logging to /home/ubuntu/.config/unity3d/<Some_Path>/Player.log
@@ -276,9 +251,7 @@ mlagents_envs.exception.UnityTimeOutException: The Unity environment took too lo
          The environment and the Python interface have compatible versions.
 ```
 
-It would be also really helpful to check your
-/home/ubuntu/.config/unity3d/<Some_Path>/Player.log to see what happens with
-your Unity environment.
+It would be also really helpful to check your /home/ubuntu/.config/unity3d/<Some_Path>/Player.log to see what happens with your Unity environment.
 
 ### Could not launch X Server
 
@@ -320,6 +293,4 @@ You might see something like:
 NVIDIA-SMI has failed because it could not communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
 ```
 
-This means the NVIDIA's driver needs to be updated. Refer to
-[this section](Training-on-Amazon-Web-Service.md#update-and-setup-nvidia-driver)
-for more information.
+This means the NVIDIA's driver needs to be updated. Refer to [this section](Training-on-Amazon-Web-Service.md#update-and-setup-nvidia-driver) for more information.

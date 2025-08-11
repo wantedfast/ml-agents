@@ -252,8 +252,7 @@ Or follow our internal implementations:
 pip3 install -e ./ml-agents-trainer-plugin
 ```
 
-Following the previous installations your package is added as an entrypoint and you can use a config file with new
-trainers:
+Following the previous installations your package is added as an entrypoint and you can use a config file with new trainers:
 ```shell
 mlagents-learn ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c/a2c_3DBall.yaml --run-id <run-id-name>
 --env <env-executable>

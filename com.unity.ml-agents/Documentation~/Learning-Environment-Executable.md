@@ -1,34 +1,30 @@
 # Using an Environment Executable
 
-This section will help you create and use built environments rather than the
-Editor to interact with an environment. Using an executable has some advantages
-over using the Editor:
+This section will help you create and use built environments rather than the Editor to interact with an environment. Using an executable has some advantages over using the Editor:
 
 - You can exchange executable with other people without having to share your
-  entire repository.
+entire repository.
 - You can put your executable on a remote machine for faster training.
 - You can use `Server Build` (`Headless`) mode for faster training (as long as the executable does not need rendering).
 - You can keep using the Unity Editor for other tasks while the agents are
-  training.
+training.
 
 ## Building the 3DBall environment
 
-The first step is to open the Unity scene containing the 3D Balance Ball
-environment:
+The first step is to open the Unity scene containing the 3D Balance Ball environment:
 
 1. Launch Unity.
 1. On the Projects dialog, choose the **Open** option at the top of the window.
 1. Using the file dialog that opens, locate the `Project` folder within the
-   ML-Agents project and click **Open**.
+ML-Agents project and click **Open**.
 1. In the **Project** window, navigate to the folder
    `Assets/ML-Agents/Examples/3DBall/Scenes/`.
 1. Double-click the `3DBall` file to load the scene containing the Balance Ball
-   environment.
+environment.
 
 ![3DBall Scene](images/mlagents-Open3DBall.png)
 
-Next, we want the set up scene to play correctly when the training process
-launches our environment executable. This means:
+Next, we want the set up scene to play correctly when the training process launches our environment executable. This means:
 
 - The environment application runs in the background.
 - No dialogs require interaction.
@@ -38,33 +34,27 @@ launches our environment executable. This means:
 1. Under **Resolution and Presentation**:
    - Ensure that **Run in Background** is Checked.
    - Ensure that **Display Resolution Dialog** is set to Disabled. (Note: this
-    setting may not be available in newer versions of the editor.)
+setting may not be available in newer versions of the editor.)
 1. Open the Build Settings window (menu:**File** > **Build Settings**).
 1. Choose your target platform.
    - (optional) Select “Development Build” to
-     [log debug messages](https://docs.unity3d.com/Manual/LogFiles.html).
+[log debug messages](https://docs.unity3d.com/Manual/LogFiles.html).
 1. If any scenes are shown in the **Scenes in Build** list, make sure that the
    3DBall Scene is the only one checked. (If the list is empty, then only the
-   current scene is included in the build).
+current scene is included in the build).
 1. Click **Build**:
    - In the File dialog, navigate to your ML-Agents directory.
    - Assign a file name and click **Save**.
    - (For Windows）With Unity 2018.1, it will ask you to select a folder instead
-     of a file name. Create a subfolder within the root directory and select
-     that folder to build. In the following steps you will refer to this
-     subfolder's name as `env_name`. You cannot create builds in the Assets
-     folder
+of a file name. Create a subfolder within the root directory and select that folder to build. In the following steps you will refer to this subfolder's name as `env_name`. You cannot create builds in the Assets folder
 
 ![Build Window](images/mlagents-BuildWindow.png)
 
-Now that we have a Unity executable containing the simulation environment, we
-can interact with it.
+Now that we have a Unity executable containing the simulation environment, we can interact with it.
 
 ## Interacting with the Environment
 
-If you want to use the [Python API](Python-LLAPI.md) to interact with your
-executable, you can pass the name of the executable with the argument
-'file_name' of the `UnityEnvironment`. For instance:
+If you want to use the [Python API](Python-LLAPI.md) to interact with your executable, you can pass the name of the executable with the argument 'file_name' of the `UnityEnvironment`. For instance:
 
 ```python
 from mlagents_envs.environment import UnityEnvironment
@@ -75,19 +65,18 @@ env = UnityEnvironment(file_name=<env_name>)
 
 1. Open a command or terminal window.
 1. Navigate to the folder where you installed the ML-Agents Toolkit. If you
-   followed the default [installation](Installation.md), then navigate to the
+followed the default [installation](Installation.md), then navigate to the
    `ml-agents/` folder.
 1. Run
    `mlagents-learn <trainer-config-file> --env=<env_name> --run-id=<run-identifier>`
-   Where:
+Where:
    - `<trainer-config-file>` is the file path of the trainer configuration yaml
    - `<env_name>` is the name and path to the executable you exported from Unity
-     (without extension)
+(without extension)
    - `<run-identifier>` is a string used to separate the results of different
-     training runs
+training runs
 
-For example, if you are training with a 3DBall executable, and you saved it to
-the directory where you installed the ML-Agents Toolkit, run:
+For example, if you are training with a 3DBall executable, and you saved it to the directory where you installed the ML-Agents Toolkit, run:
 
 ```sh
 mlagents-learn config/ppo/3DBall.yaml --env=3DBall --run-id=firstRun
@@ -117,8 +106,7 @@ ml-agents$ mlagents-learn config/ppo/3DBall.yaml --env=3DBall --run-id=first-run
 **Note**: If you're using Anaconda, don't forget to activate the ml-agents
 environment first.
 
-If `mlagents-learn` runs correctly and starts training, you should see something
-like this:
+If `mlagents-learn` runs correctly and starts training, you should see something like this:
 
 ```console
 CrashReporter: initialized
@@ -169,30 +157,22 @@ INFO:mlagents.trainers: first-run-0: Ball3DLearning: Step: 10000. Mean Reward: 2
 
 You can press Ctrl+C to stop the training, and your trained model will be at
 `results/<run-identifier>/<behavior_name>.onnx`, which corresponds to your model's
-latest checkpoint. (**Note:** There is a known bug on Windows that causes the
-saving of the model to fail when you early terminate the training, it's
-recommended to wait until Step has reached the max_steps parameter you set in
-your config YAML.) You can now embed this trained model into your Agent by
-following the steps below:
+latest checkpoint. (**Note:** There is a known bug on Windows that causes the saving of the model to fail when you early terminate the training, it's recommended to wait until Step has reached the max_steps parameter you set in your config YAML.) You can now embed this trained model into your Agent by following the steps below:
 
 1. Move your model file into
    `Project/Assets/ML-Agents/Examples/3DBall/TFModels/`.
 1. Open the Unity Editor, and select the **3DBall** scene as described above.
 1. Select the **3DBall** prefab from the Project window and select **Agent**.
 1. Drag the `<behavior_name>.onnx` file from the Project window of the Editor to
-   the **Model** placeholder in the **Ball3DAgent** inspector window.
+the **Model** placeholder in the **Ball3DAgent** inspector window.
 1. Press the **Play** button at the top of the Editor.
 
 ## Training on Headless Server
 
-To run training on headless server with no graphics rendering support, you need to turn off
-graphics display in the Unity executable. There are two ways to achieve this:
+To run training on headless server with no graphics rendering support, you need to turn off graphics display in the Unity executable. There are two ways to achieve this:
 1. Pass `--no-graphics` option to mlagents-learn training command. This is equivalent to
-   adding `-nographics -batchmode` to the Unity executable's commandline.
+adding `-nographics -batchmode` to the Unity executable's commandline.
 2. Build your Unity executable with **Server Build**. You can find this setting in Build Settings
-   in the Unity Editor.
+in the Unity Editor.
 
-If you want to train with graphics (for example, using camera and visual observations), you'll
-need to set up display rendering support (e.g. xvfb) on you server machine. In our
-[Colab Notebook Tutorials](Tutorial-Colab.md), the Setup section has
-examples of setting up xvfb on servers.
+If you want to train with graphics (for example, using camera and visual observations), you'll need to set up display rendering support (e.g. xvfb) on you server machine. In our [Colab Notebook Tutorials](Tutorial-Colab.md), the Setup section has examples of setting up xvfb on servers.

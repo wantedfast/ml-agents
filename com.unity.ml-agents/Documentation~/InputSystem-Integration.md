@@ -17,8 +17,7 @@ Additionally, see below for additional technical specifications on the C# code f
 ### `IInputActionsAssetProvider` Interface
 The `InputActuatorComponent` searches for a `Component` that implements
 `IInputActionAssetProvider` on the `GameObject` they both are attached to. It is important to note
-that if multiple `Components` on your `GameObject` need to access an `InputActionAsset` to handle events,
-they will need to share the same instance of the `InputActionAsset` that is returned from the
+that if multiple `Components` on your `GameObject` need to access an `InputActionAsset` to handle events, they will need to share the same instance of the `InputActionAsset` that is returned from the
 `IInputActionAssetProvider`.
 
 ### `InputActuatorComponent` Class

@@ -34,12 +34,8 @@ Environment initialization
 
 - `unity_env`: The Unity BaseEnv to be wrapped in the gym. Will be closed when the UnityToGymWrapper closes.
 - `uint8_visual`: Return visual observations as uint8 (0-255) matrices instead of float (0.0-1.0).
-- `flatten_branched`: If True, turn branched discrete action spaces into a Discrete space rather than
-    MultiDiscrete.
-- `allow_multiple_obs`: If True, return a list of np.ndarrays as observations with the first elements
-    containing the visual observations and the last element containing the array of vector observations.
-    If False, returns a single np.ndarray containing either only a single visual observation or the array of
-    vector observations.
+- `flatten_branched`: If True, turn branched discrete action spaces into a Discrete space rather than MultiDiscrete.
+- `allow_multiple_obs`: If True, return a list of np.ndarrays as observations with the first elements containing the visual observations and the last element containing the array of vector observations. If False, returns a single np.ndarray containing either only a single visual observation or the array of vector observations.
 - `action_space_seed`: If non-None, will be used to set the random seed on created gym.Space instances.
 
 <a name="mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.reset"></a>
@@ -49,9 +45,7 @@ Environment initialization
  | reset() -> Union[List[np.ndarray], np.ndarray]
 ```
 
-Resets the state of the environment and returns an initial observation.
-Returns: observation (object/list): the initial observation of the
-space.
+Resets the state of the environment and returns an initial observation. Returns: observation (object/list): the initial observation of the space.
 
 <a name="mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.step"></a>
 #### step
@@ -60,10 +54,7 @@ space.
  | step(action: List[Any]) -> GymStepResult
 ```
 
-Run one timestep of the environment's dynamics. When end of
-episode is reached, you are responsible for calling `reset()`
-to reset this environment's state.
-Accepts an action and returns a tuple (observation, reward, done, info).
+Run one timestep of the environment's dynamics. When end of episode is reached, you are responsible for calling `reset()` to reset this environment's state. Accepts an action and returns a tuple (observation, reward, done, info).
 
 **Arguments**:
 
@@ -71,8 +62,7 @@ Accepts an action and returns a tuple (observation, reward, done, info).
 
 **Returns**:
 
-- `observation` _object/list_ - agent's observation of the current environment
-  reward (float/list) : amount of reward returned after previous action
+- `observation` _object/list_ - agent's observation of the current environment reward (float/list) : amount of reward returned after previous action
 - `done` _boolean/list_ - whether the episode has ended.
 - `info` _dict_ - contains auxiliary diagnostic information.
 
@@ -83,8 +73,7 @@ Accepts an action and returns a tuple (observation, reward, done, info).
  | render(mode="rgb_array")
 ```
 
-Return the latest visual observations.
-Note that it will not render a new frame of the environment.
+Return the latest visual observations. Note that it will not render a new frame of the environment.
 
 <a name="mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.close"></a>
 #### close
@@ -93,9 +82,7 @@ Note that it will not render a new frame of the environment.
  | close() -> None
 ```
 
-Override _close in your subclass to perform any necessary cleanup.
-Environments will automatically close() themselves when
-garbage collected or when the program exits.
+Override _close in your subclass to perform any necessary cleanup. Environments will automatically close() themselves when garbage collected or when the program exits.
 
 <a name="mlagents_envs.envs.unity_gym_env.UnityToGymWrapper.seed"></a>
 #### seed
@@ -104,8 +91,7 @@ garbage collected or when the program exits.
  | seed(seed: Any = None) -> None
 ```
 
-Sets the seed for this env's random number generator(s).
-Currently not implemented.
+Sets the seed for this env's random number generator(s). Currently not implemented.
 
 <a name="mlagents_envs.envs.unity_gym_env.ActionFlattener"></a>
 ## ActionFlattener Objects
@@ -127,8 +113,7 @@ Initialize the flattener.
 
 **Arguments**:
 
-- `branched_action_space`: A List containing the sizes of each branch of the action
-space, e.g. [2,3,3] for three branches with size 2, 3, and 3 respectively.
+- `branched_action_space`: A List containing the sizes of each branch of the action space, e.g. [2,3,3] for three branches with size 2, 3, and 3 respectively.
 
 <a name="mlagents_envs.envs.unity_gym_env.ActionFlattener.lookup_action"></a>
 #### lookup\_action

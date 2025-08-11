@@ -1,24 +1,17 @@
 # Unity ML-Agents Gym Wrapper
 
-A common way in which machine learning researchers interact with simulation
-environments is via a wrapper provided by OpenAI called `gym`. For more
-information on the gym interface, see [here](https://github.com/openai/gym).
+A common way in which machine learning researchers interact with simulation environments is via a wrapper provided by OpenAI called `gym`. For more information on the gym interface, see [here](https://github.com/openai/gym).
 
-We provide a gym wrapper and instructions for using it with existing machine
-learning algorithms which utilize gym. Our wrapper provides interfaces on top of
-our `UnityEnvironment` class, which is the default way of interfacing with a
-Unity environment via Python.
+We provide a gym wrapper and instructions for using it with existing machine learning algorithms which utilize gym. Our wrapper provides interfaces on top of our `UnityEnvironment` class, which is the default way of interfacing with a Unity environment via Python.
 
 ## Installation
 
-The gym wrapper is part of the `mlagents_envs` package. Please refer to the
-[mlagents_envs installation instructions](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents-envs/README.md).
+The gym wrapper is part of the `mlagents_envs` package. Please refer to the [mlagents_envs installation instructions](https://github.com/Unity-Technologies/ml-agents/blob/release_22/ml-agents-envs/README.md).
 
 
 ## Using the Gym Wrapper
 
-The gym interface is available from `gym_unity.envs`. To launch an environment
-from the root of the project repository use:
+The gym interface is available from `gym_unity.envs`. To launch an environment from the root of the project repository use:
 
 ```python
 from mlagents_envs.envs.unity_gym_env import UnityToGymWrapper
@@ -28,69 +21,43 @@ env = UnityToGymWrapper(unity_env, uint8_visual, flatten_branched, allow_multipl
 
 - `unity_env` refers to the Unity environment to be wrapped.
 
-- `uint8_visual` refers to whether to output visual observations as `uint8`
-  values (0-255). Many common Gym environments (e.g. Atari) do this. By default
-  they will be floats (0.0-1.0). Defaults to `False`.
+- `uint8_visual` refers to whether to output visual observations as `uint8` values (0-255). Many common Gym environments (e.g. Atari) do this. By default, they will be floats (0.0-1.0). Defaults to `False`.
 
-- `flatten_branched` will flatten a branched discrete action space into a Gym
-  Discrete. Otherwise, it will be converted into a MultiDiscrete. Defaults to
-  `False`.
+- `flatten_branched` will flatten a branched discrete action space into a Gym Discrete. Otherwise, it will be converted into a MultiDiscrete. Defaults to `False`.
 
 - `allow_multiple_obs` will return a list of observations. The first elements
-  contain the visual observations and the last element contains the array of
-  vector observations. If False the environment returns a single array (containing
-  a single visual observations, if present, otherwise the vector observation).
-  Defaults to `False`.
+contain the visual observations and the last element contains the array of vector observations. If False the environment returns a single array (containing a single visual observations, if present, otherwise the vector observation). Defaults to `False`.
 
-- `action_space_seed` is the optional seed for action sampling. If non-None, will
-  be used to set the random seed on created gym.Space instances.
+- `action_space_seed` is the optional seed for action sampling. If non-None, will be used to set the random seed on created gym.Space instances.
 
 The returned environment `env` will function as a gym.
 
 ## Limitations
 
 - It is only possible to use an environment with a **single** Agent.
-- By default, the first visual observation is provided as the `observation`, if
-  present. Otherwise, vector observations are provided. You can receive all
-  visual and vector observations by using the `allow_multiple_obs=True` option in
-  the gym parameters. If set to `True`, you will receive a list of `observation`
-  instead of only one.
-- The `TerminalSteps` or `DecisionSteps` output from the environment can still
-  be accessed from the `info` provided by `env.step(action)`.
+- By default, the first visual observation is provided as the `observation`, if present. Otherwise, vector observations are provided. You can receive all visual and vector observations by using the `allow_multiple_obs=True` option in the gym parameters. If set to `True`, you will receive a list of `observation` instead of only one.
+- The `TerminalSteps` or `DecisionSteps` output from the environment can still be accessed from the `info` provided by `env.step(action)`.
 - Stacked vector observations are not supported.
 - Environment registration for use with `gym.make()` is currently not supported.
-- Calling env.render() will not render a new frame of the environment. It will
-  return the latest visual observation if using visual observations.
+- Calling env.render() will not render a new frame of the environment. It will return the latest visual observation if using visual observations.
 
 ## Running OpenAI Baselines Algorithms
 
-OpenAI provides a set of open-source maintained and tested Reinforcement
-Learning algorithms called the [Baselines](https://github.com/openai/baselines).
+OpenAI provides a set of open-source maintained and tested Reinforcement Learning algorithms called the [Baselines](https://github.com/openai/baselines).
 
-Using the provided Gym wrapper, it is possible to train ML-Agents environments
-using these algorithms. This requires the creation of custom training scripts to
-launch each algorithm. In most cases these scripts can be created by making
-slight modifications to the ones provided for Atari and Mujoco environments.
+Using the provided Gym wrapper, it is possible to train ML-Agents environments using these algorithms. This requires the creation of custom training scripts to launch each algorithm. In most cases these scripts can be created by making slight modifications to the ones provided for Atari and Mujoco environments.
 
 These examples were tested with baselines version 0.1.6.
 
 ### Example - DQN Baseline
 
-In order to train an agent to play the `GridWorld` environment using the
-Baselines DQN algorithm, you first need to install the baselines package using
-pip:
+In order to train an agent to play the `GridWorld` environment using the Baselines DQN algorithm, you first need to install the baselines package using pip:
 
 ```
 pip install git+git://github.com/openai/baselines
 ```
 
-Next, create a file called `train_unity.py`. Then create an `/envs/` directory
-and build the environment to that directory. For more information on
-building Unity environments, see
-[here](Learning-Environment-Executable.md). Note that because of
-limitations of the DQN baseline, the environment must have a single visual
-observation, a single discrete action and a single Agent in the scene.
-Add the following code to the `train_unity.py` file:
+Next, create a file called `train_unity.py`. Then create an `/envs/` directory and build the environment to that directory. For more information on building Unity environments, see [here](Learning-Environment-Executable.md). Note that because of limitations of the DQN baseline, the environment must have a single visual observation, a single discrete action and a single Agent in the scene. Add the following code to the `train_unity.py` file:
 
 ```python
 import gym
@@ -141,19 +108,11 @@ python -m train_unity
 
 ### Other Algorithms
 
-Other algorithms in the Baselines repository can be run using scripts similar to
-the examples from the baselines package. In most cases, the primary changes
-needed to use a Unity environment are to import `UnityToGymWrapper`, and to
-replace the environment creation code, typically `gym.make()`, with a call to
-`UnityToGymWrapper(unity_environment)` passing the environment as input.
+Other algorithms in the Baselines repository can be run using scripts similar to the examples from the baselines package. In most cases, the primary changes needed to use a Unity environment are to import `UnityToGymWrapper`, and to replace the environment creation code, typically `gym.make()`, with a call to `UnityToGymWrapper(unity_environment)` passing the environment as input.
 
-A typical rule of thumb is that for vision-based environments, modification
-should be done to Atari training scripts, and for vector observation
-environments, modification should be done to Mujoco scripts.
+A typical rule of thumb is that for vision-based environments, modification should be done to Atari training scripts, and for vector observation environments, modification should be done to Mujoco scripts.
 
-Some algorithms will make use of `make_env()` or `make_mujoco_env()` functions.
-You can define a similar function for Unity environments. An example of such a
-method using the PPO2 baseline:
+Some algorithms will make use of `make_env()` or `make_mujoco_env()` functions. You can define a similar function for Unity environments. An example of such a method using the PPO2 baseline:
 
 ```python
 from mlagents_envs.environment import UnityEnvironment
@@ -209,9 +168,7 @@ if __name__ == '__main__':
 
 ## Run Google Dopamine Algorithms
 
-Google provides a framework [Dopamine](https://github.com/google/dopamine), and
-implementations of algorithms, e.g. DQN, Rainbow, and the C51 variant of
-Rainbow. Using the Gym wrapper, we can run Unity environments using Dopamine.
+Google provides a framework [Dopamine](https://github.com/google/dopamine), and implementations of algorithms, e.g. DQN, Rainbow, and the C51 variant of Rainbow. Using the Gym wrapper, we can run Unity environments using Dopamine.
 
 First, after installing the Gym wrapper, clone the Dopamine repository.
 
@@ -219,29 +176,20 @@ First, after installing the Gym wrapper, clone the Dopamine repository.
 git clone https://github.com/google/dopamine
 ```
 
-Then, follow the appropriate install instructions as specified on
-[Dopamine's homepage](https://github.com/google/dopamine). Note that the
-Dopamine guide specifies using a virtualenv. If you choose to do so, make sure
-your unity_env package is also installed within the same virtualenv as Dopamine.
+Then, follow the appropriate install instructions as specified on [Dopamine's homepage](https://github.com/google/dopamine). Note that the Dopamine guide specifies using a virtualenv. If you choose to do so, make sure your unity_env package is also installed within the same virtualenv as Dopamine.
 
 ### Adapting Dopamine's Scripts
 
-First, open `dopamine/atari/run_experiment.py`. Alternatively, copy the entire
-`atari` folder, and name it something else (e.g. `unity`). If you choose the
-copy approach, be sure to change the package names in the import statements in
-`train.py` to your new directory.
+First, open `dopamine/atari/run_experiment.py`. Alternatively, copy the entire `atari` folder, and name it something else (e.g. `unity`). If you choose the  copy approach, be sure to change the package names in the import statements in `train.py` to your new directory.
 
-Within `run_experiment.py`, we will need to make changes to which environment is
-instantiated, just as in the Baselines example. At the top of the file, insert
+Within `run_experiment.py`, we will need to make changes to which environment is instantiated, just as in the Baselines example. At the top of the file, insert
 
 ```python
 from mlagents_envs.environment import UnityEnvironment
 from mlagents_envs.envs import UnityToGymWrapper
 ```
 
-to import the Gym Wrapper. Navigate to the `create_atari_environment` method in
-the same file, and switch to instantiating a Unity environment by replacing the
-method with the following code.
+to import the Gym Wrapper. Navigate to the `create_atari_environment` method in the same file, and switch to instantiating a Unity environment by replacing the method with the following code.
 
 ```python
     game_version = 'v0' if sticky_actions else 'v4'
@@ -251,35 +199,19 @@ method with the following code.
     return env
 ```
 
-`<path-to-environment>` is the path to your built Unity executable. For more
-information on building Unity environments, see
-[here](Learning-Environment-Executable.md), and note the Limitations
-section below.
+`<path-to-environment>` is the path to your built Unity executable. For more information on building Unity environments, see [here](Learning-Environment-Executable.md), and note the Limitations section below.
 
-Note that we are not using the preprocessor from Dopamine, as it uses many
-Atari-specific calls. Furthermore, frame-skipping can be done from within Unity,
-rather than on the Python side.
+Note that we are not using the preprocessor from Dopamine, as it uses many Atari-specific calls. Furthermore, frame-skipping can be done from within Unity, rather than on the Python side.
 
 ### Limitations
 
-Since Dopamine is designed around variants of DQN, it is only compatible with
-discrete action spaces, and specifically the Discrete Gym space. For
-environments that use branched discrete action spaces, you can enable the
-`flatten_branched` parameter in `UnityToGymWrapper`, which treats each
-combination of branched actions as separate actions.
+Since Dopamine is designed around variants of DQN, it is only compatible with discrete action spaces, and specifically the Discrete Gym space. For environments that use branched discrete action spaces, you can enable the `flatten_branched` parameter in `UnityToGymWrapper`, which treats each combination of branched actions as separate actions.
 
-Furthermore, when building your environments, ensure that your Agent is using
-visual observations with greyscale enabled, and that the dimensions of the
-visual observations is 84 by 84 (matches the parameter found in `dqn_agent.py`
-and `rainbow_agent.py`). Dopamine's agents currently do not automatically adapt
-to the observation dimensions or number of channels.
+Furthermore, when building your environments, ensure that your Agent is using visual observations with greyscale enabled, and that the dimensions of the visual observations is 84 by 84 (matches the parameter found in `dqn_agent.py` and `rainbow_agent.py`). Dopamine's agents currently do not automatically adapt to the observation dimensions or number of channels.
 
 ### Hyperparameters
 
-The hyperparameters provided by Dopamine are tailored to the Atari games, and
-you will likely need to adjust them for ML-Agents environments. Here is a sample
-`dopamine/agents/rainbow/configs/rainbow.gin` file that is known to work with
-a simple GridWorld.
+The hyperparameters provided by Dopamine are tailored to the Atari games, and you will likely need to adjust them for ML-Agents environments. Here is a sample `dopamine/agents/rainbow/configs/rainbow.gin` file that is known to work with a simple GridWorld.
 
 ```python
 import dopamine.agents.rainbow.rainbow_agent
@@ -316,10 +248,7 @@ WrappedPrioritizedReplayBuffer.replay_capacity = 1000000
 WrappedPrioritizedReplayBuffer.batch_size = 32
 ```
 
-This example assumed you copied `atari` to a separate folder named `unity`.
-Replace `unity` in `import dopamine.unity.run_experiment` with the folder you
-copied your `run_experiment.py` and `trainer.py` files to. If you directly
-modified the existing files, then use `atari` here.
+This example assumed you copied `atari` to a separate folder named `unity`. Replace `unity` in `import dopamine.unity.run_experiment` with the folder you copied your `run_experiment.py` and `trainer.py` files to. If you directly modified the existing files, then use `atari` here.
 
 ### Starting a Run
 
@@ -332,26 +261,13 @@ python -um dopamine.unity.train \
   --gin_files='dopamine/agents/rainbow/configs/rainbow.gin'
 ```
 
-Again, we assume that you've copied `atari` into a separate folder. Remember to
-replace `unity` with the directory you copied your files into. If you edited the
-Atari files directly, this should be `atari`.
+Again, we assume that you've copied `atari` into a separate folder. Remember to replace `unity` with the directory you copied your files into. If you edited the Atari files directly, this should be `atari`.
 
 ### Example: GridWorld
 
-As a baseline, here are rewards over time for the three algorithms provided with
-Dopamine as run on the GridWorld example environment. All Dopamine (DQN,
-Rainbow, C51) runs were done with the same epsilon, epsilon decay, replay
-history, training steps, and buffer settings as specified above. Note that the
-first 20000 steps are used to pre-fill the training buffer, and no learning
-happens.
+As a baseline, here are rewards over time for the three algorithms provided with Dopamine as run on the GridWorld example environment. All Dopamine (DQN, Rainbow, C51) runs were done with the same epsilon, epsilon decay, replay history, training steps, and buffer settings as specified above. Note that the first 20000 steps are used to pre-fill the training buffer, and no learning happens.
 
-We provide results from our PPO implementation and the DQN from Baselines as
-reference. Note that all runs used the same greyscale GridWorld as Dopamine. For
-PPO, `num_layers` was set to 2, and all other hyperparameters are the default
-for GridWorld in `config/ppo/GridWorld.yaml`. For Baselines DQN, the provided
-hyperparameters in the previous section are used. Note that Baselines implements
-certain features (e.g. dueling-Q) that are not enabled in Dopamine DQN.
+We provide results from our PPO implementation and the DQN from Baselines as reference. Note that all runs used the same greyscale GridWorld as Dopamine. For PPO, `num_layers` was set to 2, and all other hyperparameters are the default for GridWorld in `config/ppo/GridWorld.yaml`. For Baselines DQN, the provided hyperparameters in the previous section are used. Note that Baselines implements certain features (e.g. dueling-Q) that are not enabled in Dopamine DQN.
 
 
 ![Dopamine on GridWorld](images/dopamine_gridworld_plot.png)
-

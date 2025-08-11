@@ -1,11 +1,9 @@
 # ELO Rating System
-In adversarial games, the cumulative environment reward may **not be a meaningful metric** by which to track
-learning progress.
+In adversarial games, the cumulative environment reward may **not be a meaningful metric** by which to track learning progress.
 
 This is because the cumulative reward is **entirely dependent on the skill of the opponent**.
 
-An agent at a particular skill level will get more or less reward against a worse or better agent,
-respectively.
+An agent at a particular skill level will get more or less reward against a worse or better agent, respectively.
 
 Instead, it's better to use ELO rating system, a method to calculate **the relative skill level between two players in a zero-sum game**.
 
@@ -45,9 +43,7 @@ The winning player takes points from the losing one:
 - We start to train our agents.
 - Both of them have the same skills. So ELO score for each of them that we defined using parameter `initial_elo = 1200.0`.
 
-We calculate the expected score E:
-Ea = 0.5
-Eb = 0.5
+We calculate the expected score E: Ea = 0.5 and Eb = 0.5
 
 So it means that each player has 50% chances of winning the point.
 
