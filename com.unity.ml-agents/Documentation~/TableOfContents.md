@@ -48,7 +48,6 @@
   * [Migrating](Migrating.md)
   * [versioning](Versioning.md)
   * [ML-Agents Glossary](Glossary.md)
-  * [C# API Reference](API-Reference.md)
 * [Background](Background.md)
   * [Machine Learning](Background-Machine-Learning.md)
   * [Unity](Background-Unity.md)
