@@ -36,6 +36,7 @@
   * [Inference Engine](Inference-Engine.md)
   * [Hugging Face Integration](Hugging-Face-Integration.md)
   * [Game Integrations](Integrations.md)
+  * [Match-3](Integrations-Match3.md)
   * [ML-Agents Package Settings](Package-Settings.md)
   * [Unity Environment Registry](Unity-Environment-Registry.md)
 * [Cloud & Deployment (deprecated)](Cloud-Deployment.md)
