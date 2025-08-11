@@ -31,14 +31,11 @@ The context manager may be easier than the `@timed` decorator for profiling diff
 
 By default, at the end of training, timers are collected and written in json format to `{summaries_dir}/{run_id}_timers.json`. The output consists of node objects with the following keys:
 
-- total (float): The total time in seconds spent in the block, including child
-calls.
+- total (float): The total time in seconds spent in the block, including child calls.
 - count (int): The number of times the block was called.
-- self (float): The total time in seconds spent in the block, excluding child
-calls.
+- self (float): The total time in seconds spent in the block, excluding child calls.
 - children (dictionary): A dictionary of child nodes, keyed by the node name.
-- is_parallel (bool): Indicates that the block of code was executed in multiple
-threads or processes (see below). This is optional and defaults to false.
+- is_parallel (bool): Indicates that the block of code was executed in multiple threads or processes (see below). This is optional and defaults to false.
 
 ### Parallel execution
 

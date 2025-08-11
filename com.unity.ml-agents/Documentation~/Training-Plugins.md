@@ -21,13 +21,10 @@ entry_points={
     ]
 }
 ```
-* `ML_AGENTS_STATS_WRITER` (which is a string constant, `mlagents.stats_writer`) is the name of the plugin interface.
-This must be one of the provided interfaces ([see below](#plugin-interfaces)).
+* `ML_AGENTS_STATS_WRITER` (which is a string constant, `mlagents.stats_writer`) is the name of the plugin interface. This must be one of the provided interfaces ([see below](#plugin-interfaces)).
 * `example` is the plugin implementation name. This can be anything.
-* `mlagents_plugin_examples.example_stats_writer` is the plugin module. This points to the module where the
-plugin registration function is defined.
-* `get_example_stats_writer` is the plugin registration function. This is called when running `mlagents-learn`. The
-arguments and expected return type for this are different for each plugin interface.
+* `mlagents_plugin_examples.example_stats_writer` is the plugin module. This points to the module where the plugin registration function is defined.
+* `get_example_stats_writer` is the plugin registration function. This is called when running `mlagents-learn`. The arguments and expected return type for this are different for each plugin interface.
 
 ### Local Installation
 Once you've defined `entry_points` in your `setup.py`, you will need to run

@@ -38,12 +38,9 @@ Similar to both unsupervised and supervised learning, reinforcement learning als
 
 One common aspect of all three branches of machine learning is that they all involve a **training phase** and an **inference phase**. While the details of the training and inference phases are different for each of the three, at a high-level, the training phase involves building a model using the provided data, while the inference phase involves applying this model to new, previously unseen, data. More specifically:
 
-- For our unsupervised learning example, the training phase learns the optimal
-two clusters based on the data describing existing players, while the inference phase assigns a new player to one of these two clusters.
-- For our supervised learning example, the training phase learns the mapping
-from player attributes to player label (whether they churned or not), and the inference phase predicts whether a new player will churn or not based on that learned mapping.
-- For our reinforcement learning example, the training phase learns the optimal
-policy through guided trials, and in the inference phase, the agent observes and takes actions in the wild using its learned policy.
+- For our unsupervised learning example, the training phase learns the optimal two clusters based on the data describing existing players, while the inference phase assigns a new player to one of these two clusters.
+- For our supervised learning example, the training phase learns the mapping from player attributes to player label (whether they churned or not), and the inference phase predicts whether a new player will churn or not based on that learned mapping.
+- For our reinforcement learning example, the training phase learns the optimal policy through guided trials, and in the inference phase, the agent observes and takes actions in the wild using its learned policy.
 
 To briefly summarize: all three classes of algorithms involve training and inference phases in addition to attribute and model selections. What ultimately separates them is the type of data available to learn from. In unsupervised learning our data set was a collection of attributes, in supervised learning our data set was a collection of attribute-label pairs, and, lastly, in reinforcement learning our data set was a collection of observation-action-reward tuples.
 

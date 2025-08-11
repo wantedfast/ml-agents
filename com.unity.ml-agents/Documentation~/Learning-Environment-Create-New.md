@@ -10,15 +10,11 @@ In this example, we will create an agent capable of controlling a ball on a plat
 
 Using the ML-Agents Toolkit in a Unity project involves the following basic steps:
 
-1. Create an environment for your agents to live in. An environment can range
-from a simple physical simulation containing a few objects to an entire game or ecosystem.
-1. Implement your Agent subclasses. An Agent subclass defines the code an Agent
-uses to observe its environment, to carry out assigned actions, and to calculate the rewards used for reinforcement training. You can also implement optional methods to reset the Agent when it has finished or failed its task.
-1. Add your Agent subclasses to appropriate GameObjects, typically, the object
-in the scene that represents the Agent in the simulation.
+1. Create an environment for your agents to live in. An environment can range from a simple physical simulation containing a few objects to an entire game or ecosystem.
+2. Implement your Agent subclasses. An Agent subclass defines the code an Agent uses to observe its environment, to carry out assigned actions, and to calculate the rewards used for reinforcement training. You can also implement optional methods to reset the Agent when it has finished or failed its task.
+3. Add your Agent subclasses to appropriate GameObjects, typically, the object in the scene that represents the Agent in the simulation.
 
-**Note:** If you are unfamiliar with Unity, refer to the
-[Unity manual](https://docs.unity3d.com/Manual/index.html) if an Editor task isn't explained sufficiently in this tutorial.
+**Note:** If you are unfamiliar with Unity, refer to the [Unity manual](https://docs.unity3d.com/Manual/index.html) if an Editor task isn't explained sufficiently in this tutorial.
 
 If you haven't already, follow the [installation instructions](Installation.md).
 
@@ -27,10 +23,9 @@ If you haven't already, follow the [installation instructions](Installation.md).
 The first task to accomplish is simply creating a new Unity project and importing the ML-Agents assets into it:
 
 1. Launch Unity Hub and create a new 3D project named "RollerBall".
-1. [Add the ML-Agents Unity package](Installation.md#install-the-comunityml-agents-unity-package)
-to your project.
+2. [Add the ML-Agents Unity package](Installation.md#install-the-comunityml-agents-unity-package) to your project.
 
-Your Unity **Project** window should contain the following assets:
+Your Unity **Project** window should contain the following Packages:
 
 ![Unity Project Window](images/roller-ball-projects.png){: style="width:250px"}
 
@@ -41,19 +36,18 @@ Next, we will create a very simple scene to act as our learning environment. The
 ### Create the Floor Plane
 
 1. Right click in Hierarchy window, select 3D Object > Plane.
-1. Name the GameObject "Floor".
-1. Select the Floor Plane to view its properties in the Inspector window.
-1. Set Transform to Position = `(0, 0, 0)`, Rotation = `(0, 0, 0)`, Scale =
-   `(1, 1, 1)`.
+2. Name the GameObject "Floor".
+3. Select the Floor Plane to view its properties in the Inspector window.
+4. Set Transform to Position = `(0, 0, 0)`, Rotation = `(0, 0, 0)`, Scale =`(1, 1, 1)`.
 
 ![Floor Inspector window](images/roller-ball-floor.png){: style="width:400px"}
 
 ### Add the Target Cube
 
 1. Right click in Hierarchy window, select 3D Object > Cube.
-1. Name the GameObject "Target".
-1. Select the Target Cube to view its properties in the Inspector window.
-1. Set Transform to Position = `(3, 0.5, 3)`, Rotation = `(0, 0, 0)`, Scale =
+2. Name the GameObject "Target".
+3. Select the Target Cube to view its properties in the Inspector window.
+4. Set Transform to Position = `(3, 0.5, 3)`, Rotation = `(0, 0, 0)`, Scale =
    `(1, 1, 1)`.
 
 ![Target Cube Inspector window](images/roller-ball-target.png){: style="width:400px"}
@@ -61,12 +55,11 @@ Next, we will create a very simple scene to act as our learning environment. The
 ### Add the Agent Sphere
 
 1. Right click in Hierarchy window, select 3D Object > Sphere.
-1. Name the GameObject "RollerAgent".
-1. Select the RollerAgent Sphere to view its properties in the Inspector window.
-1. Set Transform to Position = `(0, 0.5, 0)`, Rotation = `(0, 0, 0)`, Scale =
-   `(1, 1, 1)`.
-1. Click **Add Component**.
-1. Add the `Rigidbody` component to the Sphere.
+2. Name the GameObject "RollerAgent".
+3. Select the RollerAgent Sphere to view its properties in the Inspector window.
+4. Set Transform to Position = `(0, 0.5, 0)`, Rotation = `(0, 0, 0)`, Scale = `(1, 1, 1)`.
+5. Click **Add Component**.
+6. Add the `Rigidbody` component to the Sphere.
 
 ### Group into Training Area
 
@@ -74,12 +67,9 @@ Group the floor, target and agent under a single, empty, GameObject. This will s
 
 To do so:
 
-1. Right-click on your Project Hierarchy and create a new empty GameObject. Name
-it TrainingArea.
-1. Reset the TrainingArea’s Transform so that it is at `(0,0,0)` with Rotation
-   `(0,0,0)` and Scale `(1,1,1)`.
-1. Drag the Floor, Target, and RollerAgent GameObjects in the Hierarchy into the
-TrainingArea GameObject.
+1. Right-click on your Project Hierarchy and create a new empty GameObject. Name it TrainingArea.
+2. Reset the TrainingArea’s Transform so that it is at `(0,0,0)` with Rotation `(0,0,0)` and Scale `(1,1,1)`.
+3. Drag the Floor, Target, and RollerAgent GameObjects in the Hierarchy into the TrainingArea GameObject.
 
 ![Hierarchy window](images/roller-ball-hierarchy.png){: style="width:250px"}
 
@@ -88,16 +78,15 @@ TrainingArea GameObject.
 To create the Agent Script:
 
 1. Select the RollerAgent GameObject to view it in the Inspector window.
-1. Click **Add Component**.
-1. Click **New Script** in the list of components (at the bottom).
-1. Name the script "RollerAgent".
-1. Click **Create and Add**.
+2. Click **Add Component**.
+3. Click **New Script** in the list of components (at the bottom).
+4. Name the script "RollerAgent".
+5. Click **Create and Add**.
 
 Then, edit the new `RollerAgent` script:
 
-1. In the Unity Project window, double-click the `RollerAgent` script to open it
-in your code editor.
-1. Import ML-Agent package by adding
+1. In the Unity Project window, double-click the `RollerAgent` script to open it in your code editor.
+2. Import ML-Agent package by adding
 
    ```csharp
    using Unity.MLAgents;
@@ -264,13 +253,10 @@ Note the `forceMultiplier` class variable is defined before the method definitio
 
 Now that all the GameObjects and ML-Agent components are in place, it is time to connect everything together in the Unity Editor. This involves adding and setting some of the Agent Component's properties so that they are compatible with our Agent script.
 
-1. Select the **RollerAgent** GameObject to show its properties in the Inspector
-window.
-1. Drag the Target GameObject in the Hierarchy into the `Target` field in RollerAgent Script.
-1. Add a `Decision Requester` script with the **Add Component** button.
-Set the **Decision Period** to `10`. For more information on decisions, see [the Agent documentation](Learning-Environment-Design-Agents.md#decisions)
-1. Add a `Behavior Parameters` script with the **Add Component** button.
-Set the Behavior Parameters of the Agent to the following:
+1. Select the **RollerAgent** GameObject to show its properties in the Inspector window.
+2. Drag the Target GameObject in the Hierarchy into the `Target` field in RollerAgent Script.
+3. Add a `Decision Requester` script with the **Add Component** button. Set the **Decision Period** to `10`. For more information on decisions, see [the Agent documentation](Learning-Environment-Design-Agents.md#decisions)
+4. Add a `Behavior Parameters` script with the **Add Component** button. Set the Behavior Parameters of the Agent to the following:
    - `Behavior Name`: _RollerBall_
    - `Vector Observation` > `Space Size` = 8
    - `Actions` > `Continuous Actions` = 2
@@ -294,9 +280,7 @@ public override void Heuristic(in ActionBuffers actionsOut)
 }
 ```
 
-In order for the Agent to use the Heuristic, You will need to set the
-`Behavior Type` to `Heuristic Only` in the `Behavior Parameters` of the
-RollerAgent.
+In order for the Agent to use the Heuristic, You will need to set the `Behavior Type` to `Heuristic Only` in the `Behavior Parameters` of the RollerAgent.
 
 Press **Play** to run the scene and use the arrows keys to move the Agent around the platform. Make sure that there are no errors displayed in the Unity Editor Console window and that the Agent resets when it reaches its target or falls from the platform.
 
@@ -350,14 +334,10 @@ In particular, the _cumulative_reward_ and _value_estimate_ statistics show how 
 
 ## Optional: Multiple Training Areas within the Same Scene
 
-In many of the [example environments](Learning-Environment-Examples.md), many copies of the training area are instantiated in the scene. This generally speeds up training, allowing the environment to gather many experiences in parallel. This can be achieved simply by instantiating many Agents with the same
-`Behavior Name`. Note that we've already simplified our transition to using
-multiple areas by creating the `TrainingArea` GameObject and relying on local positions in `RollerAgent.cs`. Use the following steps to parallelize your RollerBall environment:
+In many of the [example environments](Learning-Environment-Examples.md), many copies of the training area are instantiated in the scene. This generally speeds up training, allowing the environment to gather many experiences in parallel. This can be achieved simply by instantiating many Agents with the same `Behavior Name`. Note that we've already simplified our transition to using multiple areas by creating the `TrainingArea` GameObject and relying on local positions in `RollerAgent.cs`. Use the following steps to parallelize your RollerBall environment:
 
-1. Drag the TrainingArea GameObject, along with its attached GameObjects, into
-your Assets browser, turning it into a prefab.
-1. You can now instantiate copies of the TrainingArea prefab. Drag them into
-your scene, positioning them so that they do not overlap.
+1. Drag the TrainingArea GameObject, along with its attached GameObjects, into your Assets browser, turning it into a prefab.
+2. You can now instantiate copies of the TrainingArea prefab. Drag them into your scene, positioning them so that they do not overlap.
 
 Alternatively, you can use the `TrainingAreaReplicator` to replicate training areas. Use the following steps:
 
@@ -374,6 +354,4 @@ Another level of parallelization comes by training using [concurrent Unity insta
 mlagents-learn config/rollerball_config.yaml --run-id=RollerBall --num-envs=2
 ```
 
-will start ML Agents training with two environment instances. Combining multiple training areas within the same scene, with concurrent Unity instances, effectively gives you two levels of parallelism to speed up training. The command line option
-`--num-envs=<n>` controls the number of concurrent Unity instances that are
-executed in parallel during training.
+will start ML Agents training with two environment instances. Combining multiple training areas within the same scene, with concurrent Unity instances, effectively gives you two levels of parallelism to speed up training. The command line option `--num-envs=<n>` controls the number of concurrent Unity instances that are executed in parallel during training.

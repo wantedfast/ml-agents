@@ -41,10 +41,8 @@ Instruct the game to make the given move. Returns true if the move was made. Not
 
 ### `Move` struct
 The Move struct encapsulates a swap of two adjacent cells. You can get the number of potential moves for a board of a given size with. `Move.NumPotentialMoves(maxBoardSize)`. There are two helper functions to create a new `Move`:
-* `public static Move FromMoveIndex(int moveIndex, BoardSize maxBoardSize)` can be used to
-iterate over all potential moves for the board by looping from 0 to `Move.NumPotentialMoves()`
-* `public static Move FromPositionAndDirection(int row, int col, Direction dir, BoardSize maxBoardSize)` creates
-a `Move` from a row, column, and direction (and board size).
+* `public static Move FromMoveIndex(int moveIndex, BoardSize maxBoardSize)` can be used to iterate over all potential moves for the board by looping from 0 to `Move.NumPotentialMoves()`
+* `public static Move FromPositionAndDirection(int row, int col, Direction dir, BoardSize maxBoardSize)` creates a `Move` from a row, column, and direction (and board size).
 
 ### `BoardSize` struct
 Describes the "size" of the board, including the number of potential piece types that the board can have. This is returned by the AbstractBoard.GetMaxBoardSize() and GetCurrentBoardSize() methods.
@@ -61,12 +59,9 @@ A `Match3ActuatorComponent` generates a `Match3Actuator` at runtime, and should 
 
 ### Setting up Match-3 simulation
 * Implement the `AbstractBoard` methods to integrate with your game.
-* Give the `Agent` rewards when it does what you want it to (match multiple pieces in a row, clears pieces of a certain
-type, etc).
-* Add the `Agent`, `AbstractBoard` implementation, `Match3SensorComponent`, and `Match3ActuatorComponent` to the same
-`GameObject`.
-* Call `Agent.RequestDecision()` when you're ready for the `Agent` to make a move on the next `Academy` step. During
-the next `Academy` step, the `MakeMove()` method on the board will be called.
+* Give the `Agent` rewards when it does what you want it to (match multiple pieces in a row, clears pieces of a certain type, etc).
+* Add the `Agent`, `AbstractBoard` implementation, `Match3SensorComponent`, and `Match3ActuatorComponent` to the same `GameObject`.
+* Call `Agent.RequestDecision()` when you're ready for the `Agent` to make a move on the next `Academy` step. During the next `Academy` step, the `MakeMove()` method on the board will be called.
 
 ## Implementation Details
 

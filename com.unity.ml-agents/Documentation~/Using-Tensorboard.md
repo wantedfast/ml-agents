@@ -85,8 +85,7 @@ To export timeseries data in CSV or JSON format, check the "Show data download l
 
 ## Custom Metrics from Unity
 
-To get custom metrics from a C# environment into TensorBoard, you can use the
-`StatsRecorder`:
+To get custom metrics from a C# environment into TensorBoard, you can use the `StatsRecorder`:
 
 ```csharp
 var statsRecorder = Academy.Instance.StatsRecorder;

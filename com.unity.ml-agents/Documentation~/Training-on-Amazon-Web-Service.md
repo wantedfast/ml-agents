@@ -235,7 +235,7 @@ There is no data folder
 
 ### Unity Environment not responding
 
-If you didn't setup X Server or hasn't launched it properly, or your environment somehow crashes, or you haven't `chmod +x` your Unity Environment, all of these will cause connection between Unity and Python to fail. Then you will see something like this:
+If you didn't set up X Server or hasn't launched it properly, or your environment somehow crashes, or you haven't `chmod +x` your Unity Environment, all of these will cause connection between Unity and Python to fail. Then you will see something like this:
 
 ```console
 Logging to /home/ubuntu/.config/unity3d/<Some_Path>/Player.log

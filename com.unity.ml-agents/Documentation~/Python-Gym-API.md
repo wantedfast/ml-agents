@@ -25,8 +25,7 @@ env = UnityToGymWrapper(unity_env, uint8_visual, flatten_branched, allow_multipl
 
 - `flatten_branched` will flatten a branched discrete action space into a Gym Discrete. Otherwise, it will be converted into a MultiDiscrete. Defaults to `False`.
 
-- `allow_multiple_obs` will return a list of observations. The first elements
-contain the visual observations and the last element contains the array of vector observations. If False the environment returns a single array (containing a single visual observations, if present, otherwise the vector observation). Defaults to `False`.
+- `allow_multiple_obs` will return a list of observations. The first elements contain the visual observations and the last element contains the array of vector observations. If False the environment returns a single array (containing a single visual observations, if present, otherwise the vector observation). Defaults to `False`.
 
 - `action_space_seed` is the optional seed for action sampling. If non-None, will be used to set the random seed on created gym.Space instances.
 

@@ -1,8 +1,6 @@
 # Custom Side Channels
 
-You can create your own side channel in C# and Python and use it to communicate custom data structures between the two. This can be useful for situations in which the data to be sent is too complex or structured for the built-in
-`EnvironmentParameters`, or is not related to any specific agent, and therefore
-inappropriate as an agent observation.
+You can create your own side channel in C# and Python and use it to communicate custom data structures between the two. This can be useful for situations in which the data to be sent is too complex or structured for the built-in `EnvironmentParameters`, or is not related to any specific agent, and therefore inappropriate as an agent observation.
 
 ## Overview
 
@@ -12,24 +10,19 @@ In order to use a side channel, it must be implemented as both Unity and Python 
 
 The side channel will have to implement the `SideChannel` abstract class and the following method.
 
-- `OnMessageReceived(IncomingMessage msg)` : You must implement this method and
-read the data from IncomingMessage. The data must be read in the order that it was written.
+- `OnMessageReceived(IncomingMessage msg)` : You must implement this method and read the data from IncomingMessage. The data must be read in the order that it was written.
 
-The side channel must also assign a `ChannelId` property in the constructor. The
-`ChannelId` is a Guid (or UUID in Python) used to uniquely identify a side
-channel. This Guid must be the same on C# and Python. There can only be one side channel of a certain id during communication.
+The side channel must also assign a `ChannelId` property in the constructor. The `ChannelId` is a Guid (or UUID in Python) used to uniquely identify a side channel. This Guid must be the same on C# and Python. There can only be one side channel of a certain id during communication.
 
 To send data from C# to Python, create an `OutgoingMessage` instance, add data to it, call the `base.QueueMessageToSend(msg)` method inside the side channel, and call the `OutgoingMessage.Dispose()` method.
 
-To register a side channel on the Unity side, call
-`SideChannelManager.RegisterSideChannel` with the side channel as only argument.
+To register a side channel on the Unity side, call `SideChannelManager.RegisterSideChannel` with the side channel as only argument.
 
 ### Python side
 
 The side channel will have to implement the `SideChannel` abstract class. You must implement :
 
-- `on_message_received(self, msg: "IncomingMessage") -> None` : You must
-implement this method and read the data from IncomingMessage. The data must be read in the order that it was written.
+- `on_message_received(self, msg: "IncomingMessage") -> None` : You must implement this method and read the data from IncomingMessage. The data must be read in the order that it was written.
 
 The side channel must also assign a `channel_id` property in the constructor. The `channel_id` is a UUID (referred in C# as Guid) used to uniquely identify a side channel. This number must be the same on C# and Python. There can only be one side channel of a certain id during communication.
 

@@ -113,17 +113,12 @@ The `SensorComponent` abstract class is used to create the actual `ISensor` at r
 
 There are several SensorComponents provided in the API, including:
 - `CameraSensorComponent` - Uses images from a `Camera` as observations.
-- `RenderTextureSensorComponent` - Uses the content of a `RenderTexture` as
-observations.
-- `RayPerceptionSensorComponent` - Uses the information from set of ray casts
-as observations.
-- `Match3SensorComponent` - Uses the board of a [Match-3 game](Integrations-Match3.md)
-as observations.
-- `GridSensorComponent` - Uses a set of box queries in a grid shape as
-observations.
+- `RenderTextureSensorComponent` - Uses the content of a `RenderTexture` as observations.
+- `RayPerceptionSensorComponent` - Uses the information from set of ray casts as observations.
+- `Match3SensorComponent` - Uses the board of a [Match-3 game](Integrations-Match3.md) as observations.
+- `GridSensorComponent` - Uses a set of box queries in a grid shape as observations.
 
-**NOTE**: you do not need to adjust the Space Size in the Agent's
-`Behavior Parameters` when using `SensorComponents`s.
+**NOTE**: you do not need to adjust the Space Size in the Agent's `Behavior Parameters` when using `SensorComponents`s.
 
 Internally, both `Agent.CollectObservations` and `[Observable]` attribute use an ISensors to write observations, although this is mostly abstracted from the user.
 
@@ -147,8 +142,7 @@ public override void CollectObservations(VectorSensor sensor)
 }
 ```
 
-`VectorSensor` also provides a two-argument function `AddOneHotObservation()` as
-a shortcut for _one-hot_ style observations. The following example is identical to the previous one.
+`VectorSensor` also provides a two-argument function `AddOneHotObservation()` as a shortcut for _one-hot_ style observations. The following example is identical to the previous one.
 
 ```csharp
 enum ItemType { Sword, Shield, Bow, LastItem }
@@ -162,8 +156,7 @@ public override void CollectObservations(VectorSensor sensor)
 }
 ```
 
-`ObservableAttribute` has built-in support for enums. Note that you don't need
-the `LastItem` placeholder in this case:
+`ObservableAttribute` has built-in support for enums. Note that you don't need the `LastItem` placeholder in this case:
 ```csharp
 enum ItemType { Sword, Shield, Bow }
 
@@ -215,28 +208,17 @@ step 4: [0.4, 0.3, 0.2]
 (The observations are padded with zeroes for the first `stackSize-1` steps). This is a simple way to give an Agent limited "memory" without the complexity of adding a recurrent neural network (RNN).
 
 The steps for enabling stacking depends on how you generate observations:
-* For Agent.CollectObservations(), set "Stacked Vectors" on the Agent's
-  `Behavior Parameters` to a value greater than 1.
-* For ObservableAttribute, set the `numStackedObservations` parameter in the
-constructor, e.g. `[Observable(numStackedObservations: 2)]`.
-* For `ISensor`s, wrap them in a `StackingSensor` (which is also an `ISensor`).
-Generally, this should happen in the `CreateSensor()` method of your
-  `SensorComponent`.
+* For Agent.CollectObservations(), set "Stacked Vectors" on the Agent's `Behavior Parameters` to a value greater than 1.
+* For ObservableAttribute, set the `numStackedObservations` parameter in the constructor, e.g. `[Observable(numStackedObservations: 2)]`.
+* For `ISensor`s, wrap them in a `StackingSensor` (which is also an `ISensor`). Generally, this should happen in the `CreateSensor()` method of your `SensorComponent`.
 
 #### Vector Observation Summary & Best Practices
 
-- Vector Observations should include all variables relevant for allowing the
-agent to take the optimally informed decision, and ideally no extraneous information.
-- In cases where Vector Observations need to be remembered or compared over
-time, either an RNN should be used in the model, or the `Stacked Vectors` value in the agent GameObject's `Behavior Parameters` should be changed.
-- Categorical variables such as type of object (Sword, Shield, Bow) should be
-encoded in one-hot fashion (i.e. `3` -> `0, 0, 1`). This can be done automatically using the `AddOneHotObservation()` method of the `VectorSensor`, or using `[Observable]` on an enum field or property of the Agent.
-- In general, all inputs should be normalized to be in the range 0 to +1 (or -1
-to 1). For example, the `x` position information of an agent where the maximum possible value is `maxValue` should be recorded as
-  `VectorSensor.AddObservation(transform.position.x / maxValue);` rather than
-  `VectorSensor.AddObservation(transform.position.x);`.
-- Positional information of relevant GameObjects should be encoded in relative
-coordinates wherever possible. This is often relative to the agent position.
+- Vector Observations should include all variables relevant for allowing the agent to take the optimally informed decision, and ideally no extraneous information.
+- In cases where Vector Observations need to be remembered or compared over time, either an RNN should be used in the model, or the `Stacked Vectors` value in the agent GameObject's `Behavior Parameters` should be changed.
+- Categorical variables such as type of object (Sword, Shield, Bow) should be encoded in one-hot fashion (i.e. `3` -> `0, 0, 1`). This can be done automatically using the `AddOneHotObservation()` method of the `VectorSensor`, or using `[Observable]` on an enum field or property of the Agent.
+- In general, all inputs should be normalized to be in the range 0 to +1 (or -1 to 1). For example, the `x` position information of an agent where the maximum possible value is `maxValue` should be recorded as `VectorSensor.AddObservation(transform.position.x / maxValue);` rather than `VectorSensor.AddObservation(transform.position.x);`.
+- Positional information of relevant GameObjects should be encoded in relative coordinates wherever possible. This is often relative to the agent position.
 
 ### Visual Observations
 
@@ -266,19 +248,14 @@ The [GridWorld environment](Learning-Environment-Examples.md#gridworld) is an ex
 
 #### Visual Observation Summary & Best Practices
 
-- To collect visual observations, attach `CameraSensor` or `RenderTextureSensor`
-components to the agent GameObject.
-- Visual observations should generally only be used when vector observations are
-not sufficient.
-- Image size should be kept as small as possible, without the loss of needed
-details for decision making.
-- Images should be made grayscale in situations where color information is not
-needed for making informed decisions.
+- To collect visual observations, attach `CameraSensor` or `RenderTextureSensor` components to the agent GameObject.
+- Visual observations should generally only be used when vector observations are not sufficient.
+- Image size should be kept as small as possible, without the loss of needed details for decision making.
+- Images should be made grayscale in situations where color information is not needed for making informed decisions.
 
 ### Raycast Observations
 
-Raycasts are another possible method for providing observations to an agent. This can be easily implemented by adding a `RayPerceptionSensorComponent3D` (or
-`RayPerceptionSensorComponent2D`) to the Agent GameObject.
+Raycasts are another possible method for providing observations to an agent. This can be easily implemented by adding a `RayPerceptionSensorComponent3D` (or `RayPerceptionSensorComponent2D`) to the Agent GameObject.
 
 During observations, several rays (or spheres, depending on settings) are cast into the physics world, and the objects that are hit determine the observation vector that is produced.
 
@@ -286,26 +263,16 @@ During observations, several rays (or spheres, depending on settings) are cast i
 
 Both sensor components have several settings:
 
-- _Detectable Tags_ A list of strings corresponding to the types of objects that
-the Agent should be able to distinguish between. For example, in the WallJump example, we use "wall", "goal", and "block" as the list of objects to detect.
-- _Rays Per Direction_ Determines the number of rays that are cast. One ray is
-always cast forward, and this many rays are cast to the left and right.
-- _Max Ray Degrees_ The angle (in degrees) for the outermost rays. 90 degrees
-corresponds to the left and right of the agent.
-- _Sphere Cast Radius_ The size of the sphere used for sphere casting. If set to
-  0, rays will be used instead of spheres. Rays may be more efficient,
-especially in complex scenes.
+- _Detectable Tags_ A list of strings corresponding to the types of objects that the Agent should be able to distinguish between. For example, in the WallJump example, we use "wall", "goal", and "block" as the list of objects to detect.
+- _Rays Per Direction_ Determines the number of rays that are cast. One ray is always cast forward, and this many rays are cast to the left and right.
+- _Max Ray Degrees_ The angle (in degrees) for the outermost rays. 90 degrees corresponds to the left and right of the agent.
+- _Sphere Cast Radius_ The size of the sphere used for sphere casting. If set to 0, rays will be used instead of spheres. Rays may be more efficient, especially in complex scenes.
 - _Ray Length_ The length of the casts
-- _Ray Layer Mask_ The [LayerMask](https://docs.unity3d.com/ScriptReference/LayerMask.html)
-passed to the raycast or spherecast. This can be used to ignore certain types of objects when casting.
-- _Observation Stacks_ The number of previous results to "stack" with the cast
-results. Note that this can be independent of the "Stacked Vectors" setting in
-  `Behavior Parameters`.
+- _Ray Layer Mask_ The [LayerMask](https://docs.unity3d.com/ScriptReference/LayerMask.html) passed to the raycast or spherecast. This can be used to ignore certain types of objects when casting.
+- _Observation Stacks_ The number of previous results to "stack" with the cast results. Note that this can be independent of the "Stacked Vectors" setting in `Behavior Parameters`.
 - _Start Vertical Offset_ (3D only) The vertical offset of the ray start point.
 - _End Vertical Offset_ (3D only) The vertical offset of the ray end point.
-- _Alternating Ray Order_ Alternating is the default, it gives an order of (0,
-  -delta, delta, -2*delta, 2*delta, ..., -n*delta, n*delta). If alternating is
-disabled the order is left to right (-n*delta, -(n-1)*delta, ..., -delta, 0, delta, ..., (n-1)*delta, n*delta). For general usage there is no difference but if using custom models the left-to-right layout that matches the spatial structuring can be preferred (e.g. for processing with conv nets).
+- _Alternating Ray Order_ Alternating is the default, it gives an order of (0, -delta, delta, -2*delta, 2*delta, ..., -n*delta, n*delta). If alternating is disabled the order is left to right (-n*delta, -(n-1)*delta, ..., -delta, 0, delta, ..., (n-1)*delta, n*delta). For general usage there is no difference but if using custom models the left-to-right layout that matches the spatial structuring can be preferred (e.g. for processing with conv nets).
 - _Use Batched Raycasts_ (3D only) Whether to use batched raycasts. Enable to use batched raycasts and the jobs system.
 
 In the example image above, the Agent has two `RayPerceptionSensorComponent3D`s. Both use 3 Rays Per Direction and 90 Max Ray Degrees. One of the components had a vertical offset, so the Agent can tell whether it's clear to jump over the wall.
@@ -316,24 +283,17 @@ The total size of the created observations is
 (Observation Stacks) * (1 + 2 * Rays Per Direction) * (Num Detectable Tags + 2)
 ```
 
-so the number of rays and tags should be kept as small as possible to reduce the amount of data used. Note that this is separate from the State Size defined in
-`Behavior Parameters`, so you don't need to worry about the formula above when
-setting the State Size.
+so the number of rays and tags should be kept as small as possible to reduce the amount of data used. Note that this is separate from the State Size defined in `Behavior Parameters`, so you don't need to worry about the formula above when setting the State Size.
 
 #### RayCast Observation Summary & Best Practices
 
-- Attach `RayPerceptionSensorComponent3D` or `RayPerceptionSensorComponent2D` to
-use.
-- This observation type is best used when there is relevant spatial information
-for the agent that doesn't require a fully rendered image to convey.
-- Use as few rays and tags as necessary to solve the problem in order to improve
-learning stability and agent performance.
-- If you run into performance issues, try using batched raycasts by enabling the _Use Batched Raycast_ setting.
-(Only available for 3D ray perception sensors.)
+- Attach `RayPerceptionSensorComponent3D` or `RayPerceptionSensorComponent2D` to use.
+- This observation type is best used when there is relevant spatial information for the agent that doesn't require a fully rendered image to convey.
+- Use as few rays and tags as necessary to solve the problem in order to improve learning stability and agent performance.
+- If you run into performance issues, try using batched raycasts by enabling the _Use Batched Raycast_ setting. (Only available for 3D ray perception sensors.)
 
 ### Grid Observations
-Grid-base observations combine the advantages of 2D spatial representation in visual observations, and the flexibility of defining detectable objects in RayCast observations. The sensor uses a set of box queries in a grid shape and gives a top-down 2D view around the agent. This can be implemented by adding a
-`GridSensorComponent` to the Agent GameObject.
+Grid-base observations combine the advantages of 2D spatial representation in visual observations, and the flexibility of defining detectable objects in RayCast observations. The sensor uses a set of box queries in a grid shape and gives a top-down 2D view around the agent. This can be implemented by adding a `GridSensorComponent` to the Agent GameObject.
 
 During observations, the sensor detects the presence of detectable objects in each cell and encode that into one-hot representation. The collected information from each cell forms a 3D tensor observation and will be fed into the convolutional neural network (CNN) of the agent policy just like visual observations.
 
@@ -342,17 +302,12 @@ During observations, the sensor detects the presence of detectable objects in ea
 The sensor component has the following settings:
 - _Cell Scale_ The scale of each cell in the grid.
 - _Grid Size_ Number of cells on each side of the grid.
-- _Agent Game Object_ The Agent that holds the grid sensor. This is used to
-disambiguate objects with the same tag as the agent so that the agent doesn't detect itself.
+- _Agent Game Object_ The Agent that holds the grid sensor. This is used to disambiguate objects with the same tag as the agent so that the agent doesn't detect itself.
 - _Rotate With Agent_ Whether the grid rotates with the Agent.
-- _Detectable Tags_ A list of strings corresponding to the types of objects that
-the Agent should be able to distinguish between.
-- _Collider Mask_ The [LayerMask](https://docs.unity3d.com/ScriptReference/LayerMask.html)
-passed to the collider detection. This can be used to ignore certain types of objects.
-- _Initial Collider Buffer Size_ The initial size of the Collider buffer used
-in the non-allocating Physics calls for each cell.
-- _Max Collider Buffer Size_ The max size of the Collider buffer used in the
-non-allocating Physics calls for each cell.
+- _Detectable Tags_ A list of strings corresponding to the types of objects that the Agent should be able to distinguish between.
+- _Collider Mask_ The [LayerMask](https://docs.unity3d.com/ScriptReference/LayerMask.html) passed to the collider detection. This can be used to ignore certain types of objects.
+- _Initial Collider Buffer Size_ The initial size of the Collider buffer used in the non-allocating Physics calls for each cell.
+- _Max Collider Buffer Size_ The max size of the Collider buffer used in the non-allocating Physics calls for each cell.
 
 The observation for each grid cell is a one-hot encoding of the detected object. The total size of the created observations is
 
@@ -362,19 +317,15 @@ GridSize.x * GridSize.z * Num Detectable Tags
 
 so the number of detectable tags and size of the grid should be kept as small as possible to reduce the amount of data used. This makes a trade-off between the granularity of the observation and training speed.
 
-To allow more variety of observations that grid sensor can capture, the
-`GridSensorComponent` and the underlying `GridSensorBase` also provides interfaces
-that can be overridden to collect customized observation from detected objects. See the Unity package documentation for more details on custom grid sensors.
+To allow more variety of observations that grid sensor can capture, the `GridSensorComponent` and the underlying `GridSensorBase` also provides interfaces that can be overridden to collect customized observation from detected objects. See the Unity package documentation for more details on custom grid sensors.
 
 __Note__: The `GridSensor` only works in 3D environments and will not behave properly in 2D environments.
 
 #### Grid Observation Summary & Best Practices
 
 - Attach `GridSensorComponent` to use.
-- This observation type is best used when there is relevant non-visual spatial information that
-can be best captured in 2D representations.
-- Use as small grid size and as few tags as necessary to solve the problem in order to improve
-learning stability and agent performance.
+- This observation type is best used when there is relevant non-visual spatial information that can be best captured in 2D representations.
+- Use as small grid size and as few tags as necessary to solve the problem in order to improve learning stability and agent performance.
 - Do not use `GridSensor` in a 2D game.
 
 ### Variable Length Observations
@@ -383,10 +334,8 @@ It is possible for agents to collect observations from a varying number of GameO
 
 The `BufferSensorComponent` Editor inspector has two arguments:
 
- - `Observation Size` : This is how many floats each entities will be
-represented with. This number is fixed and all entities must have the same representation. For example, if the entities you want to put into the `BufferSensor` have for relevant information position and speed, then the `Observation Size` should be 6 floats.
- - `Maximum Number of Entities` : This is the maximum number of entities
-the `BufferSensor` will be able to collect.
+ - `Observation Size` : This is how many floats each entities will be represented with. This number is fixed and all entities must have the same representation. For example, if the entities you want to put into the `BufferSensor` have for relevant information position and speed, then the `Observation Size` should be 6 floats.
+ - `Maximum Number of Entities` : This is the maximum number of entities the `BufferSensor` will be able to collect.
 
 To add an entity's observations to a `BufferSensorComponent`, you need to call `BufferSensorComponent.AppendObservation()` in the Agent.CollectObservations() method with a float array of size `Observation Size` as argument.
 
@@ -394,28 +343,21 @@ __Note__: Currently, the observations put into the `BufferSensor` are not normal
 
 #### Variable Length Observation Summary & Best Practices
  - Attach `BufferSensorComponent` to use.
- - Call `BufferSensorComponent.AppendObservation()` in the
-Agent.CollectObservations() methodto add the observations of an entity to the `BufferSensor`.
+ - Call `BufferSensorComponent.AppendObservation()` in the Agent.CollectObservations() methodto add the observations of an entity to the `BufferSensor`.
  - Normalize the entities observations before feeding them into the `BufferSensor`.
 
 ### Goal Signal
 
-It is possible for agents to collect observations that will be treated as "goal signal". A goal signal is used to condition the policy of the agent, meaning that if the goal changes, the policy (i.e. the mapping from observations to actions) will change as well. Note that this is true for any observation since all observations influence the policy of the Agent to some degree. But by specifying a goal signal explicitly, we can make this conditioning more important to the agent. This feature can be used in settings where an agent must learn to solve different tasks that are similar by some aspects because the agent will learn to reuse learnings from different tasks to generalize better. In Unity, you can specify that a `VectorSensor` or a `CameraSensor` is a goal by attaching a `VectorSensorComponent` or a
-`CameraSensorComponent` to the Agent and selecting `Goal Signal` as `Observation Type`.
-On the trainer side, there are two different ways to condition the policy. This setting is determined by the [goal_conditioning_type parameter](Training-Configuration-File.md#common-trainer-configurations). If set to `hyper` (default) a [HyperNetwork](https://arxiv.org/pdf/1609.09106.pdf) will be used to generate some of the weights of the policy using the goal observations as input. Note that using a HyperNetwork requires a lot of computations, it is recommended to use a smaller number of hidden units in the policy to alleviate this. If set to `none` the goal signal will be considered as regular observations. For an example on how to use a goal signal, see the [GridWorld example](Learning-Environment-Examples.md#gridworld).
+It is possible for agents to collect observations that will be treated as "goal signal". A goal signal is used to condition the policy of the agent, meaning that if the goal changes, the policy (i.e. the mapping from observations to actions) will change as well. Note that this is true for any observation since all observations influence the policy of the Agent to some degree. But by specifying a goal signal explicitly, we can make this conditioning more important to the agent. This feature can be used in settings where an agent must learn to solve different tasks that are similar by some aspects because the agent will learn to reuse learnings from different tasks to generalize better. In Unity, you can specify that a `VectorSensor` or a `CameraSensor` is a goal by attaching a `VectorSensorComponent` or a `CameraSensorComponent` to the Agent and selecting `Goal Signal` as `Observation Type`. On the trainer side, there are two different ways to condition the policy. This setting is determined by the [goal_conditioning_type parameter](Training-Configuration-File.md#common-trainer-configurations). If set to `hyper` (default) a [HyperNetwork](https://arxiv.org/pdf/1609.09106.pdf) will be used to generate some of the weights of the policy using the goal observations as input. Note that using a HyperNetwork requires a lot of computations, it is recommended to use a smaller number of hidden units in the policy to alleviate this. If set to `none` the goal signal will be considered as regular observations. For an example on how to use a goal signal, see the [GridWorld example](Learning-Environment-Examples.md#gridworld).
 
 #### Goal Signal Summary & Best Practices
- - Attach a `VectorSensorComponent` or `CameraSensorComponent` to an agent and
-set the observation type to goal to use the feature.
+ - Attach a `VectorSensorComponent` or `CameraSensorComponent` to an agent and set the observation type to goal to use the feature.
  - Set the goal_conditioning_type parameter in the training configuration.
- - Reduce the number of hidden units in the network when using the HyperNetwork
-conditioning type.
+ - Reduce the number of hidden units in the network when using the HyperNetwork conditioning type.
 
 ## Actions and Actuators
 
-An action is an instruction from the Policy that the agent carries out. The action is passed to the an `IActionReceiver` (either an `Agent` or an `IActuator`) as the `ActionBuffers` parameter when the Academy invokes the
-`IActionReciever.OnActionReceived()` function.
-There are two types of actions supported: **Continuous** and **Discrete**.
+An action is an instruction from the Policy that the agent carries out. The action is passed to the an `IActionReceiver` (either an `Agent` or an `IActuator`) as the `ActionBuffers` parameter when the Academy invokes the `IActionReciever.OnActionReceived()` function. There are two types of actions supported: **Continuous** and **Discrete**.
 
 Neither the Policy nor the training algorithm know anything about what the action values themselves mean. The training algorithm simply tries different values for the action list and observes the affect on the accumulated rewards over time and many training episodes. Thus, the only place actions are defined for an Agent is in the `OnActionReceived()` function.
 
@@ -425,9 +367,7 @@ Note that when you are programming actions for an agent, it is often helpful to 
 
 ### Continuous Actions
 
-When an Agent's Policy has **Continuous** actions, the
-`ActionBuffers.ContinuousActions` passed to the Agent's `OnActionReceived()` function
-is an array with length equal to the `Continuous Action Size` property value. The individual values in the array have whatever meanings that you ascribe to them. If you assign an element in the array as the speed of an Agent, for example, the training process learns to control the speed of the Agent through this parameter.
+When an Agent's Policy has **Continuous** actions, the `ActionBuffers.ContinuousActions` passed to the Agent's `OnActionReceived()` function is an array with length equal to the `Continuous Action Size` property value. The individual values in the array have whatever meanings that you ascribe to them. If you assign an element in the array as the speed of an Agent, for example, the training process learns to control the speed of the Agent through this parameter.
 
 The [3DBall example](Learning-Environment-Examples.md#3dball-3d-balance-ball) uses continuous actions with two control values.
 
@@ -446,18 +386,13 @@ These control values are applied as rotation to the cube:
     }
 ```
 
-By default the output from our provided PPO algorithm pre-clamps the values of
-`ActionBuffers.ContinuousActions` into the [-1, 1] range. It is a best practice to manually clip
-these as well, if you plan to use a 3rd party algorithm with your environment. As shown above, you can scale the control values as needed after clamping them.
+By default, the output from our provided PPO algorithm pre-clamps the values of `ActionBuffers.ContinuousActions` into the [-1, 1] range. It is a best practice to manually clip these as well, if you plan to use a 3rd party algorithm with your environment. As shown above, you can scale the control values as needed after clamping them.
 
 ### Discrete Actions
 
-When an Agent's Policy uses **discrete** actions, the
-`ActionBuffers.DiscreteActions` passed to the Agent's `OnActionReceived()` function
-is an array of integers with length equal to `Discrete Branch Size`. When defining the discrete actions, `Branches` is an array of integers, each value corresponds to the number of possibilities for each branch.
+When an Agent's Policy uses **discrete** actions, the `ActionBuffers.DiscreteActions` passed to the Agent's `OnActionReceived()` function is an array of integers with length equal to `Discrete Branch Size`. When defining the discrete actions, `Branches` is an array of integers, each value corresponds to the number of possibilities for each branch.
 
-For example, if we wanted an Agent that can move in a plane and jump, we could define two branches (one for motion and one for jumping) because we want our agent be able to move **and** jump concurrently. We define the first branch to have 5 possible actions (don't move, go left, go right, go backward, go forward) and the second one to have 2 possible actions (don't jump, jump). The
-`OnActionReceived()` method would look something like:
+For example, if we wanted an Agent that can move in a plane and jump, we could define two branches (one for motion and one for jumping) because we want our agent be able to move **and** jump concurrently. We define the first branch to have 5 possible actions (don't move, go left, go right, go backward, go forward) and the second one to have 2 possible actions (don't jump, jump). The `OnActionReceived()` method would look something like:
 
 ```csharp
 // Get the action index for movement
@@ -481,8 +416,7 @@ gameObject.GetComponent<Rigidbody>().AddForce(
 
 #### Masking Discrete Actions
 
-When using Discrete Actions, it is possible to specify that some actions are impossible for the next decision. When the Agent is controlled by a neural network, the Agent will be unable to perform the specified action. Note that when the Agent is controlled by its Heuristic, the Agent will still be able to decide to perform the masked action. In order to disallow an action, override the `Agent.WriteDiscreteActionMask()` virtual method, and call
-`SetActionEnabled()` on the provided `IDiscreteActionMask`:
+When using Discrete Actions, it is possible to specify that some actions are impossible for the next decision. When the Agent is controlled by a neural network, the Agent will be unable to perform the specified action. Note that when the Agent is controlled by its Heuristic, the Agent will still be able to decide to perform the masked action. In order to disallow an action, override the `Agent.WriteDiscreteActionMask()` virtual method, and call `SetActionEnabled()` on the provided `IDiscreteActionMask`:
 
 ```csharp
 public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
@@ -493,8 +427,7 @@ public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
 
 Where:
 
-- `branch` is the index (starting at 0) of the branch on which you want to
-allow or disallow the action
+- `branch` is the index (starting at 0) of the branch on which you want to allow or disallow the action
 - `actionIndex` is the index of the action that you want to allow or disallow.
 - `isEnabled` is a bool indicating whether the action should be allowed or now.
 
@@ -507,8 +440,7 @@ actionMask.SetActionEnabled(0, 2, false);
 
 Notes:
 
-- You can call `SetActionEnabled` multiple times if you want to put masks on multiple
-branches.
+- You can call `SetActionEnabled` multiple times if you want to put masks on multiple branches.
 - At each step, the state of an action is reset and enabled by default.
 - You cannot mask all the actions of a branch.
 - You cannot mask actions in continuous control.
@@ -521,9 +453,7 @@ Like the `ISensor` interface, the `IActuator` interface is intended for advanced
 
 The `ActuatorComponent` abstract class is used to create the actual `IActuator` at runtime. It must be attached to the same `GameObject` as the `Agent`, or to a child `GameObject`.  Actuators and all of their data structures are initialized during `Agent.Initialize`.  This was done to prevent an unexpected allocations at runtime.
 
-You can find an example of an `IActuator` implementation in the `Basic` example scene.
-**NOTE**: you do not need to adjust the Actions in the Agent's
-`Behavior Parameters` when using an `IActuator` and `ActuatorComponents`.
+You can find an example of an `IActuator` implementation in the `Basic` example scene. **NOTE**: you do not need to adjust the Actions in the Agent's `Behavior Parameters` when using an `IActuator` and `ActuatorComponents`.
 
 Internally, `Agent.OnActionReceived` uses an `IActuator` to send actions to the Agent, although this is mostly abstracted from the user.
 
@@ -531,28 +461,20 @@ Internally, `Agent.OnActionReceived` uses an `IActuator` to send actions to the 
 ### Actions Summary & Best Practices
 
 - Agents can use `Discrete` and/or `Continuous` actions.
-- Discrete actions can have multiple action branches, and it's possible to mask
-certain actions so that they won't be taken.
+- Discrete actions can have multiple action branches, and it's possible to mask certain actions so that they won't be taken.
 - In general, fewer actions will make for easier learning.
-- Be sure to set the Continuous Action Size and Discrete Branch Size to the desired
-number for each type of action, and not greater, as doing the latter can interfere with the efficiency of the training process.
-- Continuous action values should be clipped to an
-appropriate range. The provided PPO model automatically clips these values between -1 and 1, but third party training systems may not do so.
+- Be sure to set the Continuous Action Size and Discrete Branch Size to the desired number for each type of action, and not greater, as doing the latter can interfere with the efficiency of the training process.
+- Continuous action values should be clipped to an appropriate range. The provided PPO model automatically clips these values between -1 and 1, but third party training systems may not do so.
 
 ## Rewards
 
 In reinforcement learning, the reward is a signal that the agent has done something right. The PPO reinforcement learning algorithm works by optimizing the choices an agent makes such that the agent earns the highest cumulative reward over time. The better your reward mechanism, the better your agent will learn.
 
-**Note:** Rewards are not used during inference by an Agent using a trained
-model and is also not used during imitation learning.
+**Note:** Rewards are not used during inference by an Agent using a trained model and is also not used during imitation learning.
 
 Perhaps the best advice is to start simple and only add complexity as needed. In general, you should reward results rather than actions you think will lead to the desired results. You can even use the Agent's Heuristic to control the Agent while watching how it accumulates rewards.
 
-Allocate rewards to an Agent by calling the `AddReward()` or `SetReward()` methods on the agent. The reward assigned between each decision should be in the range [-1,1]. Values outside this range can lead to unstable training. The
-`reward` value is reset to zero when the agent receives a new decision. If there
-are multiple calls to `AddReward()` for a single agent decision, the rewards will be summed together to evaluate how good the previous decision was. The
-`SetReward()` will override all previous rewards given to an agent since the
-previous decision.
+Allocate rewards to an Agent by calling the `AddReward()` or `SetReward()` methods on the agent. The reward assigned between each decision should be in the range [-1,1]. Values outside this range can lead to unstable training. The `reward` value is reset to zero when the agent receives a new decision. If there are multiple calls to `AddReward()` for a single agent decision, the rewards will be summed together to evaluate how good the previous decision was. The `SetReward()` will override all previous rewards given to an agent since the previous decision.
 
 ### Examples
 
@@ -617,49 +539,33 @@ Note that all of these environments make use of the `EndEpisode()` method, which
 
 ### Rewards Summary & Best Practices
 
-- Use `AddReward()` to accumulate rewards between decisions. Use `SetReward()`
-to overwrite any previous rewards accumulate between decisions.
-- The magnitude of any given reward should typically not be greater than 1.0 in
-order to ensure a more stable learning process.
-- Positive rewards are often more helpful to shaping the desired behavior of an
-agent than negative rewards. Excessive negative rewards can result in the agent failing to learn any meaningful behavior.
-- For locomotion tasks, a small positive reward (+0.1) for forward velocity is
-typically used.
-- If you want the agent to finish a task quickly, it is often helpful to provide
-a small penalty every step (-0.05) that the agent does not complete the task. In this case completion of the task should also coincide with the end of the episode by calling `EndEpisode()` on the agent when it has accomplished its goal.
+- Use `AddReward()` to accumulate rewards between decisions. Use `SetReward()` to overwrite any previous rewards accumulate between decisions.
+- The magnitude of any given reward should typically not be greater than 1.0 in order to ensure a more stable learning process.
+- Positive rewards are often more helpful to shaping the desired behavior of an agent than negative rewards. Excessive negative rewards can result in the agent failing to learn any meaningful behavior.
+- For locomotion tasks, a small positive reward (+0.1) for forward velocity is typically used.
+- If you want the agent to finish a task quickly, it is often helpful to provide a small penalty every step (-0.05) that the agent does not complete the task. In this case completion of the task should also coincide with the end of the episode by calling `EndEpisode()` on the agent when it has accomplished its goal.
 
 ## Agent Properties
 
 ![Agent Inspector](images/3dball_learning_brain.png)
 
-- `Behavior Parameters` - The parameters dictating what Policy the Agent will
-receive.
-  - `Behavior Name` - The identifier for the behavior. Agents with the same
-behavior name will learn the same policy.
+- `Behavior Parameters` - The parameters dictating what Policy the Agent will receive.
+  - `Behavior Name` - The identifier for the behavior. Agents with the same behavior name will learn the same policy.
   - `Vector Observation`
     - `Space Size` - Length of vector observation for the Agent.
-    - `Stacked Vectors` - The number of previous vector observations that will
-be stacked and used collectively for decision making. This results in the effective size of the vector observation being passed to the Policy being: _Space Size_ x _Stacked Vectors_.
+    - `Stacked Vectors` - The number of previous vector observations that will be stacked and used collectively for decision making. This results in the effective size of the vector observation being passed to the Policy being: _Space Size_ x _Stacked Vectors_.
   - `Actions`
-    - `Continuous Actions` - The number of concurrent continuous actions that
-the Agent can take.
-    - `Discrete Branches` - An array of integers, defines multiple concurrent
-discrete actions. The values in the `Discrete Branches` array correspond to the number of possible discrete values for each action branch.
-  - `Model` - The neural network model used for inference (obtained after
-training)
-  - `Inference Device` - Whether to use CPU or GPU to run the model during
-inference
-  - `Behavior Type` - Determines whether the Agent will do training, inference,
-or use its Heuristic() method:
-    - `Default` - the Agent will train if they connect to a python trainer,
-otherwise they will perform inference.
+    - `Continuous Actions` - The number of concurrent continuous actions that the Agent can take.
+    - `Discrete Branches` - An array of integers, defines multiple concurrent discrete actions. The values in the `Discrete Branches` array correspond to the number of possible discrete values for each action branch.
+  - `Model` - The neural network model used for inference (obtained after training)
+  - `Inference Device` - Whether to use CPU or GPU to run the model during inference
+  - `Behavior Type` - Determines whether the Agent will do training, inference, or use its Heuristic() method:
+    - `Default` - the Agent will train if they connect to a python trainer, otherwise they will perform inference.
     - `Heuristic Only` - the Agent will always use the `Heuristic()` method.
     - `Inference Only` - the Agent will always perform inference.
   - `Team ID` - Used to define the team for self-play
-  - `Use Child Sensors` - Whether to use all Sensor components attached to child
-GameObjects of this Agent.
-- `Max Step` - The per-agent maximum number of steps. Once this number is
-reached, the Agent will be reset.
+  - `Use Child Sensors` - Whether to use all Sensor components attached to child GameObjects of this Agent.
+- `Max Step` - The per-agent maximum number of steps. Once this number is reached, the Agent will be reset.
 
 ## Destroying an Agent
 
@@ -718,39 +624,27 @@ working together should be added to the same Group, while agents playing against
 Please see the [SoccerTwos](Learning-Environment-Examples.md#soccer-twos) environment for an example.
 
 #### Cooperative Behaviors Notes and Best Practices
-* An agent can only be registered to one MultiAgentGroup at a time. If you want to re-assign an
-agent from one group to another, you have to unregister it from the current group first.
+* An agent can only be registered to one MultiAgentGroup at a time. If you want to re-assign an agent from one group to another, you have to unregister it from the current group first.
 
 * Agents with different behavior names in the same group are not supported.
 
-* Agents within groups should always set the `Max Steps` parameter in the Agent script to 0.
-Instead, handle Max Steps using the MultiAgentGroup by ending the episode for the entire Group using `GroupEpisodeInterrupted()`.
+* Agents within groups should always set the `Max Steps` parameter in the Agent script to 0. Instead, handle Max Steps using the MultiAgentGroup by ending the episode for the entire Group using `GroupEpisodeInterrupted()`.
 
-* `EndGroupEpisode` and `GroupEpisodeInterrupted` do the same job in the game, but has
-slightly different effect on the training. If the episode is completed, you would want to call
-`EndGroupEpisode`. But if the episode is not over but it has been running for enough steps, i.e.
-reaching max step, you would call `GroupEpisodeInterrupted`.
+* `EndGroupEpisode` and `GroupEpisodeInterrupted` do the same job in the game, but has slightly different effect on the training. If the episode is completed, you would want to call `EndGroupEpisode`. But if the episode is not over but it has been running for enough steps, i.e. reaching max step, you would call `GroupEpisodeInterrupted`.
 
-* If an agent finished earlier, e.g. completed tasks/be removed/be killed in the game, do not call
-`EndEpisode()` on the Agent. Instead, disable the agent and re-enable it when the next episode starts,
-or destroy the agent entirely. This is because calling `EndEpisode()` will call `OnEpisodeBegin()`, which will reset the agent immediately. While it is possible to call `EndEpisode()` in this way, it is usually not the desired behavior when training groups of agents.
+* If an agent finished earlier, e.g. completed tasks/be removed/be killed in the game, do not call `EndEpisode()` on the Agent. Instead, disable the agent and re-enable it when the next episode starts, or destroy the agent entirely. This is because calling `EndEpisode()` will call `OnEpisodeBegin()`, which will reset the agent immediately. While it is possible to call `EndEpisode()` in this way, it is usually not the desired behavior when training groups of agents.
 
 * If an agent that was disabled in a scene needs to be re-enabled, it must be re-registered to the MultiAgentGroup.
 
-* Group rewards are meant to reinforce agents to act in the group's best interest instead of
-individual ones, and are treated differently than individual agent rewards during training. So calling `AddGroupReward()` is not equivalent to calling agent.AddReward() on each agent in the group.
+* Group rewards are meant to reinforce agents to act in the group's best interest instead of individual ones, and are treated differently than individual agent rewards during training. So calling `AddGroupReward()` is not equivalent to calling agent.AddReward() on each agent in the group.
 
-* You can still add incremental rewards to agents using `Agent.AddReward()` if they are
-in a Group. These rewards will only be given to those agents and are received when the Agent is active.
+* You can still add incremental rewards to agents using `Agent.AddReward()` if they are in a Group. These rewards will only be given to those agents and are received when the Agent is active.
 
-* Environments which use Multi Agent Groups can be trained using PPO or SAC, but agents will
-not be able to learn from group rewards after deactivation/removal, nor will they behave as cooperatively.
+* Environments which use Multi Agent Groups can be trained using PPO or SAC, but agents will not be able to learn from group rewards after deactivation/removal, nor will they behave as cooperatively.
 
 ## Recording Demonstrations
 
-In order to record demonstrations from an agent, add the
-`Demonstration Recorder` component to a GameObject in the scene which contains
-an `Agent` component. Once added, it is possible to name the demonstration that will be recorded from the agent.
+In order to record demonstrations from an agent, add the `Demonstration Recorder` component to a GameObject in the scene which contains an `Agent` component. Once added, it is possible to name the demonstration that will be recorded from the agent.
 
 <p align="center"> <img src="images/demo_component.png" alt="Demonstration Recorder" width="650" border="10" /> </p>
 

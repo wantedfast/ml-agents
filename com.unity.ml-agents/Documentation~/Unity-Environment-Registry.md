@@ -34,8 +34,7 @@ In order to share the `UnityEnvironment` you created, you must:
  - Place each executable in a `zip` compressed folder
  - Upload each zip file online to your preferred hosting platform
  - Create a `yaml` file that will contain the description and path to your environment
- - Upload the `yaml` file online
-The `yaml` file must have the following format :
+ - Upload the `yaml` file online. The `yaml` file must have the following format :
 
 ```yaml
 environments:

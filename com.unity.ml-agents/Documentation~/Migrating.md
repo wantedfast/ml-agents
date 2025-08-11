@@ -18,15 +18,12 @@ TODO: update ml-agents-env package version before release
     ```
 
 ## Migrating the package to version 3.x
-- The official version of Unity ML-Agents supports is now 6000.0. If you run
-into issues, please consider deleting your project's Library folder and reopening your project.
+- The official version of Unity ML-Agents supports is now 6000.0. If you run into issues, please consider deleting your project's Library folder and reopening your project.
 
 
 ## Migrating the package to version 2.x
-- The official version of Unity ML-Agents supports is now 2022.3 LTS. If you run
-into issues, please consider deleting your project's Library folder and reopening your project.
-- If you used any of the APIs that were deprecated before version 2.0, you need to use their replacement. These
-deprecated APIs have been removed. See the migration steps bellow for specific API replacements.
+- The official version of Unity ML-Agents supports is now 2022.3 LTS. If you run into issues, please consider deleting your project's Library folder and reopening your project.
+- If you used any of the APIs that were deprecated before version 2.0, you need to use their replacement. These deprecated APIs have been removed. See the migration steps bellow for specific API replacements.
 
 ### Deprecated methods removed
 | **Deprecated API** | **Suggested Replacement** |
@@ -221,9 +218,7 @@ To do it manually, copy your `<BehaviorName>` sections from `trainer_config.yaml
 - The signature of `Agent.Heuristic()` was changed to take a `float[]` as a parameter, instead of returning the array. This was done to prevent a common source of error where users would return arrays of the wrong size.
 - The SideChannel API has changed (#3833, #3660) :
   - Introduced the `SideChannelManager` to register, unregister and access side channels.
-  - `EnvironmentParameters` replaces the default `FloatProperties`. You can access the `EnvironmentParameters` with
-    `Academy.Instance.EnvironmentParameters` on C#. If you were previously creating a `UnityEnvironment` in python and passing it a
-    `FloatPropertiesChannel`, create an `EnvironmentParametersChannel` instead.
+  - `EnvironmentParameters` replaces the default `FloatProperties`. You can access the `EnvironmentParameters` with `Academy.Instance.EnvironmentParameters` on C#. If you were previously creating a `UnityEnvironment` in python and passing it a `FloatPropertiesChannel`, create an `EnvironmentParametersChannel` instead.
   - `SideChannel.OnMessageReceived` is now a protected method (was public)
   - SideChannel IncomingMessages methods now take an optional default argument, which is used when trying to read more data than the message contains.
   - Added a feature to allow sending stats from C# environments to TensorBoard (and other python StatsWriters). To do this from your code, use `Academy.Instance.StatsRecorder.Add(key, value)`(#3660)

@@ -6,23 +6,20 @@
 
 ([latest release](https://github.com/Unity-Technologies/ml-agents/releases/tag/latest_release)) ([all releases](https://github.com/Unity-Technologies/ml-agents/releases))
 
-**The Unity Machine Learning Agents Toolkit** (ML-Agents) is an open-source
-project that enables games and simulations to serve as environments for training intelligent agents. We provide implementations (based on PyTorch) of state-of-the-art algorithms to enable game developers and hobbyists to easily train intelligent agents for 2D, 3D and VR/AR games. Researchers can also use the provided simple-to-use Python API to train Agents using reinforcement learning, imitation learning, neuroevolution, or any other methods. These trained agents can be used for multiple purposes, including controlling NPC behavior (in a variety of settings such as multi-agent and adversarial), automated testing of game builds and evaluating different game design decisions pre-release. The ML-Agents Toolkit is mutually beneficial for both game developers and AI researchers as it provides a central platform where advances in AI can be evaluated on Unity’s rich environments and then made accessible to the wider research and game developer communities.
+**The Unity Machine Learning Agents Toolkit** (ML-Agents) is an open-source project that enables games and simulations to serve as environments for training intelligent agents. We provide implementations (based on PyTorch) of state-of-the-art algorithms to enable game developers and hobbyists to easily train intelligent agents for 2D, 3D and VR/AR games. Researchers can also use the provided simple-to-use Python API to train Agents using reinforcement learning, imitation learning, neuroevolution, or any other methods. These trained agents can be used for multiple purposes, including controlling NPC behavior (in a variety of settings such as multi-agent and adversarial), automated testing of game builds and evaluating different game design decisions pre-release. The ML-Agents Toolkit is mutually beneficial for both game developers and AI researchers as it provides a central platform where advances in AI can be evaluated on Unity’s rich environments and then made accessible to the wider research and game developer communities.
 
 ## Features
 - 17+ [example Unity environments](Learning-Environment-Examples.md)
 - Support for multiple environment configurations and training scenarios
 - Flexible Unity SDK that can be integrated into your game or custom Unity scene
-- Support for training single-agent, multi-agent cooperative, and multi-agent
-competitive scenarios via several Deep Reinforcement Learning algorithms (PPO, SAC, MA-POCA, self-play).
+- Support for training single-agent, multi-agent cooperative, and multi-agent competitive scenarios via several Deep Reinforcement Learning algorithms (PPO, SAC, MA-POCA, self-play).
 - Support for learning from demonstrations through two Imitation Learning algorithms (BC and GAIL).
 - Quickly and easily add your own [custom training algorithm](Python-Custom-Trainer-Plugin.md) and/or components.
 - Easily definable Curriculum Learning scenarios for complex tasks
 - Train robust agents using environment randomization
 - Flexible agent control with On Demand Decision Making
 - Train using multiple concurrent Unity environment instances
-- Utilizes the [Inference Engine](Inference-Engine.md) to
-provide native cross-platform support
+- Utilizes the [Inference Engine](Inference-Engine.md) to provide native cross-platform support
 - Unity environment [control from Python](Python-LLAPI.md)
 - Wrap Unity learning environments as a [gym](Python-Gym-API.md) environment
 - Wrap Unity learning environments as a [PettingZoo](Python-PettingZoo-API.md) environment
@@ -34,14 +31,10 @@ provide native cross-platform support
 
 The table below shows our latest release, including our `develop` branch which is under active development and may be unstable. A few helpful guidelines:
 
-- The [Versioning page](Versioning.md) overviews how we manage our GitHub
-releases and the versioning process for each of the ML-Agents components.
-- The [Releases page](https://github.com/Unity-Technologies/ml-agents/releases)
-contains details of the changes between releases.
-- The [Migration page](Migrating.md) contains details on how to upgrade
-from earlier releases of the ML-Agents Toolkit.
-- The `com.unity.ml-agents` package is [verified](https://docs.unity3d.com/2020.1/Documentation/Manual/pack-safe.html)
-for Unity 2020.1 and later. Verified packages releases are numbered 1.0.x.
+- The [Versioning page](Versioning.md) overviews how we manage our GitHub releases and the versioning process for each of the ML-Agents components.
+- The [Releases page](https://github.com/Unity-Technologies/ml-agents/releases) contains details of the changes between releases.
+- The [Migration page](Migrating.md) contains details on how to upgrade from earlier releases of the ML-Agents Toolkit.
+- The `com.unity.ml-agents` package is [verified](https://docs.unity3d.com/2020.1/Documentation/Manual/pack-safe.html) for Unity 2020.1 and later. Verified packages releases are numbered 1.0.x.
 
 | **Version** | **Release Date** | **Source** | **Documentation** | **Download** | **Python Package** | **Unity Package** |
 |:-----------:|:---------------:|:----------:|:-----------------:|:------------:|:------------------:|:-----------------:|

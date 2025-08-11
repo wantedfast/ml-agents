@@ -10,9 +10,7 @@ Let's get started!
 
 ## Installation
 
-If you haven't already, follow the Local Installation for Development section in [installation instructions](Installation.md). Afterward, open the Unity Project that contains all the example environments. In the **Project** window, go to the
-   `Assets/ML-Agents/Examples/3DBall/Scenes` folder and open the `3DBall` scene
-file.
+If you haven't already, follow the Local Installation for Development section in [installation instructions](Installation.md). Afterward, open the Unity Project that contains all the example environments. In the **Project** window, go to the `Assets/ML-Agents/Examples/3DBall/Scenes` folder and open the `3DBall` scene file.
 
 ## Understanding a Unity Environment
 
@@ -20,8 +18,7 @@ An agent is an autonomous actor that observes and interacts with an _environment
 
 ![Unity Editor](images/mlagents-3DBallHierarchy.png)
 
-**Note:** In Unity, the base object of everything in a scene is the
-_GameObject_. The GameObject is essentially a container for everything else, including behaviors, graphics, physics, etc. To see the components that make up a GameObject, select the GameObject in the Scene window, and open the Inspector window. The Inspector shows every component on a GameObject.
+**Note:** In Unity, the base object of everything in a scene is the _GameObject_. The GameObject is essentially a container for everything else, including behaviors, graphics, physics, etc. To see the components that make up a GameObject, select the GameObject in the Scene window, and open the Inspector window. The Inspector shows every component on a GameObject.
 
 The first thing you may notice after opening the 3D Balance Ball scene is that it contains not one, but several agent cubes. Each agent cube in the scene is an independent agent, but they all share the same Behavior. 3D Balance Ball does this to speed up training since all twelve agents contribute to training in parallel.
 
@@ -36,8 +33,7 @@ The Agent is the actor that observes and takes actions in the environment. In th
 
 Before making a decision, an agent collects its observation about its state in the world. The vector observation is a vector of floating point numbers which contain relevant information for the agent to make decisions.
 
-The Behavior Parameters of the 3D Balance Ball example uses a `Space Size` of 8. This means that the feature vector containing the Agent's observations contains eight elements: the `x` and `z` components of the agent cube's rotation and the
-`x`, `y`, and `z` components of the ball's relative position and velocity.
+The Behavior Parameters of the 3D Balance Ball example uses a `Space Size` of 8. This means that the feature vector containing the Agent's observations contains eight elements: the `x` and `z` components of the agent cube's rotation and the `x`, `y`, and `z` components of the ball's relative position and velocity.
 
 #### Behavior Parameters : Actions
 
@@ -68,11 +64,11 @@ While we provide pre-trained models for the agents in this environment, any envi
 ### Training the environment
 
 1. Open a command or terminal window.
-1. Navigate to the folder where you cloned the `ml-agents` repository. **Note**: If you followed the default [installation](Installation.md), then you should be able to run `mlagents-learn` from any directory.
-1. Run `mlagents-learn config/ppo/3DBall.yaml --run-id=first3DBallRun`.
+2. Navigate to the folder where you cloned the `ml-agents` repository. **Note**: If you followed the default [installation](Installation.md), then you should be able to run `mlagents-learn` from any directory.
+3. Run `mlagents-learn config/ppo/3DBall.yaml --run-id=first3DBallRun`.
    - `config/ppo/3DBall.yaml` is the path to a default training configuration file that we provide. The `config/ppo` folder includes training configuration files for all our example environments, including 3DBall.
    - `run-id` is a unique name for this training session.
-1. When the message _"Start training by pressing the Play button in the Unity Editor"_ is displayed on the screen, you can press the **Play** button in Unity to start training in the Editor.
+4. When the message _"Start training by pressing the Play button in the Unity Editor"_ is displayed on the screen, you can press the **Play** button in Unity to start training in the Editor.
 
 If `mlagents-learn` runs correctly and starts training, you should see something like this:
 

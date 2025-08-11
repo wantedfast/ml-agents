@@ -25,12 +25,9 @@ conda create -n mlagents python=3.10.12 && conda activate mlagents
 
 ### Install the `com.unity.ml-agents` Unity package
 
-The Unity ML-Agents C# SDK is a Unity Package. You can install the
-`com.unity.ml-agents` package
-[directly from the Package Manager registry](https://docs.unity3d.com/Manual/upm-ui-install.html). Please make sure you enable 'Preview Packages' in the 'Advanced' dropdown in order to find the latest Preview release of the package.
+The Unity ML-Agents C# SDK is a Unity Package. You can install the `com.unity.ml-agents` package [directly from the Package Manager registry](https://docs.unity3d.com/Manual/upm-ui-install.html). Please make sure you enable 'Preview Packages' in the 'Advanced' dropdown in order to find the latest Preview release of the package.
 
-**NOTE:** If you do not see the ML-Agents package listed in the Package Manager
-please follow the advanced installation instructions below.
+**NOTE:** If you do not see the ML-Agents package listed in the Package Manager please follow the advanced installation instructions below.
 
 #### Advanced: Local Installation for Development
 
@@ -52,15 +49,13 @@ git clone https://github.com/Unity-Technologies/ml-agents.git
 
 If you plan to contribute those changes back, make sure to clone the `develop` branch (by omitting `--branch release_22` from the command above). See our [Contributions Guidelines](CONTRIBUTING.md) for more information on contributing to the ML-Agents Toolkit.
 
-You can [add the local](https://docs.unity3d.com/Manual/upm-ui-local.html)
-`com.unity.ml-agents` package (from the repository that you just cloned) to your
-project by:
+You can [add the local](https://docs.unity3d.com/Manual/upm-ui-local.html) `com.unity.ml-agents` package (from the repository that you just cloned) to your project by:
 
 1. navigating to the menu `Window` -> `Package Manager`.
-1. In the package manager window click on the `+` button on the top left of the packages list).
-1. Select `Add package from disk...`
-1. Navigate into the `com.unity.ml-agents` folder.
-1. Select the `package.json` file.
+2. In the package manager window click on the `+` button on the top left of the packages list).
+3. Select `Add package from disk...`
+4. Navigate into the `com.unity.ml-agents` folder.
+5. Select the `package.json` file.
 
 <p align="center"> <img src="images/unity_package_manager_window.png" alt="Unity Package Manager Window" height="150" border="10" /> <img src="images/unity_package_json.png" alt="package.json" height="150" border="10" /> </p>
 
@@ -114,9 +109,7 @@ python -m pip install ./ml-agents-envs
 python -m pip install ./ml-agents
 ```
 
-Note that this will install `mlagents` from the cloned repository, _not_ from the PyPi repository. If you installed this correctly, you should be able to run
-`mlagents-learn --help`, after which you will see the command
-line parameters you can use with `mlagents-learn`.
+Note that this will install `mlagents` from the cloned repository, _not_ from the PyPi repository. If you installed this correctly, you should be able to run `mlagents-learn --help`, after which you will see the command line parameters you can use with `mlagents-learn`.
 
 
 
@@ -128,6 +121,4 @@ pip3 install -e ./ml-agents-envs
 pip3 install -e ./ml-agents
 ```
 
-Running pip with the `-e` flag will let you make changes to the Python files directly and have those reflected when you run `mlagents-learn`. It is important to install these packages in this order as the `mlagents` package depends on
-`mlagents_envs`, and installing it in the other order will download
-`mlagents_envs` from PyPi.
+Running pip with the `-e` flag will let you make changes to the Python files directly and have those reflected when you run `mlagents-learn`. It is important to install these packages in this order as the `mlagents` package depends on `mlagents_envs`, and installing it in the other order will download `mlagents_envs` from PyPi.
