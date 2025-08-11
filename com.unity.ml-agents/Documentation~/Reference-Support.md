@@ -10,4 +10,3 @@ The Reference & Support section contains essential documentation for ongoing ML-
 | [Migrating](Migrating.md)            | Migration guides for updating between ML-Agents versions.    |
 | [Versioning](Versioning.md)          | Information about ML-Agents versioning and release notes.    |
 | [ML-Agents Glossary](Glossary.md)    | Glossary of terms and concepts used in ML-Agents.            |
-| [C# API Reference](API-Reference.md) | C# API documentation generated from code comments.           |
