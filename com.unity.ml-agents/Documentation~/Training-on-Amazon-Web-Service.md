@@ -317,7 +317,7 @@ nvidia-smi
 You might see something like:
 
 ```sh
-NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
+NVIDIA-SMI has failed because it could not communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
 ```
 
 This means the NVIDIA's driver needs to be updated. Refer to
