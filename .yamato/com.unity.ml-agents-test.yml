@@ -8,7 +8,7 @@ test_editors:
       enableNoDefaultPackages: !!bool true
 
 trunk_editor:
-    - version: 6000.3.0a3
+    - version: 6000.3.0a2
       testProject: DevProject
 
 test_platforms:
