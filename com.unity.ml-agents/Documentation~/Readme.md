@@ -78,17 +78,15 @@ Additionally, if you use the MA-POCA trainer in your research, we ask that you c
 * [Community created ML-Agents projects](https://discussions.unity.com/t/post-your-ml-agents-project/816756)
 * [ML-Agents models on Huggingface](https://huggingface.co/models?library=ml-agents)
 * [Blog posts](Blog-posts.md)
+* [Discord](https://discord.com/channels/489222168727519232/1202574086115557446)
 
 ## Community and Feedback
 
 The ML-Agents Toolkit is an open-source project and we encourage and welcome contributions. If you wish to contribute, be sure to review our [contribution guidelines](CONTRIBUTING.md) and [code of conduct](https://github.com/Unity-Technologies/ml-agents/blob/release_22/CODE_OF_CONDUCT.md).
 
-For problems with the installation and setup of the ML-Agents Toolkit, or discussions about how to best setup or train your agents, please create a new thread on the [Unity ML-Agents forum](https://forum.unity.com/forums/ml-agents.453/) and make sure to include as much detail as possible. If you run into any other problems using the ML-Agents Toolkit or have a specific feature request, please [submit a GitHub issue](https://github.com/Unity-Technologies/ml-agents/issues).
+For problems with the installation and setup of the ML-Agents Toolkit, or discussions about how to best setup or train your agents, please create a new thread on the [Unity ML-Agents discussion forum](https://forum.unity.com/forums/ml-agents.453/). Be sure to use the ML-Agents tag and include as many details as possible to help others assist you effectively. If you run into any other problems using the ML-Agents Toolkit or have a specific feature request, please [submit a GitHub issue](https://github.com/Unity-Technologies/ml-agents/issues).
 
-Please tell us which samples you would like to see shipped with the ML-Agents Unity package by replying to [this forum thread](https://forum.unity.com/threads/feedback-wanted-shipping-sample-s-with-the-ml-agents-package.1073468/).
-
-
-Your opinion matters a great deal to us. Only by hearing your thoughts on the Unity ML-Agents Toolkit can we continue to improve and grow. Please take a few minutes to [let us know about it](https://unitysoftware.co1.qualtrics.com/jfe/form/SV_55pQKCZ578t0kbc).
+Please tell us which samples you would like to see shipped with the ML-Agents Unity package by replying to [this discussion thread](https://discussions.unity.com/t/help-shape-the-future-of-ml-agents/1661019).
 
 ## Privacy
 
