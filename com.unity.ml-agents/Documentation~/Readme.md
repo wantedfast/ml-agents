@@ -2,7 +2,7 @@
 
 [![docs badge](https://img.shields.io/badge/docs-reference-blue.svg)](https://docs.unity3d.com/Packages/com.unity.ml-agents@latest)
 
-[![license badge](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/Unity-Technologies/ml-agents/blob/release_22/LICENSE.md)
+[![license badge](https://img.shields.io/badge/license-Apache--2.0-green.svg)](https://github.com/Unity-Technologies/ml-agents/blob/release/4.0.0/LICENSE.md)
 
 ([latest release](https://github.com/Unity-Technologies/ml-agents/releases/tag/latest_release)) ([all releases](https://github.com/Unity-Technologies/ml-agents/releases))
 
@@ -36,10 +36,10 @@ The table below shows our latest release, including our `develop` branch which i
 - The [Migration page](Migrating.md) contains details on how to upgrade from earlier releases of the ML-Agents Toolkit.
 - The `com.unity.ml-agents` package is [verified](https://docs.unity3d.com/2020.1/Documentation/Manual/pack-safe.html) for Unity 2020.1 and later. Verified packages releases are numbered 1.0.x.
 
-| **Version** | **Release Date** | **Source** | **Documentation** | **Download** | **Python Package** | **Unity Package** |
-|:-----------:|:---------------:|:----------:|:-----------------:|:------------:|:------------------:|:-----------------:|
-| **Release 22** | **October 5, 2024** | **[source](https://github.com/Unity-Technologies/ml-agents/tree/release_22)** | **[docs](https://unity-technologies.github.io/ml-agents/)** | **[download](https://github.com/Unity-Technologies/ml-agents/archive/release_22.zip)** | **[1.1.0](https://pypi.org/project/mlagents/1.1.0/)** | **[3.0.0](https://docs.unity3d.com/Packages/com.unity.ml-agents@3.0/manual/index.html)** |
-| **develop (unstable)** | -- | [source](https://github.com/Unity-Technologies/ml-agents/tree/develop) | [docs](https://github.com/Unity-Technologies/ml-agents/tree/develop/com.unity.ml-agents/Documentation~/index.md) | [download](https://github.com/Unity-Technologies/ml-agents/archive/develop.zip) | -- | -- |
+|      **Version**       |  **Release Date**   |                                  **Source**                                   | **Documentation** |                                      **Download**                                      | **Python Package** |                                    **Unity Package**                                     |
+|:----------------------:|:-------------------:|:-----------------------------------------------------------------------------:|:-----------------:|:--------------------------------------------------------------------------------------:|:------------------:|:----------------------------------------------------------------------------------------:|
+|     **Release 23**     | **August 15, 2025** | **[source](https://github.com/Unity-Technologies/ml-agents/tree/release_23)** | **[docs](https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/index.html)** | **[download](https://github.com/Unity-Technologies/ml-agents/archive/release_23.zip)** | **[1.1.0](https://pypi.org/project/mlagents/1.1.0/)** | **[4.0.0](https://docs.unity3d.com/Packages/com.unity.ml-agents@4.0/manual/index.html)** |
+| **develop (unstable)** |         --          |    [source](https://github.com/Unity-Technologies/ml-agents/tree/develop)     | [docs](https://github.com/Unity-Technologies/ml-agents/tree/develop/com.unity.ml-agents/Documentation~/index.md) |    [download](https://github.com/Unity-Technologies/ml-agents/archive/develop.zip)     | -- |                                            --                                            |
 
 
 
@@ -82,7 +82,7 @@ Additionally, if you use the MA-POCA trainer in your research, we ask that you c
 
 ## Community and Feedback
 
-The ML-Agents Toolkit is an open-source project and we encourage and welcome contributions. If you wish to contribute, be sure to review our [contribution guidelines](CONTRIBUTING.md) and [code of conduct](https://github.com/Unity-Technologies/ml-agents/blob/release_22/CODE_OF_CONDUCT.md).
+The ML-Agents Toolkit is an open-source project and we encourage and welcome contributions. If you wish to contribute, be sure to review our [contribution guidelines](CONTRIBUTING.md) and [code of conduct](https://github.com/Unity-Technologies/ml-agents/blob/release/4.0.0/CODE_OF_CONDUCT.md).
 
 For problems with the installation and setup of the ML-Agents Toolkit, or discussions about how to best setup or train your agents, please create a new thread on the [Unity ML-Agents discussion forum](https://discussions.unity.com/tag/ml-agents). Be sure to include as many details as possible to help others assist you effectively. If you run into any other problems using the ML-Agents Toolkit or have a specific feature request, please [submit a GitHub issue](https://github.com/Unity-Technologies/ml-agents/issues).
 
