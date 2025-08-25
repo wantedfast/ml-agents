@@ -36,4 +36,4 @@ mlagents-learn ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c/a2c_3DBall.y
 ```
 
 ## Tutorial
-Here’s a step-by-step [tutorial](Tutorial-Custom-Trainer-Plugin.md) on how to write a setup file and extend ml-agents trainers, optimizers, and hyperparameter settings.To extend ML-agents classes see references on [trainers](Python-On-Off-Policy-Trainer-Documentation.md) and [Optimizer](Python-Optimizer-Documentation.md).
+Here’s a step-by-step [tutorial](Tutorial-Custom-Trainer-Plugin.md) on how to write a setup file and extend ml-agents trainers, optimizers, and hyperparameter settings. To extend ML-agents classes, see references on [trainers](Python-On-Off-Policy-Trainer-Documentation.md) and [Optimizer](Python-Optimizer-Documentation.md).
