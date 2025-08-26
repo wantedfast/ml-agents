@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace Unity.MLAgents.Sensors
 {
-    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     /// <summary>
     /// Extracts joint and rigidbody information for physics-based sensors.
     /// </summary>
+    [UnityEngine.Scripting.APIUpdating.MovedFrom("Unity.MLAgents.Extensions.Sensors")]
     public class RigidBodyJointExtractor : IJointExtractor
     {
         Rigidbody m_Body;
