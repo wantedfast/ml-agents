@@ -140,7 +140,7 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// Get the parent index of the body at the specified index.
         /// </summary>
-    /// <param name="index">The index of the body whose parent index is to be retrieved.</param>
+        /// <param name="index">The index of the body whose parent index is to be retrieved.</param>
         /// <returns>The parent index of the body at the specified index.</returns>
         public int GetParentIndex(int index)
         {
@@ -155,8 +155,8 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// Set whether the pose at the given index is enabled or disabled for observations.
         /// </summary>
-    /// <param name="index">The index of the pose to enable or disable.</param>
-    /// <param name="val">Whether the pose is enabled (true) or disabled (false).</param>
+        /// <param name="index">The index of the pose to enable or disable.</param>
+        /// <param name="val">Whether the pose is enabled (true) or disabled (false).</param>
         public void SetPoseEnabled(int index, bool val)
         {
             m_PoseEnabled[index] = val;
@@ -443,7 +443,7 @@ namespace Unity.MLAgents.Sensors
         ///   P.Inverse() * P
         /// will equal the identity pose (within tolerance).
         /// </summary>
-    /// <param name="pose">The pose to operate on.</param>
+        /// <param name="pose">The pose to operate on.</param>
         /// <returns>Inverse `Pose`.</returns>
         public static Pose Inverse(this Pose pose)
         {
@@ -455,8 +455,8 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// This is equivalent to Pose.GetTransformedBy(), but keeps the order more intuitive.
         /// </summary>
-    /// <param name="pose">The pose to transform by.</param>
-    /// <param name="rhs">The pose to be transformed.</param>
+        /// <param name="pose">The pose to transform by.</param>
+        /// <param name="rhs">The pose to be transformed.</param>
         /// <returns>Multiplied `Pose`.</returns>
         public static Pose Multiply(this Pose pose, Pose rhs)
         {
@@ -468,8 +468,8 @@ namespace Unity.MLAgents.Sensors
         /// as a 4x4 matrix and multiplying the augmented vector.
         /// See https://en.wikipedia.org/wiki/Affine_transformation#Augmented_matrix for more details.
         /// </summary>
-    /// <param name="pose">The pose to transform by.</param>
-    /// <param name="rhs">The vector to be transformed.</param>
+        /// <param name="pose">The pose to transform by.</param>
+        /// <param name="rhs">The vector to be transformed.</param>
         /// <returns>Multiplied `Pose`.</returns>
         public static Vector3 Multiply(this Pose pose, Vector3 rhs)
         {
