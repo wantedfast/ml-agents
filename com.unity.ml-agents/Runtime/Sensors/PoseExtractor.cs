@@ -30,6 +30,7 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// Read iterator for the enabled model space transforms.
         /// </summary>
+        /// <returns>An enumerable of enabled model space poses.</returns>
         public IEnumerable<Pose> GetEnabledModelSpacePoses()
         {
             if (m_ModelSpacePoses == null)
@@ -49,6 +50,7 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// Read iterator for the enabled local space transforms.
         /// </summary>
+        /// <returns>An enumerable of enabled local space poses.</returns>
         public IEnumerable<Pose> GetEnabledLocalSpacePoses()
         {
             if (m_LocalSpacePoses == null)
@@ -68,6 +70,7 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// Read iterator for the enabled model space linear velocities.
         /// </summary>
+        /// <returns>An enumerable of enabled model space linear velocities.</returns>
         public IEnumerable<Vector3> GetEnabledModelSpaceVelocities()
         {
             if (m_ModelSpaceLinearVelocities == null)
@@ -87,6 +90,7 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// Read iterator for the enabled local space linear velocities.
         /// </summary>
+        /// <returns>An enumerable of enabled local space linear velocities.</returns>
         public IEnumerable<Vector3> GetEnabledLocalSpaceVelocities()
         {
             if (m_LocalSpaceLinearVelocities == null)
@@ -158,6 +162,11 @@ namespace Unity.MLAgents.Sensors
             m_PoseEnabled[index] = val;
         }
 
+        /// <summary>
+        /// Returns whether the pose at the given index is enabled for observations.
+        /// </summary>
+        /// <param name="index">The index of the pose to check.</param>
+        /// <returns>True if the pose is enabled; otherwise, false.</returns>
         public bool IsPoseEnabled(int index)
         {
             return m_PoseEnabled[index];
@@ -167,7 +176,7 @@ namespace Unity.MLAgents.Sensors
         /// Initialize with the mapping of parent indices.
         /// The 0th element is assumed to be -1, indicating that it's the root.
         /// </summary>
-    /// <param name="parentIndices">An array mapping each pose to its parent index. The root should be -1.</param>
+        /// <param name="parentIndices">An array mapping each pose to its parent index. The root should be -1.</param>
         protected void Setup(int[] parentIndices)
         {
 #if DEBUG
@@ -195,14 +204,14 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// Return the world space Pose of the i'th object.
         /// </summary>
-    /// <param name="index">The index of the pose to retrieve.</param>
+        /// <param name="index">The index of the pose to retrieve.</param>
         /// <returns>The world space Pose at given index.</returns>
         protected internal abstract Pose GetPoseAt(int index);
 
         /// <summary>
         /// Return the world space linear velocity of the i'th object.
         /// </summary>
-    /// <param name="index">The index of the pose for which to get the linear velocity.</param>
+        /// <param name="index">The index of the pose for which to get the linear velocity.</param>
         /// <returns>The world space linear velocity at given index.</returns>
         protected internal abstract Vector3 GetLinearVelocityAt(int index);
 
@@ -210,7 +219,7 @@ namespace Unity.MLAgents.Sensors
         /// Return the underlying object at the given index. This is only
         /// used for display in the inspector.
         /// </summary>
-    /// <param name="index">The index of the object to retrieve.</param>
+        /// <param name="index">The index of the object to retrieve.</param>
         /// <returns>The `Object` at given index.</returns>
         protected internal virtual Object GetObjectAt(int index)
         {
@@ -285,7 +294,7 @@ namespace Unity.MLAgents.Sensors
         /// <summary>
         /// Compute the number of floats needed to represent the poses for the given PhysicsSensorSettings.
         /// </summary>
-    /// <param name="settings">The settings used to configure the physics sensor.</param>
+        /// <param name="settings">The settings used to configure the physics sensor.</param>
         /// <returns>The number of floats needed to represent the poses for the given `PhysicsSensorSettings`.</returns>
         public int GetNumPoseObservations(PhysicsSensorSettings settings)
         {
