@@ -3,7 +3,7 @@ To install and use the ML-Agents Toolkit, follow the steps below. Detailed instr
 
 1. Install Unity (6000.0 or later)
 2. Install Python using conda (>= 3.10.1, <=3.10.12) - we recommend using 3.10.12
-3. Install the `com.unity.ml-agents` Unity package; or clone this repository and install locally (recommended for the latest version and bug fixes)
+3. Install the `com.unity.ml-agents` Unity package
 4. Install `mlagents-envs`
 5. Install `mlagents`
 
