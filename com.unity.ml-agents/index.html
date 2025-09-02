@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="The Unity Machine Learning Agents Toolkit (ML-Agents) is an open-source project that enables games and simulations to serve as environments for training intelligent agents.">
+        <meta name="description" content="DEPRECATED: This documentation has been moved to the Unity Package Documentation. Please visit https://docs.unity3d.com/Packages/com.unity.ml-agents@latest for current documentation. The Unity Machine Learning Agents Toolkit (ML-Agents) is an open-source project that enables games and simulations to serve as environments for training intelligent agents.">
       
       
         <meta name="author" content="Unity Technologies">
@@ -18,15 +18,15 @@
       
       
       <link rel="icon" href="../images/unity-logo-black.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.33">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
-        <title>ML-Agents Overview - Unity ML-Agents Toolkit</title>
+        <title>Com.unity.ml agents - Unity ML-Agents Toolkit</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.3cba04c6.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -50,7 +50,7 @@
     
       <link rel="stylesheet" href="../extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -75,11 +75,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#ml-agents-overview" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -99,7 +94,7 @@
     </a>
     <label class="md-header__button md-icon" for="__drawer">
       
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -111,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ML-Agents Overview
+              Com.unity.ml agents
             
           </span>
         </div>
@@ -139,7 +134,7 @@
     <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_3" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
       </label>
     
   
@@ -149,7 +144,7 @@
     <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_3">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
       </label>
     
   
@@ -157,30 +152,32 @@
       
     
     
-      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
@@ -197,13 +194,14 @@
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
         <a href="https://github.com/Unity-Technologies/ml-agents" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -248,7 +246,7 @@
       <a href="https://github.com/Unity-Technologies/ml-agents" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -268,8 +266,10 @@
       <a href=".." class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
-    Home
+    ⚠️ DOCUMENTATION MOVED
+    
   </span>
   
 
@@ -288,8 +288,10 @@
       <a href="../ML-Agents-Overview/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     ML-Agents Overview
+    
   </span>
   
 
@@ -308,8 +310,10 @@
       <a href="../Installation/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Installation
+    
   </span>
   
 
@@ -328,8 +332,10 @@
       <a href="../ML-Agents-Toolkit-Documentation/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Toolkit Documentation
+    
   </span>
   
 
@@ -348,6 +354,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -358,8 +365,10 @@
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     Background
+    
   </span>
   
 
@@ -383,8 +392,10 @@
       <a href="../Background-Machine-Learning/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Machine Learning
+    
   </span>
   
 
@@ -404,8 +415,10 @@
       <a href="../Background-PyTorch/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     PyTorch
+    
   </span>
   
 
@@ -425,8 +438,10 @@
       <a href="../Background-Unity/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Unity
+    
   </span>
   
 
@@ -446,8 +461,10 @@
       <a href="../ELO-Rating-System/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     ELO
+    
   </span>
   
 
@@ -474,6 +491,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -484,8 +502,10 @@
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     Interfacing with Unity Builds
+    
   </span>
   
 
@@ -509,8 +529,10 @@
       <a href="../Python-Gym-API/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Getting started with the Gym API
+    
   </span>
   
 
@@ -530,8 +552,10 @@
       <a href="../Python-PettingZoo-API/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Getting started with the PettingZoo API
+    
   </span>
   
 
@@ -551,8 +575,10 @@
       <a href="../Python-LLAPI/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Getting started with the LLAPI
+    
   </span>
   
 
@@ -579,6 +605,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -589,8 +616,10 @@
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     Python API Docs
+    
   </span>
   
 
@@ -614,8 +643,10 @@
       <a href="../Python-Gym-API-Documentation/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Gym API Documentation
+    
   </span>
   
 
@@ -635,8 +666,10 @@
       <a href="../Python-PettingZoo-API-Documentation/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Petting Zoo Documentation
+    
   </span>
   
 
@@ -656,8 +689,10 @@
       <a href="../Python-LLAPI-Documentation/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     LLAPI Documentation
+    
   </span>
   
 
@@ -677,8 +712,10 @@
       <a href="../Python-On-Off-Policy-Trainer-Documentation/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     On/Off Policy Trainer
+    
   </span>
   
 
@@ -705,6 +742,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -715,8 +753,10 @@
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     Tutorials
+    
   </span>
   
 
@@ -740,8 +780,10 @@
       <a href="../Training-Plugins/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Customizing Training via Plugins
+    
   </span>
   
 
@@ -761,8 +803,10 @@
       <a href="../Tutorial-Custom-Trainer-Plugin/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Custom Trainer Plugin
+    
   </span>
   
 
@@ -782,8 +826,10 @@
       <a href="../Hugging-Face-Integration/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     HuggingFace
+    
   </span>
   
 
@@ -810,6 +856,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -820,8 +867,10 @@
           <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     About
+    
   </span>
   
 
@@ -845,8 +894,10 @@
       <a href="../FAQ/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     FAQs
+    
   </span>
   
 
@@ -866,8 +917,10 @@
       <a href="../Limitations/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Limitations
+    
   </span>
   
 
@@ -887,8 +940,10 @@
       <a href="../Migrating/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Migrating
+    
   </span>
   
 
@@ -908,8 +963,10 @@
       <a href="../Versioning/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Versioning
+    
   </span>
   
 
@@ -943,112 +1000,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#capabilities" class="md-nav__link">
-    <span class="md-ellipsis">
-      Capabilities
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#special-notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Special Notes
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#package-contents" class="md-nav__link">
-    <span class="md-ellipsis">
-      Package contents
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#known-limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Known Limitations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Known Limitations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#training" class="md-nav__link">
-    <span class="md-ellipsis">
-      Training
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inference
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#headless-mode" class="md-nav__link">
-    <span class="md-ellipsis">
-      Headless Mode
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rendering-speed-and-synchronization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Rendering Speed and Synchronization
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#additional-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Additional Resources
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1062,91 +1013,14 @@
                 
                   
 
+
   
   
 
 
-<h1 id="ml-agents-overview">ML-Agents Overview</h1>
-<p>ML-agents enable games and simulations to serve as environments for training intelligent agents in Unity. Training can be done with reinforcement learning, imitation learning, neuroevolution, or any other methods. Trained agents can be used for many use cases, including controlling NPC behavior (in a variety of settings such as multi-agent and adversarial), automated testing of game builds and evaluating different game design decisions pre-release.</p>
-<p>The <em>ML-Agents</em> package has a C# SDK for the [Unity ML-Agents Toolkit], which can be used outside of Unity. The scope of these docs is just to get started in the context of Unity, but further details and samples are located on the <a href="https://unity-technologies.github.io/ml-agents/">github docs</a>.</p>
-<h2 id="capabilities">Capabilities</h2>
-<p>The package allows you to convert any Unity scene into a learning environment and train character behaviors using a variety of machine-learning algorithms. Additionally, it allows you to embed these trained behaviors back into Unity scenes to control your characters. More specifically, the package provides the following core functionalities:</p>
-<ul>
-<li>Define Agents: entities, or characters, whose behavior will be learned. Agents are entities that generate observations (through sensors), take actions, and receive rewards from the environment.</li>
-<li>Define Behaviors: entities that specify how an agent should act. Multiple agents can share the same Behavior and a scene may have multiple Behaviors.</li>
-<li>Record demonstrations: To show the behaviors of an agent within the Editor. You can use demonstrations to help train a behavior for that agent.</li>
-<li>Embed a trained behavior (aka: run your ML model) in the scene via the <a href="https://docs.unity3d.com/Packages/com.unity.sentis@2.1/manual/index.html">Unity Sentis</a> inference engine. Embedded behaviors allow you to switch an Agent between learning and inference.</li>
-</ul>
-<h2 id="special-notes">Special Notes</h2>
-<p>Note that the ML-Agents package does not contain the machine learning algorithms for training behaviors. The ML-Agents package only supports instrumenting a Unity scene, setting it up for training, and then embedding the trained model back into your Unity scene. The machine learning algorithms that orchestrate training are part of the companion <a href="https://github.com/Unity-Technologies/ml-agents">python package</a>.
-Note that we also provide an ML-Agents Extensions package (<code>com.unity.ml-agents.extensions</code>) that contains early/experimental features that you may find useful. This package is only available from the <a href="https://github.com/Unity-Technologies/ml-agents/blob/release_22_docs/com.unity.ml-agents.extensions">ML-Agents GitHub repo</a>.</p>
-<h2 id="package-contents">Package contents</h2>
-<p>The following table describes the package folder structure:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Location</strong></th>
-<th><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><em>Documentation~</em></td>
-<td>Contains the documentation for the Unity package.</td>
-</tr>
-<tr>
-<td><em>Editor</em></td>
-<td>Contains utilities for Editor windows and drawers.</td>
-</tr>
-<tr>
-<td><em>Plugins</em></td>
-<td>Contains third-party DLLs.</td>
-</tr>
-<tr>
-<td><em>Runtime</em></td>
-<td>Contains core C# APIs for integrating ML-Agents into your Unity scene.</td>
-</tr>
-<tr>
-<td><em>Runtime/Integrations</em></td>
-<td>Contains utilities for integrating ML-Agents into specific game genres.</td>
-</tr>
-<tr>
-<td><em>Tests</em></td>
-<td>Contains the unit tests for the package.</td>
-</tr>
-</tbody>
-</table>
-<p><a name="Installation"></a></p>
-<h2 id="installation">Installation</h2>
-<p>To add the ML-Agents package to a Unity project:</p>
-<ul>
-<li>Create a new Unity project with Unity 2023.2 (or later) or open an existing one.</li>
-<li>To open the Package Manager, navigate to Window &gt; Package Manager.</li>
-<li>Click + and select Add package by name...</li>
-<li>Enter com.unity.ml-agents
-*Click Add to add the package to your project.</li>
-</ul>
-<p>To install the companion Python package to enable training behaviors, follow the <a href="https://github.com/Unity-Technologies/ml-agents/blob/release_22_docs/docs/Installation.md">installation instructions</a> on our <a href="https://github.com/Unity-Technologies/ml-agents">GitHub repository</a>.</p>
-<h2 id="known-limitations">Known Limitations</h2>
-<h3 id="training">Training</h3>
-<p>Training is limited to the Unity Editor and Standalone builds on Windows, MacOS,
-and Linux with the Mono scripting backend. Currently, training does not work
-with the IL2CPP scripting backend. Your environment will default to inference
-mode if training is not supported or is not currently running.</p>
-<h3 id="inference">Inference</h3>
-<p>Inference is executed via <a href="https://docs.unity3d.com/Packages/com.unity.sentis@latest/index.html">Unity Sentis</a> on the end-user device. Therefore, it is subject to the performance limitations of the end-user CPU or GPU. Also, only models created with our trainers are supported for running ML-Agents with a neural network behavior.</p>
-<h3 id="headless-mode">Headless Mode</h3>
-<p>If you enable Headless mode, you will not be able to collect visual observations from your agents.</p>
-<h3 id="rendering-speed-and-synchronization">Rendering Speed and Synchronization</h3>
-<p>Currently the speed of the game physics can only be increased to 100x real-time. The Academy (the sentinel that controls the stepping of the game to make sure everything is synchronized, from collection of observations to applying actions generated from policy inference to the agent) also moves in time with <code>FixedUpdate()</code> rather than <code>Update()</code>, so game behavior implemented in Update() may be out of sync with the agent decision-making.  See <a href="https://docs.unity3d.com/Manual/ExecutionOrder.html">Execution Order of Event Functions</a> for more information.</p>
-<p>You can control the frequency of Academy stepping by calling <code>Academy.Instance.DisableAutomaticStepping()</code>, and then calling <code>Academy.Instance.EnvironmentStep()</code>.</p>
-<h2 id="additional-resources">Additional Resources</h2>
-<ul>
-<li><a href="https://github.com/Unity-Technologies/ml-agents">GitHub repository</a></li>
-<li><a href="https://discussions.unity.com/tag/ml-agents">Unity Discussions</a></li>
-<li><a href="https://discord.com/channels/489222168727519232/1202574086115557446">Discord</a></li>
-<li><a href="https://unity-technologies.github.io/ml-agents/">Website</a></li>
-</ul>
+  <h1>Com.unity.ml agents</h1>
+
+
 
 
 
@@ -1197,10 +1071,14 @@ mode if training is not supported or is not currently running.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.af256bd8.min.js"></script>
+      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="../deprecation-banner.js"></script>
       
     
   </body>
