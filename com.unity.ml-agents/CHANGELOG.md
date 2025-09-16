@@ -7,6 +7,9 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Minor Changes
+#### ml-agents / ml-agents-envs
+- Fixed CUDA/CPU mismatch in threaded training (#6245)
 
 ## [4.0.0] - 2025-08-28
 ### Major Changes
