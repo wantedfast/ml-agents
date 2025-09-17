@@ -10,6 +10,7 @@ and this project adheres to
 ### Minor Changes
 #### com.unity.ml-agents (C#)
 - Fixed tensor indexing to use correct CHW layout (#6239)
+
 #### ml-agents / ml-agents-envs
 - Fixed CUDA/CPU mismatch in threaded training (#6245)
 
