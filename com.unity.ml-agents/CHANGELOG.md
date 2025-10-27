@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Minor Changes
+#### com.unity.ml-agents (C#)
+- Fixed tensor indexing to use correct CHW layout (#6239)
+- Updated the installation doc (#6242)
+
+#### ml-agents / ml-agents-envs
+- Set the Torch version constraint to 2.8 (#6251)
+- Fixed CUDA/CPU mismatch in threaded training (#6245)
+
 ## [4.0.0] - 2025-08-28
 ### Major Changes
 #### com.unity.ml-agents (C#)
