@@ -1,5 +1,5 @@
 # Installation
-To install and use the ML-Agents Toolkit, follow the steps below. Detailed instructions for each step are provided later on this page. For advanced installation and development setup, see the [Advanced Installation](#advanced-installation) section at the bottom of this page.
+To install and use the ML-Agents Toolkit, follow the steps below. Detailed instructions for each step are provided later on this page.
 
 1. Install Unity (6000.0 or later)
 2. Install Python using conda (>= 3.10.1, <=3.10.12) - we recommend using 3.10.12
