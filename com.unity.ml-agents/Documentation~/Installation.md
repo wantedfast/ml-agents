@@ -24,7 +24,7 @@ To install Python, follow these steps:
 
 1. Install [Conda](https://docs.conda.io/en/latest/) or [Mamba](https://github.com/mamba-org/mamba).
 2. Open a terminal and create a new Conda environment with Python 3.10.12:
-   
+
    ```shell
    conda create -n mlagents python=3.10.12 && conda activate mlagents
 
@@ -95,9 +95,6 @@ Clone the ML-Agents repository to access the source code, sample environments, a
 
 To clone the latest stable release, run:
 
-
-Use the command below to clone the repository:
-
 ```sh
 git clone --branch release_23 https://github.com/Unity-Technologies/ml-agents.git
 ```
@@ -162,7 +159,7 @@ pip3 install -e ./ml-agents-envs
 pip3 install -e ./ml-agents
 ```
 
-Note: 
+Note:
 
 Install the packages in this order. The `mlagents` package depends on `mlagents_envs`.
 Installing them in the other order will download `mlagents_envs` from PyPi, which can cause version mismatches.
