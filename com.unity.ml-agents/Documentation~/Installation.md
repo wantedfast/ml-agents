@@ -106,7 +106,7 @@ To clone the bleeding-edge development version (optional), run:
 ```sh
 git clone https://github.com/Unity-Technologies/ml-agents.git
 ```
-If you plan to contribute your changes, clone the develop branch (omit the `--branch` flag) and see the [Contribution Guidelines](CONTRIBUTING.md) for details.
+If you plan to contribute your changes, clone the develop branch (omit the `--branch` flag) and refer to the [Contribution Guidelines](CONTRIBUTING.md) for details.
 
 
 #### Add the ML-Agents Unity package
