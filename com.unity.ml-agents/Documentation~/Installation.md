@@ -75,7 +75,7 @@ python -m pip install mlagents==1.1.0
 ```
 Make sure to install a Python package version that matches your Unity ML-Agents package version. For information on compatible versions, refer to the [ML-Agents release history](https://github.com/Unity-Technologies/ml-agents/releases).
 
-3. If you encounter an error while building the grpcio wheel, install it separately before reinstalling `mlagents`:
+3. If you encounter an error while building the `grpcio` wheel, install it separately before reinstalling `mlagents`:
 
 ```shell
 conda install "grpcio=1.48.2" -c conda-forge
