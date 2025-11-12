@@ -31,6 +31,10 @@ sign_macOS:
     type: Unity::VM::osx
     image: package-ci/macos-13:v4
     flavor: m1.mac
+  sources:
+    checkout_mode: sparse
+    files:
+      sparse_checkout_rules: .yamato/sparse-checkouts/upm-packages.txt
   commands:
     - brick_source: git@github.cds.internal.unity3d.com:unity/macos.cds.ci.code-signing.git@v1.2.2
       variables:
