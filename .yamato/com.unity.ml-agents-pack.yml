@@ -24,6 +24,8 @@ pack:
         - "upm-ci~/packages/**/*"
   triggers:
     cancel_old_ci: true
+  dependencies:
+    - .yamato/com.unity.ml-agents-pack.yml#sign_macOS
 
 sign_macOS:
   name: Sign MacOS Shared Libraries

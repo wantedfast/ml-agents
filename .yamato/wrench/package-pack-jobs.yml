@@ -21,6 +21,8 @@ package_pack_-_ml-agents:
     packages:
       paths:
       - upm-ci~/packages/**/*
+  dependencies:
+    - path: .yamato/com.unity.ml-agents-pack.yml#sign_macOS
   variables:
     UPMCI_ACK_LARGE_PACKAGE: 1
     UPMPVP_CONTEXT_WRENCH: 0.10.5.0
