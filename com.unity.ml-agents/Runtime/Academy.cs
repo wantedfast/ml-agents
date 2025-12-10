@@ -261,6 +261,7 @@ namespace Unity.MLAgents
             LazyInitialize();
 
 #if UNITY_EDITOR
+            EditorApplication.quitting += Dispose;
             EditorApplication.playModeStateChanged += HandleOnPlayModeChanged;
 #endif
         }
