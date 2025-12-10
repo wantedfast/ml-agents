@@ -11,6 +11,7 @@ and this project adheres to
 #### com.unity.ml-agents (C#)
 - Fixed tensor indexing to use correct CHW layout (#6239)
 - Updated the installation doc (#6242)
+- Fixed Unity Editor crashing when quitting in play mode (#6267)
 
 #### ml-agents / ml-agents-envs
 - Set the Torch version constraint to 2.8 (#6251)
