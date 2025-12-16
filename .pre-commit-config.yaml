@@ -3,6 +3,7 @@ repos:
     rev: 22.3.0
     hooks:
     -   id: black
+        args: ["--check"]
         exclude: >
             (?x)^(
                 .*_pb2.py|
@@ -94,7 +95,8 @@ repos:
     -   id: dotnet-format
         name: dotnet-format
         language: system
-        entry: dotnet format whitespace --folder --include --no-restore --verify-no-changes
+        entry: dotnet format whitespace --folder --include . --no-restore --verify-no-changes
+        pass_filenames: false
         types_or: ["c#"]
     -   id: markdown-link-check
         name: markdown-link-check
