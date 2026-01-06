@@ -123,4 +123,4 @@ default_registry = UnityEnvRegistry()
 # TODO restore when a new registry is available.
 default_registry.register_from_yaml(
     "https://storage.googleapis.com/mlagents-test-environments/1.1.0/manifest.yaml"
- )  # noqa E501
+)  # noqa E501
