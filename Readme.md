@@ -69,7 +69,6 @@ Additionally, if you use the MA-POCA trainer in your research, we ask that you c
 }
 ```
 
-
 ## Additional Resources
 
 * [Unity Discussions](https://discussions.unity.com/tag/ml-agents)
