@@ -94,7 +94,8 @@ repos:
     -   id: dotnet-format
         name: dotnet-format
         language: system
-        entry: dotnet format whitespace --folder --include
+        entry: dotnet format whitespace --folder --include . --verify-no-changes
+        pass_filenames: false
         types_or: ["c#"]
     -   id: markdown-link-check
         name: markdown-link-check
