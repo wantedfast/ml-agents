@@ -35,6 +35,12 @@ jobs:
     - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
+    - name: Free disk space
+      run: |
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /usr/local/share/boost
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        df -h
     - name: Cache pip
       uses: actions/cache@v4
       with:
