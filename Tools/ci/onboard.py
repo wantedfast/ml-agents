@@ -64,7 +64,11 @@ def create_package_option(name, first):
     if not first:
         initial_char = ",\n"
         initial_tab = "        "
-    return f'{initial_char}{initial_tab}{{\n            "{name}",\n            new PackageOptions() {{ ReleaseOptions = new ReleaseOptions() {{ IsReleasing = true }} }}\n        }}'
+    return (
+        f'{initial_char}{initial_tab}{{\n            "{name}",\n'
+        f"            new PackageOptions() {{ ReleaseOptions = "
+        f"new ReleaseOptions() {{ IsReleasing = true }} }}\n        }}"
+    )
 
 
 def update_template_variables(packages):
@@ -77,7 +81,7 @@ def update_template_variables(packages):
     )
     settings_content = settings_content.replace("PACKAGES_ROOTS", ".")
 
-    package_replace_string = ''
+    package_replace_string = ""
     first = True
     for package in packages:
         package_replace_string += create_package_option(package, first)
@@ -134,8 +138,8 @@ def update_shell_scripts(root_dir):
     )
 
     path_diff = len(split_cwd) - len(split_root)
-    cd_string = ''
-    for i in range(path_diff):
+    cd_string = ""
+    for _ in range(path_diff):
         cd_string += "../"
 
     bash_content = open("regenerate.bat").read()
