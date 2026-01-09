@@ -586,23 +586,11 @@ class SimpleActor(nn.Module, Actor):
         self.version_number = torch.nn.Parameter(
             torch.Tensor([self.MODEL_EXPORT_VERSION]), requires_grad=False
         )
-        self.is_continuous_int_deprecated = torch.nn.Parameter(
-            torch.Tensor([int(self.action_spec.is_continuous())]), requires_grad=False
-        )
         self.continuous_act_size_vector = torch.nn.Parameter(
             torch.Tensor([int(self.action_spec.continuous_size)]), requires_grad=False
         )
         self.discrete_act_size_vector = torch.nn.Parameter(
             torch.Tensor([self.action_spec.discrete_branches]), requires_grad=False
-        )
-        self.act_size_vector_deprecated = torch.nn.Parameter(
-            torch.Tensor(
-                [
-                    self.action_spec.continuous_size
-                    + sum(self.action_spec.discrete_branches)
-                ]
-            ),
-            requires_grad=False,
         )
         self.network_body = NetworkBody(observation_specs, network_settings)
         if network_settings.memory is not None:
