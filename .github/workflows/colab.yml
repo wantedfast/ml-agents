@@ -30,8 +30,15 @@ jobs:
     - uses: actions/checkout@v4
     - name: Free disk space
       run: |
+        echo "Disk space before cleanup:"
+        df -h
         sudo rm -rf /opt/ghc
         sudo rm -rf /usr/local/share/boost
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/hostedtoolcache/CodeQL
+        sudo docker image prune --all --force
+        sudo apt-get clean
+        echo "Disk space after cleanup:"
         df -h
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -54,10 +61,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools
+        # Install CPU-only PyTorch first to avoid large CUDA packages
+        python -m pip install --no-cache-dir torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
         # Install the local checkouts of ml-agents. This will prevent the colab notebooks from installing a released version.
-        python -m pip install --progress-bar=off -e ./ml-agents-envs
-        python -m pip install --progress-bar=off -e ./ml-agents
-        python -m pip install --progress-bar=off -r colab_requirements.txt
+        python -m pip install --no-cache-dir --progress-bar=off -e ./ml-agents-envs
+        python -m pip install --no-cache-dir --progress-bar=off -e ./ml-agents
+        python -m pip install --no-cache-dir --progress-bar=off -r colab_requirements.txt
     - name: Execute notebook
       run: jupyter nbconvert --to notebook --execute --log-level=DEBUG --ExecutePreprocessor.kernel_name=python3 --output output-${{ matrix.notebook_path }} colab/${{ matrix.notebook_path }}
     - name: Upload colab results
