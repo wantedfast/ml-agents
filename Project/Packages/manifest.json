@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.ai.inference": "https://github.cds.internal.unity3d.com/unity/UnityInferenceEngine.git?path=com.unity.ai.inference#dev",
     "com.unity.ai.navigation": "2.0.6",
     "com.unity.formats.fbx": "5.1.1",
     "com.unity.ide.rider": "3.0.31",
