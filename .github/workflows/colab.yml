@@ -49,8 +49,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install --upgrade setuptools
-        # Install CPU-only PyTorch first to avoid large CUDA packages
-        python -m pip install --no-cache-dir torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
         # Install the local checkouts of ml-agents. This will prevent the colab notebooks from installing a released version.
         python -m pip install --no-cache-dir --progress-bar=off -e ./ml-agents-envs
         python -m pip install --no-cache-dir --progress-bar=off -e ./ml-agents
