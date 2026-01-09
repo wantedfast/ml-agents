@@ -28,6 +28,11 @@ jobs:
         notebook_path: [Colab_UnityEnvironment_1_Run.ipynb, Colab_UnityEnvironment_2_Train.ipynb, Colab_UnityEnvironment_3_SideChannel.ipynb]
     steps:
     - uses: actions/checkout@v4
+    - name: Free disk space
+      run: |
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /usr/local/share/boost
+        df -h
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -35,12 +40,6 @@ jobs:
     - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
-    - name: Free disk space
-      run: |
-        sudo rm -rf /opt/ghc
-        sudo rm -rf /usr/local/share/boost
-        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        df -h
     - name: Cache pip
       uses: actions/cache@v4
       with:
