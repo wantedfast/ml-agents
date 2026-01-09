@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MLAgents.Cookbook")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25711a313b4ac459437b36facf1c3476ed16d650")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09abb37b940ba39a0db7bc18e7d9eafceca86327")]
 [assembly: System.Reflection.AssemblyProductAttribute("MLAgents.Cookbook")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MLAgents.Cookbook")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
