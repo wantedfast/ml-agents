@@ -1,13 +1,23 @@
 {
-  "project_path": "Tools/CI",
-  "schema_version": 0.5,
+  "schema_version": 0.7,
   "packages": {
     "com.unity.ml-agents": {
       "directory": "com.unity.ml-agents/",
       "prePackCommands": [],
-      "preTestCommands": {},
+      "preTestCommands": {
+        "MacOS": [],
+        "Ubuntu": [],
+        "Windows": []
+      },
       "InternalOnly": false,
-      "NeverPublish": false
+      "NeverPublish": false,
+      "MaxEditorVersion": "",
+      "coverageEnabled": false,
+      "coverageCommands": [
+        "generateAdditionalMetrics;generateHtmlReport;assemblyFilters:ASSEMBLY_NAME;pathReplacePatterns:@*,,**/PackageCache/,;sourcePaths:YAMATO_SOURCE_DIR/Packages;"
+      ],
+      "dependantsToIgnoreInPreviewApv": {},
+      "postPackCommands": []
     }
   },
   "releasing_packages": [
@@ -22,6 +32,7 @@
   },
   "publishing_job": ".yamato/wrench/promotion-jobs.yml#publish_ml-agents",
   "branch_pattern": "ReleaseSlash",
-  "wrench_version": "0.10.5.0",
-  "pvp_exemption_path": ".yamato/wrench/pvp-exemptions.json"
+  "wrench_version": "1.4.3.0",
+  "pvp_exemption_path": ".yamato/wrench/pvp-exemptions.json",
+  "cs_project_path": "Tools/ci/MLAgents.Cookbook.csproj"
 }
