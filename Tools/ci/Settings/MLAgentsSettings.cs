@@ -1,4 +1,5 @@
-﻿using RecipeEngine.Api.Settings;
+using RecipeEngine.Api.Dependencies;
+using RecipeEngine.Api.Settings;
 using RecipeEngine.Modules.Wrench.Models;
 using RecipeEngine.Modules.Wrench.Settings;
 
@@ -14,7 +15,11 @@ public class MLAgentsSettings : AnnotatedSettingsBase
     {
         {
             "com.unity.ml-agents",
-            new PackageOptions() { ReleaseOptions = new ReleaseOptions() { IsReleasing = true } }
+            new PackageOptions()
+            {
+                ReleaseOptions = new ReleaseOptions() { IsReleasing = true },
+                PackJobOptions = new PackJobOptions() { Dependencies = new List<Dependency>() { new Dependency("com.unity.ml-agents-pack", "sign_macos") } }
+            }
         }
     };
 
@@ -23,7 +28,7 @@ public class MLAgentsSettings : AnnotatedSettingsBase
         Wrench = new WrenchSettings(
             PackagesRootPaths,
             PackageOptions
-        );      
+        );
     }
 
     public WrenchSettings Wrench { get; private set; }
