@@ -9,9 +9,9 @@ test_-_wrench_jobs_up_to_date:
     type: Unity::VM
     flavor: b1.large
   commands:
-  - command: cd Tools/ci
+  - command: pwd
   - command: ls
-  - command: dotnet run --project MLAgents.Cookbook.csproj
+  - command: dotnet run --project Tools/ci/MLAgents.Cookbook.csproj
   - command: |-
       if [ -n "$(git status --porcelain -- .yamato/wrench)" ]; then
         git status
