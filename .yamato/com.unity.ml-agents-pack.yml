@@ -25,9 +25,9 @@ pack:
   triggers:
     cancel_old_ci: true
   dependencies:
-    - .yamato/com.unity.ml-agents-pack.yml#sign_macOS
+    - .yamato/com.unity.ml-agents-pack.yml#sign_macos
 
-sign_macOS:
+sign_macos:
   name: Sign MacOS Shared Libraries
   agent:
     type: Unity::VM::osx
