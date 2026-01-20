@@ -18,6 +18,24 @@
       ],
       "dependantsToIgnoreInPreviewApv": {},
       "postPackCommands": []
+    },
+    "com.unity.ml-agents.tests": {
+      "directory": "com.unity.ml-agents.tests/",
+      "prePackCommands": [],
+      "preTestCommands": {
+        "MacOS": [],
+        "Ubuntu": [],
+        "Windows": []
+      },
+      "InternalOnly": true,
+      "NeverPublish": true,
+      "MaxEditorVersion": "",
+      "coverageEnabled": false,
+      "coverageCommands": [
+        "generateAdditionalMetrics;generateHtmlReport;assemblyFilters:ASSEMBLY_NAME;pathReplacePatterns:@*,,**/PackageCache/,;sourcePaths:YAMATO_SOURCE_DIR/Packages;"
+      ],
+      "dependantsToIgnoreInPreviewApv": {},
+      "postPackCommands": []
     }
   },
   "releasing_packages": [
