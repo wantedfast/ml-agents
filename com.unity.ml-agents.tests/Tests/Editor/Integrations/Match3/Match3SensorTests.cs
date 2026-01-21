@@ -395,7 +395,7 @@ namespace Unity.MLAgents.Tests.Integrations.Match3
             for (var i = 0; i < splitPngs.Count; i++)
             {
                 var pngData = splitPngs[i];
-                var path = $"Packages/com.unity.ml-agents/Tests/Editor/Integrations/Match3/{pathPrefix}{i}.png";
+                var path = $"Packages/com.unity.ml-agents.tests/Tests/Editor/Integrations/Match3/{pathPrefix}{i}.png";
                 using (var sw = File.Create(path))
                 {
                     foreach (var b in pngData)
@@ -411,7 +411,7 @@ namespace Unity.MLAgents.Tests.Integrations.Match3
             var bytesOut = new List<byte>();
             for (var i = 0; i < numExpected; i++)
             {
-                var path = $"Packages/com.unity.ml-agents/Tests/Editor/Integrations/Match3/{pathPrefix}{i}.png";
+                var path = $"Packages/com.unity.ml-agents.tests/Tests/Editor/Integrations/Match3/{pathPrefix}{i}.png";
                 var res = File.ReadAllBytes(path);
                 bytesOut.AddRange(res);
             }
