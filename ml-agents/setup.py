@@ -59,6 +59,7 @@ setup(
         "h5py>=2.9.0",
         f"mlagents_envs=={VERSION}",
         "numpy>=1.23.5,<1.24.0",
+        "packaging>=20.0",
         "Pillow>=4.2.1",
         "protobuf>=3.6,<3.21",
         "pyyaml>=3.1.0",
