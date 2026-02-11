@@ -18,9 +18,7 @@ def assert_torch_installed():
         torch_version = version("torch")
     except PackageNotFoundError:
         pass
-    assert torch_version is not None and Version(torch_version) >= Version(
-        "1.6.0"
-    ), (
+    assert torch_version is not None and Version(torch_version) >= Version("1.6.0"), (
         "A compatible version of PyTorch was not installed. Please visit the PyTorch homepage "
         + "(https://pytorch.org/get-started/locally/) and follow the instructions to install. "
         + "Version 1.6.0 and later are supported."
