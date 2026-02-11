@@ -9,4 +9,4 @@ curl -fs "https://artifactory-slo.bf.unity3d.com/artifactory/automation-and-tool
 IF EXIST "patterns" rmdir /s /q patterns
 powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('patterns.zip', '.'); }" && DEL "patterns.zip"
 infrastructure_instability_detection
-exit /b 0
+exit /b 0\r
