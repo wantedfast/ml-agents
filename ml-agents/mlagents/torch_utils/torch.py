@@ -1,11 +1,6 @@
 import os
 
-try:
-    from importlib.metadata import version, PackageNotFoundError
-except ImportError:
-    # Python < 3.8 compatibility
-    from importlib_metadata import version, PackageNotFoundError
-
+from importlib.metadata import version, PackageNotFoundError
 from packaging.version import Version
 from mlagents.torch_utils import cpu_utils
 from mlagents.trainers.settings import TorchSettings
