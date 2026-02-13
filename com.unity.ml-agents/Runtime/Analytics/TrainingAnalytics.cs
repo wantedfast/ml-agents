@@ -34,11 +34,23 @@ namespace Unity.MLAgents.Analytics
         private static HashSet<string> s_SentTrainingBehaviorInitialized;
 #endif
 
-        private static Guid s_TrainingSessionGuid;
+        private static Guid? s_TrainingSessionGuid;
 
         // These are set when the RpcCommunicator connects
         private static string s_TrainerPackageVersion = "";
         private static string s_TrainerCommunicationVersion = "";
+
+#if UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStaticsOnLoad()
+        {
+            s_SentRemotePolicyInitialized = null;
+            s_SentTrainingBehaviorInitialized = null;
+            s_TrainingSessionGuid = null;
+            s_TrainerPackageVersion = "";
+            s_TrainerCommunicationVersion = "";
+        }
+#endif
 
         internal static bool EnableAnalytics()
         {
