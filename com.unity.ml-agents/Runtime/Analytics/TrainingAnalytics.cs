@@ -44,8 +44,10 @@ namespace Unity.MLAgents.Analytics
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStaticsOnLoad()
         {
+#if MLA_UNITY_ANALYTICS_MODULE && ENABLE_CLOUD_SERVICES_ANALYTICS
             s_SentRemotePolicyInitialized = null;
             s_SentTrainingBehaviorInitialized = null;
+#endif
             s_TrainingSessionGuid = null;
             s_TrainerPackageVersion = "";
             s_TrainerCommunicationVersion = "";
