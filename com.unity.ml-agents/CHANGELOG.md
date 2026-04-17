@@ -11,7 +11,7 @@ and this project adheres to
 - Support for Fast Enter Play Mode required by Core CLR (#6288)
 - Fix deprecated instanceID API usages in com.unity.ml-agents (#6287)
 - Improve documentation on how to set up local environments (#6289)
-- Upgraded to Sentis Inference Engine 2.6.1 (#6291)
+- Upgraded to Sentis 2.6.1 (#6291)
 
 ## [4.0.2] - 2026-02-03
 ### Minor Changes
