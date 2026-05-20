@@ -8,7 +8,7 @@ and this project adheres to
 
 ## Unreleased
 #### com.unity.ml-agents (C#)
-- Fix a crash that could occur when exiting playmode (#6296) 
+- Fix a crash that could occur when exiting playmode (#6296)
 
 ## [4.0.3] - 2026-04-17
 ### Minor Changes
