@@ -70,12 +70,13 @@ class GaussianDistInstance(DistInstance):
         return self.mean
 
     def log_prob(self, value):
+        value = value.to(self.mean.device)
         var = self.std**2
         log_scale = torch.log(self.std + EPSILON)
         return (
             -((value - self.mean) ** 2) / (2 * var + EPSILON)
             - log_scale
-            - math.log(math.sqrt(2 * math.pi))
+            - 0.5 * torch.log(torch.tensor(2 * math.pi, device=self.mean.device))
         )
 
     def pdf(self, value):
