@@ -277,10 +277,6 @@ namespace Unity.MLAgents
             {
                 Dispose();
             }
-            else if (state == PlayModeStateChange.ExitingPlayMode)
-            {
-                Dispose();
-            }
         }
 
 #endif
