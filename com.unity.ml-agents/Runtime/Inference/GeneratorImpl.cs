@@ -260,10 +260,8 @@ namespace Unity.MLAgents.Inference
                     {
                         if (tensorOffset >= tensorCapacity)
                         {
-                            UnityEngine.Debug.LogWarning(
-                                "[ml-agents] Sensor write overflow: tensorOffset (" + tensorOffset +
-                                ") reached tensor capacity (" + tensorCapacity +
-                                "). Skipping remaining sensors to prevent buffer overrun.");
+                            UnityEngine.Debug.LogWarning($"[ml-agents] Sensor write overflow: tensorOffset ({tensorOffset}) reached tensor capacity ({tensorCapacity}). 
+                            Skipping remaining sensors to prevent buffer overrun.");
                             break;
                         }
 
