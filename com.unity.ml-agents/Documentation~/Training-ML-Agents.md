@@ -135,6 +135,7 @@ checkpoint_settings:
 
 ```yaml
 torch_settings:
+  # Device used for training
   device: cpu
 ```
 

@@ -1,7 +1,7 @@
 from typing import Callable, List, Dict, Tuple, Optional, Union, Any
 import abc
 
-from mlagents.torch_utils import torch, nn, default_device
+from mlagents.torch_utils import torch, nn
 
 from mlagents_envs.base_env import ActionSpec, ObservationSpec, ObservationType
 from mlagents.trainers.torch_entities.action_model import ActionModel
@@ -86,9 +86,12 @@ class ObservationEncoder(nn.Module):
     def update_normalization(self, buffer: AgentBuffer) -> None:
         obs = ObsUtil.from_buffer(buffer, len(self.processors))
         for vec_input, enc in zip(obs, self.processors):
-            if isinstance(enc, VectorInput):
+            if isinstance(enc, VectorInput) and enc.normalizer is not None:
                 enc.update_normalization(
-                    torch.as_tensor(vec_input.to_ndarray(), device=default_device())
+                    torch.as_tensor(
+                        vec_input.to_ndarray(),
+                        device=enc.normalizer.running_mean.device,
+                    )
                 )
 
     def copy_normalization(self, other_encoder: "ObservationEncoder") -> None:
