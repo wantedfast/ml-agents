@@ -254,7 +254,7 @@ namespace Unity.MLAgents.Inference
                 else
                 {
                     var tensorOffset = 0;
-                    var tensorCapacity = tensorProxy.data.shape[1];
+                    var tensorCapacity = tensorProxy.data.shape.rank >= 2 ? tensorProxy.data.shape[1] : 0;
 
                     for (var sensorIndexIndex = 0; sensorIndexIndex < m_SensorIndices.Count; sensorIndexIndex++)
                     {

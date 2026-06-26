@@ -77,7 +77,7 @@ namespace Unity.MLAgents.Sensors
             m_Offset = channelOffset;
             m_Data = null;
             m_TensorShape = m_Proxy.data.shape;
-            m_Capacity = m_TensorShape[1];
+            m_Capacity = m_TensorShape.rank >= 2 ? m_TensorShape[1] : 0;
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Unity.MLAgents.Sensors
                 }
                 else
                 {
-                    if (index + m_Offset >= m_Capacity)
+                    if (index + m_Offset < 0 || index + m_Offset >= m_Capacity)
                         return;
 
                     m_Proxy.data.CompleteAllPendingOperations();
@@ -157,7 +157,7 @@ namespace Unity.MLAgents.Sensors
                 }
                 else
                 {
-                    if (ch + m_Offset >= m_TensorShape.Channels() ||
+                    if (ch + m_Offset < 0 || ch + m_Offset >= m_TensorShape.Channels() ||
                         h < 0 || h >= m_TensorShape.Height() ||
                         w < 0 || w >= m_TensorShape.Width())
                         return;
@@ -187,7 +187,7 @@ namespace Unity.MLAgents.Sensors
             {
                 m_Proxy.data.CompleteAllPendingOperations();
 
-                var maxCount = Math.Min(data.Count, m_Capacity - m_Offset - writeOffset);
+                var maxCount = Math.Min(data.Count, Math.Max(0, m_Capacity - m_Offset - writeOffset));
                 for (var index = 0; index < maxCount; index++)
                 {
                     ((Tensor<float>)m_Proxy.data)[m_Batch, index + m_Offset + writeOffset] = data[index];
