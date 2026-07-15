@@ -236,6 +236,14 @@ class POCATrainer(OnPolicyTrainer):
     def create_optimizer(self) -> TorchPOCAOptimizer:
         return TorchPOCAOptimizer(self.policy, self.trainer_settings)
 
+    def add_policy(
+        self, parsed_behavior_id: BehaviorIdentifiers, policy: Policy
+    ) -> None:
+        super().add_policy(parsed_behavior_id, policy)
+        # initialize_or_load() runs inside the base implementation and can replace
+        # encoder weights. Reapply the configured visual checkpoint afterwards.
+        self.optimizer.reload_pretrained_visual_encoder()
+
     def get_policy(self, name_behavior_id: str) -> Policy:
         """
         Gets policy from trainer associated with name_behavior_id

@@ -136,6 +136,8 @@ class NetworkSettings:
     hidden_units: int = 128
     num_layers: int = 2
     vis_encode_type: EncoderType = EncoderType.SIMPLE
+    pretrained_visual_encoder_path: Optional[str] = None
+    freeze_visual_encoder: bool = False
     memory: Optional[MemorySettings] = None
     goal_conditioning_type: ConditioningType = ConditioningType.HYPER
     deterministic: bool = parser.get_default("deterministic")

@@ -32,7 +32,11 @@ from mlagents.trainers.torch_entities.decoders import ValueHeads
 from mlagents.trainers.torch_entities.agent_action import AgentAction
 from mlagents.trainers.torch_entities.action_log_probs import ActionLogProbs
 from mlagents.trainers.torch_entities.utils import ModelUtils
+from mlagents.trainers.torch_entities.pretrained_visual_encoder import (
+    load_pretrained_visual_encoders,
+)
 from mlagents.trainers.trajectory import ObsUtil, GroupObsUtil
+from mlagents.trainers.exception import UnityTrainerException
 
 from mlagents_envs.logging_util import get_logger
 
@@ -175,7 +179,25 @@ class TorchPOCAOptimizer(TorchOptimizer):
         # Move to GPU if needed
         self._critic.to(default_device())
 
-        params = list(self.policy.actor.parameters()) + list(self.critic.parameters())
+        self._visual_checkpoint = (
+            trainer_settings.network_settings.pretrained_visual_encoder_path
+        )
+        self._freeze_visual_encoder = (
+            trainer_settings.network_settings.freeze_visual_encoder
+        )
+        if self._freeze_visual_encoder and self._visual_checkpoint is None:
+            raise UnityTrainerException(
+                "freeze_visual_encoder requires pretrained_visual_encoder_path"
+            )
+        if self._visual_checkpoint is not None:
+            self.reload_pretrained_visual_encoder()
+
+        params = [
+            parameter
+            for parameter in list(self.policy.actor.parameters())
+            + list(self.critic.parameters())
+            if parameter.requires_grad
+        ]
 
         self.hyperparameters: POCASettings = cast(
             POCASettings, trainer_settings.hyperparameters
@@ -211,6 +233,27 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self.stream_names = list(self.reward_signals.keys())
         self.value_memory_dict: Dict[str, torch.Tensor] = {}
         self.baseline_memory_dict: Dict[str, torch.Tensor] = {}
+
+    def reload_pretrained_visual_encoder(self) -> None:
+        """Reapply frozen visual weights after a full trainer checkpoint load."""
+        if self._visual_checkpoint is not None:
+            actor_count, critic_count, checkpoint_hash = (
+                load_pretrained_visual_encoders(
+                    self.policy.actor,
+                    self.critic,
+                    self._visual_checkpoint,
+                    self._freeze_visual_encoder,
+                )
+            )
+            logger.info(
+                "Loaded pretrained visual encoder %s (sha256=%s) into "
+                "actor=%d critic=%d; frozen=%s",
+                self._visual_checkpoint,
+                checkpoint_hash,
+                actor_count,
+                critic_count,
+                self._freeze_visual_encoder,
+            )
 
     def create_reward_signals(
         self, reward_signal_configs: Dict[RewardSignalType, RewardSignalSettings]
