@@ -47,6 +47,7 @@ setup(
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
     packages=find_packages(
         exclude=["*.tests", "*.tests.*", "tests.*", "tests", "colabs", "*.ipynb"]
@@ -63,7 +64,7 @@ setup(
         "numpy>=1.23.5,<2.0",
         "filelock>=3.4.0",
     ],
-    python_requires=">=3.10.1,<=3.10.12",
+    python_requires=">=3.10.1,<=3.11.15",
     # TODO: Remove this once mypy stops having spurious setuptools issues.
     cmdclass={"verify": VerifyVersionCommand},  # type: ignore
 )
