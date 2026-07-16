@@ -142,6 +142,7 @@ class NetworkSettings:
     visual_encoder_audit_output_path: Optional[str] = None
     use_navigation_probe_features: bool = False
     visual_navigation_probe_path: Optional[str] = None
+    use_oracle_navigation_geometry: bool = False
     memory: Optional[MemorySettings] = None
     goal_conditioning_type: ConditioningType = ConditioningType.HYPER
     deterministic: bool = parser.get_default("deterministic")

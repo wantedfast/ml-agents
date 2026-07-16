@@ -204,6 +204,11 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self._visual_navigation_probe_path = (
             trainer_settings.network_settings.visual_navigation_probe_path
         )
+        self._use_oracle_navigation_geometry = (
+            trainer_settings.network_settings.use_oracle_navigation_geometry
+        )
+        if self._use_oracle_navigation_geometry:
+            self._validate_oracle_geometry_contract()
         if self._use_navigation_probe_features:
             if not self._visual_navigation_probe_path:
                 raise UnityTrainerException(
@@ -274,6 +279,38 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self.stream_names = list(self.reward_signals.keys())
         self.value_memory_dict: Dict[str, torch.Tensor] = {}
         self.baseline_memory_dict: Dict[str, torch.Tensor] = {}
+
+    def _validate_oracle_geometry_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException("Oracle geometry mode requires memory=null")
+        if self._visual_checkpoint is not None or self._use_navigation_probe_features:
+            raise UnityTrainerException(
+                "Oracle geometry mode cannot load a visual encoder or navigation probe"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_OracleGeometry", (96,)),
+            ("VectorSensor_size13", (13,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "Oracle geometry observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "Oracle geometry requires exactly two continuous actions and no discrete actions"
+            )
+        logger.info(
+            "Oracle geometry audit: geometry_sensor=96; geometry_padding=416; "
+            "manual_vector=13; camera_sensors=0; ray_sensors=0; "
+            "continuous_actions=2; trainable_geometry_parameters=0; lstm=false"
+        )
 
     def reload_pretrained_visual_encoder(self) -> None:
         """Reapply frozen visual weights after a full trainer checkpoint load."""

@@ -109,6 +109,19 @@ class VectorInput(nn.Module):
             self.normalizer.update(inputs)
 
 
+class OracleGeometryInput(nn.Module):
+    INPUT_SIZE = 96
+    OUTPUT_SIZE = 512
+
+    def forward(self, inputs: torch.Tensor) -> torch.Tensor:
+        zero_block = torch.zeros_like(inputs)
+        padding = torch.cat(
+            [zero_block, zero_block, zero_block, zero_block, zero_block[:, :32]],
+            dim=1,
+        )
+        return torch.cat([inputs, padding], dim=1)
+
+
 class FullyConnectedVisualEncoder(nn.Module):
     def __init__(
         self, height: int, width: int, initial_channels: int, output_size: int
