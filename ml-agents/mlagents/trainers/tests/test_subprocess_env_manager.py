@@ -1,6 +1,7 @@
 from unittest import mock
 from unittest.mock import Mock, MagicMock, call, ANY
 import unittest
+import signal
 import pytest
 from queue import Empty as EmptyQueue
 
@@ -42,6 +43,7 @@ class MockEnvWorker:
         self.conn = None
         self.send = Mock()
         self.recv = Mock(return_value=resp)
+        self.request_close = Mock()
         self.waiting = False
 
 
@@ -213,6 +215,173 @@ class SubprocessEnvManagerTest(unittest.TestCase):
                 call(EnvironmentCommand.STEP, ANY),
             ]
         )
+
+    @mock.patch(
+        "mlagents.trainers.subprocess_env_manager.SubprocessEnvManager.create_worker"
+    )
+    def test_single_crashed_env_restarts_without_closed_response(
+        self, mock_create_worker
+    ):
+        crashing_worker = MockEnvWorker(
+            0, EnvironmentResponse(EnvironmentCommand.RESET, 0, 0)
+        )
+        restarting_worker = MockEnvWorker(
+            0, EnvironmentResponse(EnvironmentCommand.RESET, 0, 0)
+        )
+        mock_create_worker.side_effect = [crashing_worker, restarting_worker]
+        manager = SubprocessEnvManager(mock_env_factory, RunOptions(), 1)
+        manager.step_queue = Mock()
+        manager.step_queue.get_nowait.side_effect = [
+            EnvironmentResponse(
+                EnvironmentCommand.ENV_EXITED,
+                0,
+                UnityCommunicationException("worker timed out"),
+            ),
+            EnvironmentResponse(EnvironmentCommand.CLOSED, 0, None),
+            EnvironmentResponse(
+                EnvironmentCommand.STEP, 0, StepResponse(1, None, {})
+            ),
+            EmptyQueue(),
+        ]
+        crashing_worker.previous_step = Mock()
+        crashing_worker.waiting = True
+        manager._take_step = Mock(return_value=Mock())
+
+        manager._step()
+
+        assert manager.env_workers[0] is restarting_worker
+        assert manager.restart_counts[0] == 1
+        restarting_worker.send.assert_has_calls(
+            [
+                call(EnvironmentCommand.ENVIRONMENT_PARAMETERS, ANY),
+                call(EnvironmentCommand.RESET, ANY),
+                call(EnvironmentCommand.STEP, ANY),
+            ]
+        )
+
+    @mock.patch(
+        "mlagents.trainers.subprocess_env_manager.SubprocessEnvManager.create_worker"
+    )
+    def test_concurrent_crashed_envs_restart_without_closed_responses(
+        self, mock_create_worker
+    ):
+        crashing_workers = [
+            MockEnvWorker(i, EnvironmentResponse(EnvironmentCommand.RESET, i, i))
+            for i in range(2)
+        ]
+        restarting_workers = [
+            MockEnvWorker(i, EnvironmentResponse(EnvironmentCommand.RESET, i, i))
+            for i in range(2)
+        ]
+        mock_create_worker.side_effect = crashing_workers + restarting_workers
+        manager = SubprocessEnvManager(mock_env_factory, RunOptions(), 2)
+        manager.step_queue = Mock()
+        manager.step_queue.get_nowait.side_effect = [
+            EnvironmentResponse(
+                EnvironmentCommand.ENV_EXITED,
+                0,
+                UnityCommunicationException("worker 0 timed out"),
+            ),
+            EnvironmentResponse(
+                EnvironmentCommand.ENV_EXITED,
+                1,
+                UnityCommunicationException("worker 1 timed out"),
+            ),
+            EmptyQueue(),
+            EnvironmentResponse(EnvironmentCommand.STEP, 0, StepResponse(1, None, {})),
+            EnvironmentResponse(EnvironmentCommand.STEP, 1, StepResponse(2, None, {})),
+            EmptyQueue(),
+        ]
+        for worker in crashing_workers:
+            worker.previous_step = Mock()
+            worker.waiting = True
+        manager._take_step = Mock(return_value=Mock())
+
+        manager._step()
+
+        assert manager.env_workers == restarting_workers
+        assert manager.restart_counts == [1, 1]
+        for worker in restarting_workers:
+            worker.send.assert_has_calls(
+                [
+                    call(EnvironmentCommand.ENVIRONMENT_PARAMETERS, ANY),
+                    call(EnvironmentCommand.RESET, ANY),
+                    call(EnvironmentCommand.STEP, ANY),
+                ]
+            )
+
+    @mock.patch("mlagents.trainers.subprocess_env_manager.os.killpg")
+    @mock.patch("mlagents.trainers.subprocess_env_manager.open", create=True)
+    def test_terminate_failed_worker_force_kills_stubborn_process(
+        self, mock_open, mock_killpg
+    ):
+        process = Mock()
+        process.pid = 123
+        process.is_alive.side_effect = [True, True]
+        mock_open.return_value.__enter__.return_value.read.return_value = "456"
+        mock_killpg.side_effect = lambda _pid, sig: (
+            (_ for _ in ()).throw(ProcessLookupError()) if sig == 0 else None
+        )
+        worker = MockEnvWorker(0)
+        worker.process = process
+        worker.conn = Mock()
+
+        SubprocessEnvManager._terminate_failed_worker(worker)
+
+        process.terminate.assert_called_once_with()
+        process.kill.assert_called_once_with()
+        worker.conn.close.assert_called_once_with()
+        assert worker.closed
+        assert not worker.waiting
+        assert call(456, signal.SIGTERM) in mock_killpg.call_args_list
+
+    @mock.patch(
+        "mlagents.trainers.subprocess_env_manager.time.monotonic",
+        side_effect=[0.0, 2.0],
+    )
+    @mock.patch("mlagents.trainers.subprocess_env_manager.os.kill")
+    @mock.patch("mlagents.trainers.subprocess_env_manager.os.killpg")
+    @mock.patch("mlagents.trainers.subprocess_env_manager.open", create=True)
+    def test_terminate_failed_worker_uses_sigkill_fallbacks(
+        self, mock_open, mock_killpg, mock_kill, _mock_monotonic
+    ):
+        process = Mock()
+        process.pid = 123
+        del process.kill
+        process.is_alive.side_effect = [True, True]
+        mock_open.return_value.__enter__.return_value.read.return_value = "456"
+        worker = MockEnvWorker(0)
+        worker.process = process
+
+        SubprocessEnvManager._terminate_failed_worker(worker)
+
+        mock_kill.assert_called_once_with(123, signal.SIGKILL)
+        mock_killpg.assert_has_calls(
+            [
+                call(456, signal.SIGTERM),
+                call(456, signal.SIGKILL),
+            ]
+        )
+
+    @mock.patch(
+        "mlagents.trainers.subprocess_env_manager.SubprocessEnvManager._postprocess_steps"
+    )
+    def test_step_ignores_stale_non_step_and_empty_step_responses(self, postprocess):
+        manager = SubprocessEnvManager(mock_env_factory, RunOptions(), 1)
+        manager.step_queue = Mock()
+        valid_step = EnvironmentResponse(
+            EnvironmentCommand.STEP, 0, StepResponse(1, {}, {})
+        )
+        manager.step_queue.get_nowait.side_effect = [
+            EnvironmentResponse(EnvironmentCommand.RESET, 0, None),
+            EnvironmentResponse(EnvironmentCommand.STEP, 0, None),
+            valid_step,
+            EmptyQueue(),
+        ]
+
+        manager._step()
+
+        postprocess.assert_called_once_with([valid_step])
 
     @mock.patch("mlagents.trainers.subprocess_env_manager.SubprocessEnvManager._step")
     @mock.patch(

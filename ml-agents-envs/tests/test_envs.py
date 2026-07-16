@@ -144,7 +144,6 @@ def test_check_communication_compatibility():
     assert not UnityEnvironment._check_communication_compatibility(
         unity_ver, python_ver, unity_package_version
     )
-
     unity_ver = "0.16.0"
     python_ver = "0.16.0"
     assert UnityEnvironment._check_communication_compatibility(
@@ -158,6 +157,13 @@ def test_check_communication_compatibility():
     assert not UnityEnvironment._check_communication_compatibility(
         unity_ver, python_ver, unity_package_version
     )
+
+
+def test_check_communication_compatibility_rejects_invalid_version():
+    with pytest.raises(UnityEnvironmentException, match="Invalid communication"):
+        UnityEnvironment._check_communication_compatibility(
+            "not-a-version", UnityEnvironment.API_VERSION, "test"
+        )
 
 
 def test_returncode_to_signal_name():

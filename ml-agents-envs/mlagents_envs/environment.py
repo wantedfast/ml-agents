@@ -1,5 +1,4 @@
 import atexit
-from distutils.version import StrictVersion
 
 import numpy as np
 import os
@@ -91,16 +90,25 @@ class UnityEnvironment(BaseEnv):
     def _check_communication_compatibility(
         unity_com_ver: str, python_api_version: str, unity_package_version: str
     ) -> bool:
-        unity_communicator_version = StrictVersion(unity_com_ver)
-        api_version = StrictVersion(python_api_version)
-        if unity_communicator_version.version[0] == 0:
+        def version_tuple(value: str) -> Tuple[int, int, int]:
+            try:
+                parsed = tuple(int(part) for part in value.split(".")[:3])
+                return (parsed + (0, 0, 0))[:3]  # type: ignore
+            except (AttributeError, TypeError, ValueError):
+                raise UnityEnvironmentException(
+                    f"Invalid communication API version: {value!r}"
+                )
+
+        unity_communicator_version = version_tuple(unity_com_ver)
+        api_version = version_tuple(python_api_version)
+        if unity_communicator_version[0] == 0:
             if (
-                unity_communicator_version.version[0] != api_version.version[0]
-                or unity_communicator_version.version[1] != api_version.version[1]
+                unity_communicator_version[0] != api_version[0]
+                or unity_communicator_version[1] != api_version[1]
             ):
                 # Minor beta versions differ.
                 return False
-        elif unity_communicator_version.version[0] != api_version.version[0]:
+        elif unity_communicator_version[0] != api_version[0]:
             # Major versions mismatch.
             return False
         else:

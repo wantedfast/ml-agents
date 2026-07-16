@@ -35,6 +35,9 @@ from mlagents.trainers.torch_entities.utils import ModelUtils
 from mlagents.trainers.torch_entities.pretrained_visual_encoder import (
     load_pretrained_visual_encoders,
 )
+from mlagents.trainers.torch_entities.visual_encoder_audit import (
+    audit_visual_encoder_batch,
+)
 from mlagents.trainers.trajectory import ObsUtil, GroupObsUtil
 from mlagents.trainers.exception import UnityTrainerException
 
@@ -185,6 +188,41 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self._freeze_visual_encoder = (
             trainer_settings.network_settings.freeze_visual_encoder
         )
+        self._visual_encoder_audit = (
+            trainer_settings.network_settings.visual_encoder_audit
+        )
+        self._visual_encoder_audit_output_path = (
+            trainer_settings.network_settings.visual_encoder_audit_output_path
+        )
+        self._visual_encoder_audit_complete = False
+        self._use_navigation_probe_features = (
+            trainer_settings.network_settings.use_navigation_probe_features
+        )
+        self._visual_navigation_probe_path = (
+            trainer_settings.network_settings.visual_navigation_probe_path
+        )
+        if self._use_navigation_probe_features:
+            if not self._visual_navigation_probe_path:
+                raise UnityTrainerException(
+                    "use_navigation_probe_features requires visual_navigation_probe_path"
+                )
+            if not self._visual_checkpoint:
+                raise UnityTrainerException(
+                    "use_navigation_probe_features requires pretrained_visual_encoder_path"
+                )
+            if not self._freeze_visual_encoder:
+                raise UnityTrainerException(
+                    "use_navigation_probe_features requires freeze_visual_encoder=true"
+                )
+        if self._visual_encoder_audit:
+            if not self._visual_checkpoint:
+                raise UnityTrainerException(
+                    "visual_encoder_audit requires pretrained_visual_encoder_path"
+                )
+            if not self._visual_encoder_audit_output_path:
+                raise UnityTrainerException(
+                    "visual_encoder_audit requires visual_encoder_audit_output_path"
+                )
         if self._freeze_visual_encoder and self._visual_checkpoint is None:
             raise UnityTrainerException(
                 "freeze_visual_encoder requires pretrained_visual_encoder_path"
@@ -243,6 +281,9 @@ class TorchPOCAOptimizer(TorchOptimizer):
                     self.critic,
                     self._visual_checkpoint,
                     self._freeze_visual_encoder,
+                    self._visual_navigation_probe_path
+                    if self._use_navigation_probe_features
+                    else None,
                 )
             )
             logger.info(
@@ -254,6 +295,36 @@ class TorchPOCAOptimizer(TorchOptimizer):
                 critic_count,
                 self._freeze_visual_encoder,
             )
+
+    def _run_visual_encoder_audit(self, current_obs: List[torch.Tensor]) -> None:
+        if not self._visual_encoder_audit or self._visual_encoder_audit_complete:
+            return
+        if self._visual_checkpoint is None:
+            raise UnityTrainerException(
+                "visual_encoder_audit requires pretrained_visual_encoder_path"
+            )
+        if not self._visual_encoder_audit_output_path:
+            raise UnityTrainerException(
+                "visual_encoder_audit requires visual_encoder_audit_output_path"
+            )
+        visual_indices = [
+            index
+            for index, spec in enumerate(self.policy.behavior_spec.observation_specs)
+            if len(spec.shape) == 3
+        ]
+        if len(visual_indices) != 1:
+            raise UnityTrainerException(
+                f"Visual audit requires exactly one visual observation; found {len(visual_indices)}"
+            )
+        report = audit_visual_encoder_batch(
+            self.policy.actor,
+            self.critic,
+            current_obs[visual_indices[0]],
+            self._visual_checkpoint,
+            self._visual_encoder_audit_output_path,
+        )
+        logger.info("Live visual encoder audit: %s", report)
+        self._visual_encoder_audit_complete = True
 
     def create_reward_signals(
         self, reward_signal_configs: Dict[RewardSignalType, RewardSignalSettings]
@@ -310,6 +381,7 @@ class TorchPOCAOptimizer(TorchOptimizer):
         current_obs = ObsUtil.from_buffer(batch, n_obs)
         # Convert to tensors
         current_obs = [ModelUtils.list_to_tensor(obs) for obs in current_obs]
+        self._run_visual_encoder_audit(current_obs)
         groupmate_obs = GroupObsUtil.from_buffer(batch, n_obs)
         groupmate_obs = [
             [ModelUtils.list_to_tensor(obs) for obs in _groupmate_obs]

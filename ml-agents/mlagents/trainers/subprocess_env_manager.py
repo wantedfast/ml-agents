@@ -2,6 +2,8 @@ import datetime
 from typing import Dict, NamedTuple, List, Any, Optional, Callable, Set
 import cloudpickle
 import enum
+import os
+import signal
 import time
 
 from mlagents_envs.environment import UnityEnvironment
@@ -309,7 +311,11 @@ class SubprocessEnvManager(EnvManager):
             return
         # Drain the step queue to make sure all workers are paused and we have found all concurrent errors.
         # Pausing all training is needed since we need to reset all pending training steps as they could be corrupted.
-        other_failures: Dict[int, Exception] = self._drain_step_queue()
+        # The worker that sent first_failure may be blocked forever while closing its
+        # Unity process, so it cannot be required to send a second CLOSED response.
+        other_failures: Dict[int, Exception] = self._drain_step_queue(
+            {first_failure.worker_id}
+        )
         # TODO: Once we use python 3.9 switch to using the | operator to combine dicts.
         failures: Dict[int, Exception] = {
             **{first_failure.worker_id: first_failure.payload},
@@ -320,6 +326,7 @@ class SubprocessEnvManager(EnvManager):
             logger.warning(f"Restarting worker[{worker_id}] after '{ex}'")
             self.recent_restart_timestamps[worker_id].append(datetime.datetime.now())
             self.restart_counts[worker_id] += 1
+            self._terminate_failed_worker(self.env_workers[worker_id])
             self.env_workers[worker_id] = self.create_worker(
                 worker_id, self.step_queue, self.env_factory, self.run_options
             )
@@ -327,23 +334,89 @@ class SubprocessEnvManager(EnvManager):
         # outdated data.
         self.reset(self.env_parameters)
 
-    def _drain_step_queue(self) -> Dict[int, Exception]:
+    @staticmethod
+    def _terminate_failed_worker(env_worker: UnityEnvWorker) -> None:
+        """Best-effort cleanup before replacing a failed worker process."""
+        process = env_worker.process
+        child_process_ids = []
+        process_id = getattr(process, "pid", None)
+        if process_id is not None:
+            children_path = f"/proc/{process_id}/task/{process_id}/children"
+            try:
+                with open(children_path) as children_file:
+                    child_process_ids = [
+                        int(value) for value in children_file.read().split()
+                    ]
+            except (FileNotFoundError, PermissionError, ValueError):
+                pass
+        env_worker.request_close()
+        if process is not None:
+            process.join(timeout=1)
+            if process.is_alive():
+                process.terminate()
+                process.join(timeout=1)
+            if process.is_alive():
+                if hasattr(process, "kill"):
+                    process.kill()
+                elif process_id is not None:
+                    os.kill(process_id, signal.SIGKILL)
+                process.join(timeout=1)
+        # Unity is launched in its own session. If its Python worker was
+        # force-killed, terminate that session before Unity becomes orphaned.
+        for child_process_id in child_process_ids:
+            try:
+                os.killpg(child_process_id, signal.SIGTERM)
+            except (ProcessLookupError, PermissionError):
+                continue
+            deadline = time.monotonic() + 1
+            while time.monotonic() < deadline:
+                try:
+                    os.killpg(child_process_id, 0)
+                except ProcessLookupError:
+                    break
+                except PermissionError:
+                    break
+                time.sleep(0.05)
+            else:
+                try:
+                    os.killpg(child_process_id, signal.SIGKILL)
+                except (ProcessLookupError, PermissionError):
+                    pass
+        if env_worker.conn is not None:
+            env_worker.conn.close()
+        env_worker.closed = True
+        env_worker.waiting = False
+
+    def _drain_step_queue(
+        self, excluded_worker_ids: Optional[Set[int]] = None
+    ) -> Dict[int, Exception]:
         """
         Drains all steps out of the step queue and returns all exceptions from crashed workers.
         This will effectively pause all workers so that they won't do anything until _queue_steps is called.
         """
         all_failures = {}
-        workers_still_pending = {w.worker_id for w in self.env_workers if w.waiting}
+        excluded_worker_ids = excluded_worker_ids or set()
+        workers_still_pending = {
+            w.worker_id
+            for w in self.env_workers
+            if w.waiting and w.worker_id not in excluded_worker_ids
+        }
         deadline = datetime.datetime.now() + datetime.timedelta(minutes=1)
         while workers_still_pending and deadline > datetime.datetime.now():
             try:
                 while True:
                     step: EnvironmentResponse = self.step_queue.get_nowait()
+                    if step.worker_id in excluded_worker_ids:
+                        continue
                     if step.cmd == EnvironmentCommand.ENV_EXITED:
-                        workers_still_pending.add(step.worker_id)
+                        # ENV_EXITED is the terminal response for a failed worker.
+                        # Waiting for a later CLOSED message can deadlock when the
+                        # worker is blocked while reaping its Unity child.
+                        workers_still_pending.discard(step.worker_id)
+                        self.env_workers[step.worker_id].waiting = False
                         all_failures[step.worker_id] = step.payload
                     else:
-                        workers_still_pending.remove(step.worker_id)
+                        workers_still_pending.discard(step.worker_id)
                         self.env_workers[step.worker_id].waiting = False
             except EmptyQueueException:
                 pass
@@ -422,6 +495,20 @@ class SubprocessEnvManager(EnvManager):
                         worker_steps.clear()
                         step_workers.clear()
                         self._queue_steps()
+                    elif step.cmd == EnvironmentCommand.CLOSED:
+                        # A force-terminated worker may publish CLOSED after its
+                        # replacement has started. It is lifecycle metadata, not
+                        # an environment step for the replacement worker.
+                        continue
+                    elif step.cmd != EnvironmentCommand.STEP or step.payload is None:
+                        # Messages left by a replaced worker can arrive after reset.
+                        # Only complete STEP responses are valid training samples.
+                        logger.debug(
+                            "Ignoring stale worker[%s] response: %s",
+                            step.worker_id,
+                            step.cmd,
+                        )
+                        continue
                     elif step.worker_id not in step_workers:
                         self.env_workers[step.worker_id].waiting = False
                         worker_steps.append(step)

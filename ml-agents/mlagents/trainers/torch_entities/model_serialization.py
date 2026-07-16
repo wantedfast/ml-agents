@@ -1,5 +1,6 @@
-from typing import Tuple
+import inspect
 import threading
+from typing import Dict, Tuple
 from mlagents.torch_utils import torch
 
 from mlagents_envs.logging_util import get_logger
@@ -160,6 +161,12 @@ class ModelSerializer:
         onnx_output_path = f"{output_filepath}.onnx"
         logger.debug(f"Converting to {onnx_output_path}")
 
+        exporter_options: Dict[str, bool] = {}
+        if "dynamo" in inspect.signature(torch.onnx.export).parameters:
+            # release_21 recurrent policies require the legacy exporter. Newer
+            # PyTorch releases otherwise select the dynamo exporter by default.
+            exporter_options["dynamo"] = False
+
         with exporting_to_onnx():
             torch.onnx.export(
                 self.policy.actor,
@@ -169,5 +176,6 @@ class ModelSerializer:
                 input_names=self.input_names,
                 output_names=self.output_names,
                 dynamic_axes=self.dynamic_axes,
+                **exporter_options,
             )
         logger.info(f"Exported {onnx_output_path}")
