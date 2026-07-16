@@ -7,6 +7,16 @@ from mlagents.trainers.exception import UnityTrainerException
 from mlagents.trainers.torch_entities.encoders import ResNetVisualEncoder
 
 
+NAVIGATION_GEOMETRY_SIZE = 96
+NAVIGATION_GEOMETRY_PADDING_SIZE = 416
+NAVIGATION_STATION_ORDER = ["Onion", "Dish", "Pot", "Delivery"]
+
+
+def checkpoint_sha256(path: str) -> str:
+    with open(path, "rb") as checkpoint_file:
+        return hashlib.sha256(checkpoint_file.read()).hexdigest()
+
+
 def _visual_encoders(module: nn.Module) -> List[ResNetVisualEncoder]:
     return [
         child
@@ -42,8 +52,9 @@ class NavigationGeometryAdapter(nn.Module):
         ).sum(dim=-1) / 30.0
         geometry = torch.cat([delta, direction, expected_distance], dim=1)
         # ML-Agents release_21 exports with ONNX opset 9, whose Pad sizes must
-        # be static. The geometry prefix is always 96 values, leaving 416 zeros.
-        zeros = embedding[:, :416] * 0.0
+        # be static. Only the geometry prefix reaches the policy; the raw latent
+        # is replaced by deterministic zeros.
+        zeros = torch.zeros_like(embedding[:, :NAVIGATION_GEOMETRY_PADDING_SIZE])
         return torch.cat([geometry, zeros], dim=1)
 
 
@@ -76,7 +87,7 @@ def _attach_navigation_adapter(
         "probe_type": "linear",
         "encoder_checkpoint_sha256": encoder_checkpoint_sha256,
         "dataset_manifest_sha256": dataset_manifest_sha256,
-        "station_order": ["Onion", "Dish", "Pot", "Delivery"],
+        "station_order": NAVIGATION_STATION_ORDER,
         "grid_size": 16,
         "embedding_size": 512,
     }
@@ -115,8 +126,7 @@ def load_pretrained_visual_encoders(
             f"Pretrained visual encoder checkpoint does not exist: {checkpoint_path}"
         )
 
-    with open(checkpoint_path, "rb") as checkpoint_file:
-        digest = hashlib.sha256(checkpoint_file.read()).hexdigest()
+    digest = checkpoint_sha256(checkpoint_path)
 
     checkpoint = torch.load(checkpoint_path, map_location="cpu")
     if not isinstance(checkpoint, dict) or "encoder_state_dict" not in checkpoint:

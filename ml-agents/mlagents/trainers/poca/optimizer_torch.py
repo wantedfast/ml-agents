@@ -33,6 +33,9 @@ from mlagents.trainers.torch_entities.agent_action import AgentAction
 from mlagents.trainers.torch_entities.action_log_probs import ActionLogProbs
 from mlagents.trainers.torch_entities.utils import ModelUtils
 from mlagents.trainers.torch_entities.pretrained_visual_encoder import (
+    NAVIGATION_GEOMETRY_PADDING_SIZE,
+    NAVIGATION_GEOMETRY_SIZE,
+    checkpoint_sha256,
     load_pretrained_visual_encoders,
 )
 from mlagents.trainers.torch_entities.visual_encoder_audit import (
@@ -295,6 +298,24 @@ class TorchPOCAOptimizer(TorchOptimizer):
                 critic_count,
                 self._freeze_visual_encoder,
             )
+            if self._use_navigation_probe_features:
+                vector_sizes = [
+                    spec.shape[0]
+                    for spec in self.policy.behavior_spec.observation_specs
+                    if len(spec.shape) == 1
+                ]
+                logger.info(
+                    "Frozen CNN geometry audit: probe=%s (sha256=%s); "
+                    "geometry_features=%d; zero_padding=%d; raw_latent=false; "
+                    "manual_vector_sizes=%s; "
+                    "encoder_probe_frozen=true; lstm=%s",
+                    self._visual_navigation_probe_path,
+                    checkpoint_sha256(self._visual_navigation_probe_path),
+                    NAVIGATION_GEOMETRY_SIZE,
+                    NAVIGATION_GEOMETRY_PADDING_SIZE,
+                    vector_sizes,
+                    self.trainer_settings.network_settings.memory is not None,
+                )
 
     def _run_visual_encoder_audit(self, current_obs: List[torch.Tensor]) -> None:
         if not self._visual_encoder_audit or self._visual_encoder_audit_complete:

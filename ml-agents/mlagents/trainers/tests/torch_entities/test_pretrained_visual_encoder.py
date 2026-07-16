@@ -7,6 +7,8 @@ from mlagents.torch_utils import torch
 from mlagents.trainers.exception import UnityTrainerException
 from mlagents.trainers.torch_entities.encoders import ResNetVisualEncoder
 from mlagents.trainers.torch_entities.pretrained_visual_encoder import (
+    NAVIGATION_GEOMETRY_PADDING_SIZE,
+    NAVIGATION_GEOMETRY_SIZE,
     NavigationGeometryAdapter,
     load_pretrained_visual_encoders,
 )
@@ -127,6 +129,8 @@ def test_poca_optimizer_excludes_and_reapplies_frozen_encoder(tmp_path):
     source = ResNetVisualEncoder(84, 84, 3, 512)
     checkpoint = tmp_path / "encoder.pt"
     save_checkpoint(checkpoint, source)
+    probe_path = tmp_path / "probe.pt"
+    save_probe_checkpoint(probe_path, NavigationGeometryAdapter(), checkpoint)
     settings = poca_dummy_config()
     settings.network_settings = NetworkSettings(
         hidden_units=512,
@@ -134,6 +138,8 @@ def test_poca_optimizer_excludes_and_reapplies_frozen_encoder(tmp_path):
         vis_encode_type=EncoderType.RESNET,
         pretrained_visual_encoder_path=str(checkpoint),
         freeze_visual_encoder=True,
+        use_navigation_probe_features=True,
+        visual_navigation_probe_path=str(probe_path),
     )
     settings.reward_signals = {
         RewardSignalType.EXTRINSIC: RewardSignalSettings(strength=1.0, gamma=0.99)
@@ -148,12 +154,43 @@ def test_poca_optimizer_excludes_and_reapplies_frozen_encoder(tmp_path):
         for module in policy.actor.modules()
         if isinstance(module, ResNetVisualEncoder)
     )
+    critic_encoder = next(
+        module
+        for module in optimizer.critic.modules()
+        if isinstance(module, ResNetVisualEncoder)
+    )
     optimized_ids = {
         id(parameter)
         for group in optimizer.optimizer.param_groups
         for parameter in group["params"]
     }
     assert all(id(parameter) not in optimized_ids for parameter in actor_encoder.parameters())
+    assert all(
+        id(parameter) not in optimized_ids for parameter in critic_encoder.parameters()
+    )
+
+    frozen_before = {
+        "actor": {
+            name: value.detach().clone()
+            for name, value in actor_encoder.state_dict().items()
+        },
+        "critic": {
+            name: value.detach().clone()
+            for name, value in critic_encoder.state_dict().items()
+        },
+    }
+    optimizer.optimizer.zero_grad()
+    trainable_loss = sum(
+        parameter.sum()
+        for group in optimizer.optimizer.param_groups
+        for parameter in group["params"]
+    )
+    trainable_loss.backward()
+    optimizer.optimizer.step()
+    for name, value in actor_encoder.state_dict().items():
+        assert torch.equal(frozen_before["actor"][name], value)
+    for name, value in critic_encoder.state_dict().items():
+        assert torch.equal(frozen_before["critic"][name], value)
 
     with torch.no_grad():
         next(actor_encoder.parameters()).fill_(42.0)
@@ -177,7 +214,15 @@ def test_navigation_probe_adapter_exposes_geometry_and_preserves_width(tmp_path)
 
     output = actor.encoder(torch.rand(2, 3, 84, 84))
     assert output.shape == (2, 512)
-    assert torch.count_nonzero(output[:, 96:]) == 0
+    assert torch.isfinite(output).all()
+    assert torch.count_nonzero(output[:, NAVIGATION_GEOMETRY_SIZE:]) == 0
+    assert (
+        output[:, NAVIGATION_GEOMETRY_SIZE:].shape[1]
+        == NAVIGATION_GEOMETRY_PADDING_SIZE
+    )
+    critic_output = critic.encoder(torch.rand(2, 3, 84, 84))
+    assert torch.isfinite(critic_output).all()
+    assert torch.count_nonzero(critic_output[:, NAVIGATION_GEOMETRY_SIZE:]) == 0
     assert hasattr(actor.encoder, "navigation_geometry_adapter")
     assert all(
         not parameter.requires_grad
