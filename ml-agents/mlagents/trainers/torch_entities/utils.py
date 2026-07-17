@@ -11,6 +11,7 @@ from mlagents.trainers.torch_entities.encoders import (
     FullyConnectedVisualEncoder,
     VectorInput,
     OracleGeometryInput,
+    EnhancedOracleNavigationInput,
 )
 from mlagents.trainers.settings import EncoderType, ScheduleType
 from mlagents.trainers.torch_entities.attention import (
@@ -152,6 +153,7 @@ class ModelUtils:
         attention_embedding_size: int,
         vis_encode_type: EncoderType,
         use_oracle_navigation_geometry: bool = False,
+        use_enhanced_oracle_navigation: bool = False,
     ) -> Tuple[nn.Module, int]:
         """
         Returns the encoder and the size of the appropriate encoder.
@@ -171,6 +173,20 @@ class ModelUtils:
                     f"({OracleGeometryInput.INPUT_SIZE},), got {shape}"
                 )
             return (OracleGeometryInput(), OracleGeometryInput.OUTPUT_SIZE)
+
+        if (
+            use_enhanced_oracle_navigation
+            and obs_spec.name == "01_EnhancedOracleNavigation"
+        ):
+            if shape != (EnhancedOracleNavigationInput.INPUT_SIZE,):
+                raise UnityTrainerException(
+                    "01_EnhancedOracleNavigation must have shape "
+                    f"({EnhancedOracleNavigationInput.INPUT_SIZE},), got {shape}"
+                )
+            return (
+                EnhancedOracleNavigationInput(),
+                EnhancedOracleNavigationInput.OUTPUT_SIZE,
+            )
 
         # VISUAL
         if dim_prop in ModelUtils.VALID_VISUAL_PROP:
@@ -203,6 +219,7 @@ class ModelUtils:
         attention_embedding_size: int,
         normalize: bool = False,
         use_oracle_navigation_geometry: bool = False,
+        use_enhanced_oracle_navigation: bool = False,
     ) -> Tuple[nn.ModuleList, List[int]]:
         """
         Creates visual and vector encoders, along with their normalizers.
@@ -230,6 +247,7 @@ class ModelUtils:
                 attention_embedding_size,
                 vis_encode_type,
                 use_oracle_navigation_geometry,
+                use_enhanced_oracle_navigation,
             )
             encoders.append(encoder)
             embedding_sizes.append(embedding_size)
@@ -242,6 +260,17 @@ class ModelUtils:
                 raise UnityTrainerException(
                     "Oracle geometry mode requires exactly one named "
                     f"01_OracleGeometry sensor, found {oracle_count}"
+                )
+
+        if use_enhanced_oracle_navigation:
+            navigation_count = sum(
+                isinstance(encoder, EnhancedOracleNavigationInput)
+                for encoder in encoders
+            )
+            if navigation_count != 1:
+                raise UnityTrainerException(
+                    "Enhanced Oracle navigation mode requires exactly one named "
+                    f"01_EnhancedOracleNavigation sensor, found {navigation_count}"
                 )
 
         x_self_size = sum(embedding_sizes)  # The size of the "self" embedding

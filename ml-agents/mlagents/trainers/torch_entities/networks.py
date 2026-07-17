@@ -40,6 +40,7 @@ class ObservationEncoder(nn.Module):
         vis_encode_type: EncoderType,
         normalize: bool = False,
         use_oracle_navigation_geometry: bool = False,
+        use_enhanced_oracle_navigation: bool = False,
     ):
         """
         Returns an ObservationEncoder that can process and encode a set of observations.
@@ -53,6 +54,7 @@ class ObservationEncoder(nn.Module):
             self.ATTENTION_EMBEDDING_SIZE,
             normalize=normalize,
             use_oracle_navigation_geometry=use_oracle_navigation_geometry,
+            use_enhanced_oracle_navigation=use_enhanced_oracle_navigation,
         )
         self.rsa, self.x_self_encoder = ModelUtils.create_residual_self_attention(
             self.processors, self.embedding_sizes, self.ATTENTION_EMBEDDING_SIZE
@@ -194,6 +196,7 @@ class NetworkBody(nn.Module):
             network_settings.vis_encode_type,
             self.normalize,
             network_settings.use_oracle_navigation_geometry,
+            network_settings.use_enhanced_oracle_navigation,
         )
         self.processors = self.observation_encoder.processors
         total_enc_size = self.observation_encoder.total_enc_size
@@ -283,6 +286,7 @@ class MultiAgentNetworkBody(torch.nn.Module):
             network_settings.vis_encode_type,
             self.normalize,
             network_settings.use_oracle_navigation_geometry,
+            network_settings.use_enhanced_oracle_navigation,
         )
         self.processors = self.observation_encoder.processors
 
