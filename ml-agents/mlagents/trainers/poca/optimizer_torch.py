@@ -210,7 +210,24 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self._use_enhanced_oracle_navigation = (
             trainer_settings.network_settings.use_enhanced_oracle_navigation
         )
-        if self._use_oracle_navigation_geometry and self._use_enhanced_oracle_navigation:
+        self._use_position_state_features = (
+            trainer_settings.network_settings.use_position_state_features
+        )
+        self._visual_position_probe_path = (
+            trainer_settings.network_settings.visual_position_probe_path
+        )
+        self._use_oracle_position_state = (
+            trainer_settings.network_settings.use_oracle_position_state
+        )
+        oracle_mode_count = sum(
+            int(mode)
+            for mode in (
+                self._use_oracle_navigation_geometry,
+                self._use_enhanced_oracle_navigation,
+                self._use_oracle_position_state,
+            )
+        )
+        if oracle_mode_count > 1:
             raise UnityTrainerException(
                 "Oracle geometry modes are mutually exclusive"
             )
@@ -218,6 +235,25 @@ class TorchPOCAOptimizer(TorchOptimizer):
             self._validate_oracle_geometry_contract()
         if self._use_enhanced_oracle_navigation:
             self._validate_enhanced_oracle_navigation_contract()
+        if self._use_oracle_position_state:
+            self._validate_oracle_position_state_contract()
+        if self._use_position_state_features:
+            if not self._visual_position_probe_path:
+                raise UnityTrainerException(
+                    "use_position_state_features requires visual_position_probe_path"
+                )
+            if not self._visual_checkpoint:
+                raise UnityTrainerException(
+                    "use_position_state_features requires pretrained_visual_encoder_path"
+                )
+            if not self._freeze_visual_encoder:
+                raise UnityTrainerException(
+                    "use_position_state_features requires freeze_visual_encoder=true"
+                )
+            if self._use_navigation_probe_features:
+                raise UnityTrainerException(
+                    "Position-state and navigation geometry probes are mutually exclusive"
+                )
         if self._use_navigation_probe_features:
             if not self._visual_navigation_probe_path:
                 raise UnityTrainerException(
@@ -358,6 +394,44 @@ class TorchPOCAOptimizer(TorchOptimizer):
             "lstm=false"
         )
 
+    def _validate_oracle_position_state_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException(
+                "Oracle position-state mode requires memory=null"
+            )
+        if (
+            self._visual_checkpoint is not None
+            or self._use_navigation_probe_features
+            or self._use_position_state_features
+        ):
+            raise UnityTrainerException(
+                "Oracle position-state mode cannot load visual encoder/probe features"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_OraclePositionState", (12,)),
+            ("VectorSensor_size17", (17,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "Oracle position-state observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "Oracle position-state requires exactly two continuous actions"
+            )
+        logger.info(
+            "Oracle position-state audit: position_features=12; zero_padding=500; "
+            "manual_vector=17; camera_sensors=0; ray_sensors=0; "
+            "continuous_actions=2; trainable_position_parameters=0; lstm=false"
+        )
+
     def reload_pretrained_visual_encoder(self) -> None:
         """Reapply frozen visual weights after a full trainer checkpoint load."""
         if self._visual_checkpoint is not None:
@@ -369,6 +443,9 @@ class TorchPOCAOptimizer(TorchOptimizer):
                     self._freeze_visual_encoder,
                     self._visual_navigation_probe_path
                     if self._use_navigation_probe_features
+                    else None,
+                    self._visual_position_probe_path
+                    if self._use_position_state_features
                     else None,
                 )
             )
@@ -396,6 +473,21 @@ class TorchPOCAOptimizer(TorchOptimizer):
                     checkpoint_sha256(self._visual_navigation_probe_path),
                     NAVIGATION_GEOMETRY_SIZE,
                     NAVIGATION_GEOMETRY_PADDING_SIZE,
+                    vector_sizes,
+                    self.trainer_settings.network_settings.memory is not None,
+                )
+            if self._use_position_state_features:
+                vector_sizes = [
+                    spec.shape[0]
+                    for spec in self.policy.behavior_spec.observation_specs
+                    if len(spec.shape) == 1
+                ]
+                logger.info(
+                    "Frozen CNN position-state audit: probe=%s (sha256=%s); "
+                    "position_features=12; zero_padding=500; raw_latent=false; "
+                    "manual_vector_sizes=%s; encoder_probe_frozen=true; lstm=%s",
+                    self._visual_position_probe_path,
+                    checkpoint_sha256(self._visual_position_probe_path),
                     vector_sizes,
                     self.trainer_settings.network_settings.memory is not None,
                 )

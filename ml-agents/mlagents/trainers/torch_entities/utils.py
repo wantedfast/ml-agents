@@ -12,6 +12,7 @@ from mlagents.trainers.torch_entities.encoders import (
     VectorInput,
     OracleGeometryInput,
     EnhancedOracleNavigationInput,
+    OraclePositionStateInput,
 )
 from mlagents.trainers.settings import EncoderType, ScheduleType
 from mlagents.trainers.torch_entities.attention import (
@@ -154,6 +155,7 @@ class ModelUtils:
         vis_encode_type: EncoderType,
         use_oracle_navigation_geometry: bool = False,
         use_enhanced_oracle_navigation: bool = False,
+        use_oracle_position_state: bool = False,
     ) -> Tuple[nn.Module, int]:
         """
         Returns the encoder and the size of the appropriate encoder.
@@ -188,6 +190,14 @@ class ModelUtils:
                 EnhancedOracleNavigationInput.OUTPUT_SIZE,
             )
 
+        if use_oracle_position_state and obs_spec.name == "01_OraclePositionState":
+            if shape != (OraclePositionStateInput.INPUT_SIZE,):
+                raise UnityTrainerException(
+                    "01_OraclePositionState must have shape "
+                    f"({OraclePositionStateInput.INPUT_SIZE},), got {shape}"
+                )
+            return (OraclePositionStateInput(), OraclePositionStateInput.OUTPUT_SIZE)
+
         # VISUAL
         if dim_prop in ModelUtils.VALID_VISUAL_PROP:
             visual_encoder_class = ModelUtils.get_encoder_for_type(vis_encode_type)
@@ -220,6 +230,7 @@ class ModelUtils:
         normalize: bool = False,
         use_oracle_navigation_geometry: bool = False,
         use_enhanced_oracle_navigation: bool = False,
+        use_oracle_position_state: bool = False,
     ) -> Tuple[nn.ModuleList, List[int]]:
         """
         Creates visual and vector encoders, along with their normalizers.
@@ -248,6 +259,7 @@ class ModelUtils:
                 vis_encode_type,
                 use_oracle_navigation_geometry,
                 use_enhanced_oracle_navigation,
+                use_oracle_position_state,
             )
             encoders.append(encoder)
             embedding_sizes.append(embedding_size)
@@ -271,6 +283,16 @@ class ModelUtils:
                 raise UnityTrainerException(
                     "Enhanced Oracle navigation mode requires exactly one named "
                     f"01_EnhancedOracleNavigation sensor, found {navigation_count}"
+                )
+
+        if use_oracle_position_state:
+            position_count = sum(
+                isinstance(encoder, OraclePositionStateInput) for encoder in encoders
+            )
+            if position_count != 1:
+                raise UnityTrainerException(
+                    "Oracle position-state mode requires exactly one named "
+                    f"01_OraclePositionState sensor, found {position_count}"
                 )
 
         x_self_size = sum(embedding_sizes)  # The size of the "self" embedding

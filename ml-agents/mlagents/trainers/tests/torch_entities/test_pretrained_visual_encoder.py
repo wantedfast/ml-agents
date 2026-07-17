@@ -10,6 +10,9 @@ from mlagents.trainers.torch_entities.pretrained_visual_encoder import (
     NAVIGATION_GEOMETRY_PADDING_SIZE,
     NAVIGATION_GEOMETRY_SIZE,
     NavigationGeometryAdapter,
+    POSITION_STATE_PADDING_SIZE,
+    POSITION_STATE_SIZE,
+    PositionStateAdapter,
     load_pretrained_visual_encoders,
 )
 from mlagents.trainers.poca.optimizer_torch import TorchPOCAOptimizer
@@ -63,6 +66,28 @@ def save_probe_checkpoint(path, probe, encoder_checkpoint):
                 "station_order": ["Onion", "Dish", "Pot", "Delivery"],
                 "grid_size": 16,
                 "embedding_size": 512,
+            },
+        },
+        path,
+    )
+
+
+def save_position_probe_checkpoint(path, probe, encoder_checkpoint):
+    encoder_digest = hashlib.sha256(encoder_checkpoint.read_bytes()).hexdigest()
+    torch.save(
+        {
+            "probe_state_dict": probe.state_dict(),
+            "metadata": {
+                "probe_type": "position_state_grid_classifier",
+                "encoder_checkpoint_sha256": encoder_digest,
+                "dataset_manifest_sha256": "a" * 64,
+                "object_order": [
+                    "Agent1", "Agent2", "Onion", "Dish", "Pot", "Counter"
+                ],
+                "grid_size": 16,
+                "embedding_size": 512,
+                "position_state_size": 12,
+                "qualified_for_rl": True,
             },
         },
         path,
@@ -272,4 +297,56 @@ def test_navigation_probe_rejects_wrong_encoder_hash(tmp_path):
     with pytest.raises(UnityTrainerException, match="encoder_checkpoint_sha256"):
         load_pretrained_visual_encoders(
             VisualModule(), VisualModule(), str(checkpoint), True, str(probe_path)
+        )
+
+
+def test_position_state_adapter_exposes_positions_and_preserves_width(tmp_path):
+    source = ResNetVisualEncoder(84, 84, 3, 512)
+    checkpoint = tmp_path / "encoder.pt"
+    save_checkpoint(checkpoint, source)
+    probe = PositionStateAdapter()
+    probe_path = tmp_path / "position_probe.pt"
+    save_position_probe_checkpoint(probe_path, probe, checkpoint)
+    actor, critic = VisualModule(), VisualModule()
+
+    load_pretrained_visual_encoders(
+        actor,
+        critic,
+        str(checkpoint),
+        True,
+        position_probe_path=str(probe_path),
+    )
+
+    output = actor.encoder(torch.rand(2, 3, 84, 84))
+    critic_output = critic.encoder(torch.rand(2, 3, 84, 84))
+    assert output.shape == (2, 512)
+    assert torch.isfinite(output).all()
+    assert torch.all((output[:, :POSITION_STATE_SIZE] >= 0.0))
+    assert torch.all((output[:, :POSITION_STATE_SIZE] <= 1.0))
+    assert torch.count_nonzero(output[:, POSITION_STATE_SIZE:]) == 0
+    assert output[:, POSITION_STATE_SIZE:].shape[1] == POSITION_STATE_PADDING_SIZE
+    assert torch.count_nonzero(critic_output[:, POSITION_STATE_SIZE:]) == 0
+    assert all(
+        not parameter.requires_grad
+        for parameter in actor.encoder.position_state_adapter.parameters()
+    )
+
+
+def test_position_state_adapter_rejects_unqualified_probe(tmp_path):
+    source = ResNetVisualEncoder(84, 84, 3, 512)
+    checkpoint = tmp_path / "encoder.pt"
+    save_checkpoint(checkpoint, source)
+    probe_path = tmp_path / "position_probe.pt"
+    save_position_probe_checkpoint(probe_path, PositionStateAdapter(), checkpoint)
+    payload = torch.load(probe_path, map_location="cpu")
+    payload["metadata"]["qualified_for_rl"] = False
+    torch.save(payload, probe_path)
+
+    with pytest.raises(UnityTrainerException, match="qualified_for_rl"):
+        load_pretrained_visual_encoders(
+            VisualModule(),
+            VisualModule(),
+            str(checkpoint),
+            True,
+            position_probe_path=str(probe_path),
         )
