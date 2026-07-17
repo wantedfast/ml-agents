@@ -13,6 +13,8 @@ from mlagents.trainers.torch_entities.encoders import (
     OracleGeometryInput,
     EnhancedOracleNavigationInput,
     OraclePositionStateInput,
+    OracleEgoState28Input,
+    OracleEgoState28CompactInput,
 )
 from mlagents.trainers.settings import EncoderType, ScheduleType
 from mlagents.trainers.torch_entities.attention import (
@@ -156,6 +158,8 @@ class ModelUtils:
         use_oracle_navigation_geometry: bool = False,
         use_enhanced_oracle_navigation: bool = False,
         use_oracle_position_state: bool = False,
+        use_oracle_ego_state28: bool = False,
+        use_oracle_ego_state28_compact: bool = False,
     ) -> Tuple[nn.Module, int]:
         """
         Returns the encoder and the size of the appropriate encoder.
@@ -198,6 +202,28 @@ class ModelUtils:
                 )
             return (OraclePositionStateInput(), OraclePositionStateInput.OUTPUT_SIZE)
 
+        if use_oracle_ego_state28 and obs_spec.name == "01_OracleEgoState28":
+            if shape != (OracleEgoState28Input.INPUT_SIZE,):
+                raise UnityTrainerException(
+                    "01_OracleEgoState28 must have shape "
+                    f"({OracleEgoState28Input.INPUT_SIZE},), got {shape}"
+                )
+            return (
+                OracleEgoState28Input(normalize),
+                OracleEgoState28Input.OUTPUT_SIZE,
+            )
+
+        if use_oracle_ego_state28_compact and obs_spec.name == "01_OracleEgoState28":
+            if shape != (OracleEgoState28CompactInput.INPUT_SIZE,):
+                raise UnityTrainerException(
+                    "01_OracleEgoState28 must have shape "
+                    f"({OracleEgoState28CompactInput.INPUT_SIZE},), got {shape}"
+                )
+            return (
+                OracleEgoState28CompactInput(normalize),
+                OracleEgoState28CompactInput.OUTPUT_SIZE,
+            )
+
         # VISUAL
         if dim_prop in ModelUtils.VALID_VISUAL_PROP:
             visual_encoder_class = ModelUtils.get_encoder_for_type(vis_encode_type)
@@ -231,6 +257,8 @@ class ModelUtils:
         use_oracle_navigation_geometry: bool = False,
         use_enhanced_oracle_navigation: bool = False,
         use_oracle_position_state: bool = False,
+        use_oracle_ego_state28: bool = False,
+        use_oracle_ego_state28_compact: bool = False,
     ) -> Tuple[nn.ModuleList, List[int]]:
         """
         Creates visual and vector encoders, along with their normalizers.
@@ -260,6 +288,8 @@ class ModelUtils:
                 use_oracle_navigation_geometry,
                 use_enhanced_oracle_navigation,
                 use_oracle_position_state,
+                use_oracle_ego_state28,
+                use_oracle_ego_state28_compact,
             )
             encoders.append(encoder)
             embedding_sizes.append(embedding_size)
@@ -293,6 +323,27 @@ class ModelUtils:
                 raise UnityTrainerException(
                     "Oracle position-state mode requires exactly one named "
                     f"01_OraclePositionState sensor, found {position_count}"
+                )
+
+        if use_oracle_ego_state28:
+            ego_count = sum(
+                isinstance(encoder, OracleEgoState28Input) for encoder in encoders
+            )
+            if ego_count != 1:
+                raise UnityTrainerException(
+                    "Oracle ego-State28 mode requires exactly one named "
+                    f"01_OracleEgoState28 sensor, found {ego_count}"
+                )
+
+        if use_oracle_ego_state28_compact:
+            compact_count = sum(
+                isinstance(encoder, OracleEgoState28CompactInput)
+                for encoder in encoders
+            )
+            if compact_count != 1:
+                raise UnityTrainerException(
+                    "Compact Oracle ego-State28 mode requires exactly one named "
+                    f"01_OracleEgoState28 sensor, found {compact_count}"
                 )
 
         x_self_size = sum(embedding_sizes)  # The size of the "self" embedding

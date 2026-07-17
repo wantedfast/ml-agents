@@ -188,6 +188,27 @@ class OraclePositionStateInput(nn.Module):
         return torch.cat([inputs, padding], dim=1)
 
 
+class OracleEgoState28Input(OraclePositionStateInput, VectorInput):
+    """Preserve the 12-value ego-centric State28 geometry in a 512-wide input."""
+
+    def __init__(self, normalize: bool = False):
+        VectorInput.__init__(self, self.INPUT_SIZE, normalize)
+
+    def forward(self, inputs: torch.Tensor) -> torch.Tensor:
+        normalized = VectorInput.forward(self, inputs)
+        return OraclePositionStateInput.forward(self, normalized)
+
+
+class OracleEgoState28CompactInput(VectorInput):
+    """Normalize and expose the 12 ego-centric geometry values without padding."""
+
+    INPUT_SIZE = 12
+    OUTPUT_SIZE = 12
+
+    def __init__(self, normalize: bool = False):
+        super().__init__(self.INPUT_SIZE, normalize)
+
+
 class FullyConnectedVisualEncoder(nn.Module):
     def __init__(
         self, height: int, width: int, initial_channels: int, output_size: int

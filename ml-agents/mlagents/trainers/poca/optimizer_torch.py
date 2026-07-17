@@ -219,12 +219,20 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self._use_oracle_position_state = (
             trainer_settings.network_settings.use_oracle_position_state
         )
+        self._use_oracle_ego_state28 = (
+            trainer_settings.network_settings.use_oracle_ego_state28
+        )
+        self._use_oracle_ego_state28_compact = (
+            trainer_settings.network_settings.use_oracle_ego_state28_compact
+        )
         oracle_mode_count = sum(
             int(mode)
             for mode in (
                 self._use_oracle_navigation_geometry,
                 self._use_enhanced_oracle_navigation,
                 self._use_oracle_position_state,
+                self._use_oracle_ego_state28,
+                self._use_oracle_ego_state28_compact,
             )
         )
         if oracle_mode_count > 1:
@@ -237,6 +245,10 @@ class TorchPOCAOptimizer(TorchOptimizer):
             self._validate_enhanced_oracle_navigation_contract()
         if self._use_oracle_position_state:
             self._validate_oracle_position_state_contract()
+        if self._use_oracle_ego_state28:
+            self._validate_oracle_ego_state28_contract()
+        if self._use_oracle_ego_state28_compact:
+            self._validate_oracle_ego_state28_compact_contract()
         if self._use_position_state_features:
             if not self._visual_position_probe_path:
                 raise UnityTrainerException(
@@ -430,6 +442,83 @@ class TorchPOCAOptimizer(TorchOptimizer):
             "Oracle position-state audit: position_features=12; zero_padding=500; "
             "manual_vector=17; camera_sensors=0; ray_sensors=0; "
             "continuous_actions=2; trainable_position_parameters=0; lstm=false"
+        )
+
+    def _validate_oracle_ego_state28_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException(
+                "Oracle ego-State28 mode requires memory=null"
+            )
+        if (
+            self._visual_checkpoint is not None
+            or self._use_navigation_probe_features
+            or self._use_position_state_features
+        ):
+            raise UnityTrainerException(
+                "Oracle ego-State28 mode cannot load visual encoder/probe features"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_OracleEgoState28", (12,)),
+            ("VectorSensor_size16", (16,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "Oracle ego-State28 observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "Oracle ego-State28 requires exactly two continuous actions"
+            )
+        logger.info(
+            "Oracle ego-State28 audit: ego_geometry=12; zero_padding=500; "
+            "manual_vector=16; identity=false; camera_sensors=0; ray_sensors=0; "
+            "continuous_actions=2; trainable_geometry_parameters=0; lstm=false"
+        )
+
+    def _validate_oracle_ego_state28_compact_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException(
+                "Compact Oracle ego-State28 mode requires memory=null"
+            )
+        if (
+            self._visual_checkpoint is not None
+            or self._use_navigation_probe_features
+            or self._use_position_state_features
+        ):
+            raise UnityTrainerException(
+                "Compact Oracle ego-State28 mode cannot load visual encoder/probe features"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_OracleEgoState28", (12,)),
+            ("VectorSensor_size16", (16,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "Compact Oracle ego-State28 observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "Compact Oracle ego-State28 requires exactly two continuous actions"
+            )
+        logger.info(
+            "Compact Oracle ego-State28 audit: ego_geometry=12; zero_padding=0; "
+            "manual_vector=16; total_policy_input=28; identity=false; "
+            "camera_sensors=0; ray_sensors=0; continuous_actions=2; "
+            "trainable_geometry_parameters=0; lstm=false"
         )
 
     def reload_pretrained_visual_encoder(self) -> None:

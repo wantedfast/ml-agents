@@ -147,6 +147,8 @@ class NetworkSettings:
     use_position_state_features: bool = False
     visual_position_probe_path: Optional[str] = None
     use_oracle_position_state: bool = False
+    use_oracle_ego_state28: bool = False
+    use_oracle_ego_state28_compact: bool = False
     memory: Optional[MemorySettings] = None
     goal_conditioning_type: ConditioningType = ConditioningType.HYPER
     deterministic: bool = parser.get_default("deterministic")
