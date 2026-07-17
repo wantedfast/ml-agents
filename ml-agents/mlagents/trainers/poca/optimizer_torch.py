@@ -225,6 +225,9 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self._use_oracle_ego_state28_compact = (
             trainer_settings.network_settings.use_oracle_ego_state28_compact
         )
+        self._use_cnn_exact_state28 = (
+            trainer_settings.network_settings.use_cnn_exact_state28
+        )
         oracle_mode_count = sum(
             int(mode)
             for mode in (
@@ -249,6 +252,8 @@ class TorchPOCAOptimizer(TorchOptimizer):
             self._validate_oracle_ego_state28_contract()
         if self._use_oracle_ego_state28_compact:
             self._validate_oracle_ego_state28_compact_contract()
+        if self._use_cnn_exact_state28:
+            self._validate_cnn_exact_state28_contract()
         if self._use_position_state_features:
             if not self._visual_position_probe_path:
                 raise UnityTrainerException(
@@ -279,6 +284,7 @@ class TorchPOCAOptimizer(TorchOptimizer):
                 raise UnityTrainerException(
                     "use_navigation_probe_features requires freeze_visual_encoder=true"
                 )
+
         if self._visual_encoder_audit:
             if not self._visual_checkpoint:
                 raise UnityTrainerException(
@@ -336,6 +342,50 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self.stream_names = list(self.reward_signals.keys())
         self.value_memory_dict: Dict[str, torch.Tensor] = {}
         self.baseline_memory_dict: Dict[str, torch.Tensor] = {}
+
+    def _validate_cnn_exact_state28_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException("CNN Exact State28 requires memory=null")
+        if not network_settings.normalize:
+            raise UnityTrainerException("CNN Exact State28 requires normalize=true")
+        if not self._visual_checkpoint or not self._visual_position_probe_path:
+            raise UnityTrainerException(
+                "CNN Exact State28 requires pretrained_visual_encoder_path and "
+                "visual_position_probe_path"
+            )
+        if not self._freeze_visual_encoder:
+            raise UnityTrainerException(
+                "CNN Exact State28 requires freeze_visual_encoder=true"
+            )
+        if self._use_navigation_probe_features or self._use_position_state_features:
+            raise UnityTrainerException(
+                "CNN Exact State28 cannot enable another visual probe feature mode"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_OverallView", (3, 84, 84)),
+            ("VectorSensor_size17", (17,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "CNN Exact State28 observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "CNN Exact State28 requires exactly two continuous actions"
+            )
+        logger.info(
+            "CNN reconstructed-State28 contract: image=84x84x3; canonical_positions=12; "
+            "manual_state=17; fused_policy_input=28; raw_latent=false; "
+            "identity_consumed=true; grid_quantized_positions=true; "
+            "camera_half_size=5.75; ray_sensors=0; lstm=false"
+        )
 
     def _validate_oracle_geometry_contract(self) -> None:
         network_settings = self.trainer_settings.network_settings
@@ -536,6 +586,9 @@ class TorchPOCAOptimizer(TorchOptimizer):
                     self._visual_position_probe_path
                     if self._use_position_state_features
                     else None,
+                    self._visual_position_probe_path
+                    if self._use_cnn_exact_state28
+                    else None,
                 )
             )
             logger.info(
@@ -580,6 +633,28 @@ class TorchPOCAOptimizer(TorchOptimizer):
                     vector_sizes,
                     self.trainer_settings.network_settings.memory is not None,
                 )
+            if self._use_cnn_exact_state28:
+                probe_payload = torch.load(
+                    self._visual_position_probe_path, map_location="cpu"
+                )
+                probe_qualified = probe_payload.get("metadata", {}).get(
+                    "qualified_for_rl"
+                )
+                logger.info(
+                    "Frozen CNN reconstructed-State28 audit: probe=%s (sha256=%s); "
+                    "canonical_positions=12; manual_state=17; fused_state=28; "
+                    "raw_latent=false; encoder_probe_frozen=true; lstm=false; "
+                    "hard_grid_qualified=%s",
+                    self._visual_position_probe_path,
+                    checkpoint_sha256(self._visual_position_probe_path),
+                    probe_qualified,
+                )
+                if probe_qualified is not True:
+                    logger.warning(
+                        "CNN Exact State28 is an experimental continuous-coordinate "
+                        "run: the position probe did not pass its historical hard-grid "
+                        "qualification threshold."
+                    )
 
     def _run_visual_encoder_audit(self, current_obs: List[torch.Tensor]) -> None:
         if not self._visual_encoder_audit or self._visual_encoder_audit_complete:

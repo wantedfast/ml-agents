@@ -12,6 +12,7 @@ from mlagents.trainers.torch_entities.pretrained_visual_encoder import (
     NavigationGeometryAdapter,
     POSITION_STATE_PADDING_SIZE,
     POSITION_STATE_SIZE,
+    ExactState28PositionAdapter,
     PositionStateAdapter,
     load_pretrained_visual_encoders,
 )
@@ -26,6 +27,13 @@ from mlagents.trainers.settings import (
 from mlagents.trainers.tests import mock_brain
 from mlagents.trainers.tests.dummy_config import poca_dummy_config
 from mlagents.trainers.torch_entities.networks import SimpleActor
+from mlagents_envs.base_env import (
+    ActionSpec,
+    BehaviorSpec,
+    DimensionProperty,
+    ObservationSpec,
+    ObservationType,
+)
 
 
 class VisualModule(torch.nn.Module):
@@ -350,3 +358,113 @@ def test_position_state_adapter_rejects_unqualified_probe(tmp_path):
             True,
             position_probe_path=str(probe_path),
         )
+
+
+def test_exact_state28_adapter_outputs_only_positions_and_freezes_both_sides(tmp_path):
+    source = ResNetVisualEncoder(84, 84, 3, 512)
+    checkpoint = tmp_path / "encoder.pt"
+    save_checkpoint(checkpoint, source)
+    probe_path = tmp_path / "position_probe.pt"
+    save_position_probe_checkpoint(
+        probe_path, ExactState28PositionAdapter(), checkpoint
+    )
+    # Exact State28 consumes continuous expected coordinates. The historical
+    # checkpoint missed the stricter hard-cell threshold but has low coordinate
+    # MAE, so this mode intentionally does not claim hard-cell qualification.
+    payload = torch.load(probe_path, map_location="cpu")
+    payload["metadata"]["qualified_for_rl"] = False
+    torch.save(payload, probe_path)
+    actor, critic = VisualModule(), VisualModule()
+
+    load_pretrained_visual_encoders(
+        actor,
+        critic,
+        str(checkpoint),
+        True,
+        exact_state28_position_probe_path=str(probe_path),
+    )
+
+    actor_output = actor.encoder(torch.rand(2, 3, 84, 84))
+    critic_output = critic.encoder(torch.rand(2, 3, 84, 84))
+    assert actor_output.shape == (2, 12)
+    assert critic_output.shape == (2, 12)
+    assert torch.isfinite(actor_output).all()
+    assert torch.all((actor_output >= 0.0) & (actor_output <= 1.0))
+    assert all(
+        not parameter.requires_grad
+        for parameter in actor.encoder.position_state_adapter.parameters()
+    )
+    assert all(
+        not parameter.requires_grad
+        for parameter in critic.encoder.position_state_adapter.parameters()
+    )
+
+
+def test_poca_optimizer_builds_frozen_cnn_exact_state28_contract(tmp_path):
+    source = ResNetVisualEncoder(84, 84, 3, 512)
+    checkpoint = tmp_path / "encoder.pt"
+    save_checkpoint(checkpoint, source)
+    probe_path = tmp_path / "position_probe.pt"
+    save_position_probe_checkpoint(
+        probe_path, ExactState28PositionAdapter(), checkpoint
+    )
+    settings = poca_dummy_config()
+    settings.network_settings = NetworkSettings(
+        normalize=True,
+        hidden_units=512,
+        num_layers=2,
+        vis_encode_type=EncoderType.RESNET,
+        pretrained_visual_encoder_path=str(checkpoint),
+        freeze_visual_encoder=True,
+        visual_position_probe_path=str(probe_path),
+        use_cnn_exact_state28=True,
+    )
+    settings.reward_signals = {
+        RewardSignalType.EXTRINSIC: RewardSignalSettings(strength=1.0, gamma=0.99)
+    }
+    visual_spec = ObservationSpec(
+        shape=(3, 84, 84),
+        dimension_property=(
+            DimensionProperty.NONE,
+            DimensionProperty.TRANSLATIONAL_EQUIVARIANCE,
+            DimensionProperty.TRANSLATIONAL_EQUIVARIANCE,
+        ),
+        observation_type=ObservationType.DEFAULT,
+        name="01_OverallView",
+    )
+    vector_spec = ObservationSpec(
+        shape=(17,),
+        dimension_property=(DimensionProperty.UNSPECIFIED,),
+        observation_type=ObservationType.DEFAULT,
+        name="VectorSensor_size17",
+    )
+    behavior_spec = BehaviorSpec(
+        [visual_spec, vector_spec], ActionSpec.create_continuous(2)
+    )
+    policy = TorchPolicy(0, behavior_spec, settings.network_settings, SimpleActor, {})
+
+    optimizer = TorchPOCAOptimizer(policy, settings)
+
+    actor_encoder = next(
+        module
+        for module in policy.actor.modules()
+        if isinstance(module, ResNetVisualEncoder)
+    )
+    critic_encoder = next(
+        module
+        for module in optimizer.critic.modules()
+        if isinstance(module, ResNetVisualEncoder)
+    )
+    optimized_ids = {
+        id(parameter)
+        for group in optimizer.optimizer.param_groups
+        for parameter in group["params"]
+    }
+    for encoder in (actor_encoder, critic_encoder):
+        assert all(not parameter.requires_grad for parameter in encoder.parameters())
+        assert all(
+            id(parameter) not in optimized_ids for parameter in encoder.parameters()
+        )
+        assert encoder(torch.rand(2, 3, 84, 84)).shape == (2, 12)
+    assert policy.actor.network_body.observation_encoder.total_enc_size == 28
+    assert optimizer.critic.network_body.observation_encoder.total_enc_size == 28

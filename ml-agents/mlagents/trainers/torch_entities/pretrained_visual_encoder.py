@@ -97,6 +97,33 @@ class PositionStateAdapter(nn.Module):
         return torch.cat([positions, zeros], dim=1)
 
 
+class ExactState28PositionAdapter(PositionStateAdapter):
+    """Decode the canonical positions used to reconstruct Exact State28."""
+
+    def forward(self, embedding: torch.Tensor) -> torch.Tensor:
+        batch = embedding.shape[0]
+        logits = self.position(embedding).reshape(
+            batch,
+            len(POSITION_OBJECT_ORDER),
+            POSITION_GRID_SIZE * POSITION_GRID_SIZE,
+        )
+        probabilities = torch.softmax(logits, dim=-1)
+        cell_indices = torch.arange(
+            POSITION_GRID_SIZE * POSITION_GRID_SIZE,
+            device=embedding.device,
+            dtype=embedding.dtype,
+        )
+        x_coordinates = torch.remainder(cell_indices, POSITION_GRID_SIZE) / float(
+            POSITION_GRID_SIZE - 1
+        )
+        y_coordinates = torch.floor(cell_indices / POSITION_GRID_SIZE) / float(
+            POSITION_GRID_SIZE - 1
+        )
+        x = (probabilities * x_coordinates.reshape(1, 1, -1)).sum(dim=-1)
+        y = (probabilities * y_coordinates.reshape(1, 1, -1)).sum(dim=-1)
+        return torch.stack([x, y], dim=-1).reshape(batch, POSITION_STATE_SIZE)
+
+
 def _remove_navigation_adapter(encoder: ResNetVisualEncoder) -> None:
     handle = getattr(encoder, "_navigation_adapter_hook", None)
     if handle is not None:
@@ -209,6 +236,53 @@ def _attach_position_adapter(
     )
 
 
+def _attach_exact_state28_position_adapter(
+    encoder: ResNetVisualEncoder,
+    probe_path: str,
+    encoder_checkpoint_sha256: str,
+    dataset_manifest_sha256: str,
+) -> None:
+    if not os.path.isfile(probe_path):
+        raise UnityTrainerException(
+            f"Exact State28 position probe checkpoint does not exist: {probe_path}"
+        )
+    payload = torch.load(probe_path, map_location="cpu")
+    if not isinstance(payload, dict) or "probe_state_dict" not in payload:
+        raise UnityTrainerException(
+            "Exact State28 position probe must contain 'probe_state_dict'."
+        )
+    metadata = payload.get("metadata", {})
+    expected_metadata = {
+        "probe_type": "position_state_grid_classifier",
+        "encoder_checkpoint_sha256": encoder_checkpoint_sha256,
+        "dataset_manifest_sha256": dataset_manifest_sha256,
+        "object_order": POSITION_OBJECT_ORDER,
+        "grid_size": POSITION_GRID_SIZE,
+        "embedding_size": 512,
+        "position_state_size": POSITION_STATE_SIZE,
+    }
+    for key, expected_value in expected_metadata.items():
+        if metadata.get(key) != expected_value:
+            raise UnityTrainerException(
+                f"Exact State28 position probe metadata mismatch for {key}: "
+                f"expected {expected_value}, got {metadata.get(key)}"
+            )
+
+    adapter = ExactState28PositionAdapter().to(next(encoder.parameters()).device)
+    try:
+        adapter.load_state_dict(payload["probe_state_dict"], strict=True)
+    except RuntimeError as error:
+        raise UnityTrainerException(
+            f"Exact State28 position probe is incompatible: {error}"
+        ) from error
+    adapter.requires_grad_(False)
+    adapter.eval()
+    encoder.position_state_adapter = adapter
+    encoder._position_state_adapter_hook = encoder.register_forward_hook(
+        lambda module, _inputs, output: module.position_state_adapter(output)
+    )
+
+
 def load_pretrained_visual_encoders(
     actor: nn.Module,
     critic: nn.Module,
@@ -216,6 +290,7 @@ def load_pretrained_visual_encoders(
     freeze: bool,
     navigation_probe_path: Optional[str] = None,
     position_probe_path: Optional[str] = None,
+    exact_state28_position_probe_path: Optional[str] = None,
 ) -> Tuple[int, int, str]:
     """Strictly load one encoder checkpoint into every actor/critic visual encoder."""
     if not os.path.isfile(checkpoint_path):
@@ -266,9 +341,17 @@ def load_pretrained_visual_encoders(
             f"critic={len(critic_encoders)}."
         )
 
-    if navigation_probe_path is not None and position_probe_path is not None:
+    active_probe_count = sum(
+        path is not None
+        for path in (
+            navigation_probe_path,
+            position_probe_path,
+            exact_state28_position_probe_path,
+        )
+    )
+    if active_probe_count > 1:
         raise UnityTrainerException(
-            "Navigation geometry and position-state probes are mutually exclusive"
+            "Visual navigation, position-state, and Exact State28 probes are mutually exclusive"
         )
 
     state_dict = checkpoint["encoder_state_dict"]
@@ -303,6 +386,17 @@ def load_pretrained_visual_encoders(
             _attach_position_adapter(
                 encoder,
                 position_probe_path,
+                digest,
+                dataset_digest,
+            )
+        if exact_state28_position_probe_path is not None:
+            if not freeze:
+                raise UnityTrainerException(
+                    "Exact State28 position features require a frozen visual encoder"
+                )
+            _attach_exact_state28_position_adapter(
+                encoder,
+                exact_state28_position_probe_path,
                 digest,
                 dataset_digest,
             )

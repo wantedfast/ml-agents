@@ -160,6 +160,7 @@ class ModelUtils:
         use_oracle_position_state: bool = False,
         use_oracle_ego_state28: bool = False,
         use_oracle_ego_state28_compact: bool = False,
+        use_cnn_exact_state28: bool = False,
     ) -> Tuple[nn.Module, int]:
         """
         Returns the encoder and the size of the appropriate encoder.
@@ -230,10 +231,17 @@ class ModelUtils:
             ModelUtils._check_resolution_for_encoder(
                 shape[1], shape[2], vis_encode_type
             )
-            return (visual_encoder_class(shape[1], shape[2], shape[0], h_size), h_size)
+            embedding_size = 12 if use_cnn_exact_state28 else h_size
+            return (
+                visual_encoder_class(shape[1], shape[2], shape[0], h_size),
+                embedding_size,
+            )
         # VECTOR
         if dim_prop in ModelUtils.VALID_VECTOR_PROP:
-            return (VectorInput(shape[0], normalize), shape[0])
+            return (
+                VectorInput(shape[0], False if use_cnn_exact_state28 else normalize),
+                shape[0],
+            )
         # VARIABLE LENGTH
         if dim_prop in ModelUtils.VALID_VAR_LEN_PROP:
             return (
@@ -259,6 +267,7 @@ class ModelUtils:
         use_oracle_position_state: bool = False,
         use_oracle_ego_state28: bool = False,
         use_oracle_ego_state28_compact: bool = False,
+        use_cnn_exact_state28: bool = False,
     ) -> Tuple[nn.ModuleList, List[int]]:
         """
         Creates visual and vector encoders, along with their normalizers.
@@ -290,6 +299,7 @@ class ModelUtils:
                 use_oracle_position_state,
                 use_oracle_ego_state28,
                 use_oracle_ego_state28_compact,
+                use_cnn_exact_state28,
             )
             encoders.append(encoder)
             embedding_sizes.append(embedding_size)
@@ -344,6 +354,19 @@ class ModelUtils:
                 raise UnityTrainerException(
                     "Compact Oracle ego-State28 mode requires exactly one named "
                     f"01_OracleEgoState28 sensor, found {compact_count}"
+                )
+
+        if use_cnn_exact_state28:
+            visual_count = sum(
+                len(spec.shape) == 3 for spec in observation_specs
+            )
+            vector_sizes = [
+                spec.shape[0] for spec in observation_specs if len(spec.shape) == 1
+            ]
+            if visual_count != 1 or vector_sizes != [17]:
+                raise UnityTrainerException(
+                    "CNN Exact State28 requires one visual sensor and one 17-value "
+                    f"vector sensor, found visual={visual_count}, vectors={vector_sizes}"
                 )
 
         x_self_size = sum(embedding_sizes)  # The size of the "self" embedding

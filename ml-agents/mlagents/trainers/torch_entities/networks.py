@@ -44,6 +44,7 @@ class ObservationEncoder(nn.Module):
         use_oracle_position_state: bool = False,
         use_oracle_ego_state28: bool = False,
         use_oracle_ego_state28_compact: bool = False,
+        use_cnn_exact_state28: bool = False,
     ):
         """
         Returns an ObservationEncoder that can process and encode a set of observations.
@@ -61,6 +62,11 @@ class ObservationEncoder(nn.Module):
             use_oracle_position_state=use_oracle_position_state,
             use_oracle_ego_state28=use_oracle_ego_state28,
             use_oracle_ego_state28_compact=use_oracle_ego_state28_compact,
+            use_cnn_exact_state28=use_cnn_exact_state28,
+        )
+        self.use_cnn_exact_state28 = use_cnn_exact_state28
+        self.exact_state28_normalizer = (
+            VectorInput(28, normalize) if use_cnn_exact_state28 else None
         )
         self.rsa, self.x_self_encoder = ModelUtils.create_residual_self_attention(
             self.processors, self.embedding_sizes, self.ATTENTION_EMBEDDING_SIZE
@@ -68,7 +74,7 @@ class ObservationEncoder(nn.Module):
         if self.rsa is not None:
             total_enc_size = sum(self.embedding_sizes) + self.ATTENTION_EMBEDDING_SIZE
         else:
-            total_enc_size = sum(self.embedding_sizes)
+            total_enc_size = 28 if use_cnn_exact_state28 else sum(self.embedding_sizes)
         self.normalize = normalize
         self._total_enc_size = total_enc_size
 
@@ -95,11 +101,29 @@ class ObservationEncoder(nn.Module):
 
     def update_normalization(self, buffer: AgentBuffer) -> None:
         obs = ObsUtil.from_buffer(buffer, len(self.processors))
+        if self.use_cnn_exact_state28:
+            device = next(self.parameters()).device
+            tensors = [
+                torch.as_tensor(item.to_ndarray(), device=device) for item in obs
+            ]
+            with torch.no_grad():
+                processed = [
+                    processor(value)
+                    for processor, value in zip(self.processors, tensors)
+                ]
+                fused = self._fuse_exact_state28(processed[0], processed[1])
+            self.exact_state28_normalizer.update_normalization(fused)
+            return
         for vec_input, enc in zip(obs, self.processors):
             if isinstance(enc, VectorInput):
                 enc.update_normalization(torch.as_tensor(vec_input.to_ndarray()))
 
     def copy_normalization(self, other_encoder: "ObservationEncoder") -> None:
+        if self.use_cnn_exact_state28:
+            self.exact_state28_normalizer.copy_normalization(
+                other_encoder.exact_state28_normalizer
+            )
+            return
         if self.normalize:
             for n1, n2 in zip(self.processors, other_encoder.processors):
                 if isinstance(n1, VectorInput) and isinstance(n2, VectorInput):
@@ -110,6 +134,14 @@ class ObservationEncoder(nn.Module):
         Encode observations using a list of processors and an RSA.
         :param inputs: List of Tensors corresponding to a set of obs.
         """
+        if self.use_cnn_exact_state28:
+            processed = [
+                processor(value)
+                for processor, value in zip(self.processors, inputs)
+            ]
+            fused = self._fuse_exact_state28(processed[0], processed[1])
+            return self.exact_state28_normalizer(fused)
+
         encodes = []
         var_len_processor_inputs: List[Tuple[nn.Module, torch.Tensor]] = []
 
@@ -152,6 +184,48 @@ class ObservationEncoder(nn.Module):
             )
 
         return encoded_self
+
+    @staticmethod
+    def _fuse_exact_state28(
+        canonical_grid_positions: torch.Tensor,
+        manual_state: torch.Tensor,
+    ) -> torch.Tensor:
+        """Reconstruct the original ordered State28 from CNN positions and state17."""
+        if canonical_grid_positions.shape[1] != 12 or manual_state.shape[1] != 17:
+            raise UnityTrainerException(
+                "CNN Exact State28 fusion requires position12 and manualState17"
+            )
+
+        # The fixed 84x84 observation camera is centered at zero with half-size 5.75.
+        # Probe coordinates are expected grid indices normalized by 15. Convert cell
+        # centers back to world coordinates and then apply State28's world/10 scale.
+        world_positions = -0.5390625 + canonical_grid_positions * 1.078125
+        agent1 = world_positions[:, 0:2]
+        agent2 = world_positions[:, 2:4]
+        onion = world_positions[:, 4:6]
+        dish = world_positions[:, 6:8]
+        pot = world_positions[:, 8:10]
+        counter = world_positions[:, 10:12]
+        is_agent2 = manual_state[:, 12:13] > 0.0
+        self_position = torch.where(is_agent2, agent2, agent1)
+        other_position = torch.where(is_agent2, agent1, agent2)
+
+        return torch.cat(
+            [
+                self_position,
+                manual_state[:, 0:2],
+                (other_position - self_position) / 2.0,
+                manual_state[:, 2:4],
+                manual_state[:, 4:8],
+                manual_state[:, 8:12],
+                (pot - self_position) / 2.0,
+                manual_state[:, 13:17],
+                onion,
+                dish,
+                counter,
+            ],
+            dim=1,
+        )
 
     def get_goal_encoding(self, inputs: List[torch.Tensor]) -> torch.Tensor:
         """
@@ -206,6 +280,7 @@ class NetworkBody(nn.Module):
             network_settings.use_oracle_position_state,
             network_settings.use_oracle_ego_state28,
             network_settings.use_oracle_ego_state28_compact,
+            network_settings.use_cnn_exact_state28,
         )
         self.processors = self.observation_encoder.processors
         total_enc_size = self.observation_encoder.total_enc_size
@@ -299,6 +374,7 @@ class MultiAgentNetworkBody(torch.nn.Module):
             network_settings.use_oracle_position_state,
             network_settings.use_oracle_ego_state28,
             network_settings.use_oracle_ego_state28_compact,
+            network_settings.use_cnn_exact_state28,
         )
         self.processors = self.observation_encoder.processors
 
