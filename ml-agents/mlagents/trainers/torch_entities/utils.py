@@ -15,6 +15,7 @@ from mlagents.trainers.torch_entities.encoders import (
     OraclePositionStateInput,
     OracleEgoState28Input,
     OracleEgoState28CompactInput,
+    SemanticPositionInput,
 )
 from mlagents.trainers.settings import EncoderType, ScheduleType
 from mlagents.trainers.torch_entities.attention import (
@@ -161,6 +162,8 @@ class ModelUtils:
         use_oracle_ego_state28: bool = False,
         use_oracle_ego_state28_compact: bool = False,
         use_cnn_exact_state28: bool = False,
+        use_semantic_state28: bool = False,
+        use_semantic_relative_state28: bool = False,
     ) -> Tuple[nn.Module, int]:
         """
         Returns the encoder and the size of the appropriate encoder.
@@ -225,6 +228,26 @@ class ModelUtils:
                 OracleEgoState28CompactInput.OUTPUT_SIZE,
             )
 
+        semantic_sensor_name = (
+            "01_SemanticRelativeMap"
+            if use_semantic_relative_state28
+            else "01_SemanticMap"
+        )
+        if (
+            (use_semantic_state28 or use_semantic_relative_state28)
+            and obs_spec.name == semantic_sensor_name
+        ):
+            expected_shape = (
+                SemanticPositionInput.CHANNELS,
+                SemanticPositionInput.HEIGHT,
+                SemanticPositionInput.WIDTH,
+            )
+            if shape != expected_shape:
+                raise UnityTrainerException(
+                    f"{semantic_sensor_name} must have shape {expected_shape}, got {shape}"
+                )
+            return (SemanticPositionInput(), SemanticPositionInput.OUTPUT_SIZE)
+
         # VISUAL
         if dim_prop in ModelUtils.VALID_VISUAL_PROP:
             visual_encoder_class = ModelUtils.get_encoder_for_type(vis_encode_type)
@@ -239,7 +262,14 @@ class ModelUtils:
         # VECTOR
         if dim_prop in ModelUtils.VALID_VECTOR_PROP:
             return (
-                VectorInput(shape[0], False if use_cnn_exact_state28 else normalize),
+                VectorInput(
+                    shape[0],
+                    False
+                    if use_cnn_exact_state28
+                    or use_semantic_state28
+                    or use_semantic_relative_state28
+                    else normalize,
+                ),
                 shape[0],
             )
         # VARIABLE LENGTH
@@ -268,6 +298,8 @@ class ModelUtils:
         use_oracle_ego_state28: bool = False,
         use_oracle_ego_state28_compact: bool = False,
         use_cnn_exact_state28: bool = False,
+        use_semantic_state28: bool = False,
+        use_semantic_relative_state28: bool = False,
     ) -> Tuple[nn.ModuleList, List[int]]:
         """
         Creates visual and vector encoders, along with their normalizers.
@@ -300,6 +332,8 @@ class ModelUtils:
                 use_oracle_ego_state28,
                 use_oracle_ego_state28_compact,
                 use_cnn_exact_state28,
+                use_semantic_state28,
+                use_semantic_relative_state28,
             )
             encoders.append(encoder)
             embedding_sizes.append(embedding_size)
@@ -367,6 +401,30 @@ class ModelUtils:
                 raise UnityTrainerException(
                     "CNN Exact State28 requires one visual sensor and one 17-value "
                     f"vector sensor, found visual={visual_count}, vectors={vector_sizes}"
+                )
+
+        if use_semantic_state28 or use_semantic_relative_state28:
+            if use_cnn_exact_state28:
+                raise UnityTrainerException(
+                    "Semantic State28 modes and CNN Exact State28 are mutually exclusive"
+                )
+            if use_semantic_state28 and use_semantic_relative_state28:
+                raise UnityTrainerException(
+                    "Semantic State28 and Semantic Relative-State28 are mutually exclusive"
+                )
+            semantic_count = sum(
+                isinstance(encoder, SemanticPositionInput) for encoder in encoders
+            )
+            vector_sizes = [
+                spec.shape[0]
+                for spec in observation_specs
+                if spec.dimension_property in ModelUtils.VALID_VECTOR_PROP
+            ]
+            if semantic_count != 1 or vector_sizes != [17]:
+                raise UnityTrainerException(
+                    "Semantic State28 mode requires one named 9x16x16 semantic sensor "
+                    "and one 17-value vector sensor, found "
+                    f"semantic={semantic_count}, vectors={vector_sizes}"
                 )
 
         x_self_size = sum(embedding_sizes)  # The size of the "self" embedding

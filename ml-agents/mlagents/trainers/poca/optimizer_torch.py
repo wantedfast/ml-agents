@@ -228,6 +228,18 @@ class TorchPOCAOptimizer(TorchOptimizer):
         self._use_cnn_exact_state28 = (
             trainer_settings.network_settings.use_cnn_exact_state28
         )
+        self._use_semantic_state28 = (
+            trainer_settings.network_settings.use_semantic_state28
+        )
+        self._use_semantic_relative_state28 = (
+            trainer_settings.network_settings.use_semantic_relative_state28
+        )
+        self._use_agent_centric_semantic = (
+            trainer_settings.network_settings.use_agent_centric_semantic
+        )
+        self._use_global_semantic_cnn = (
+            trainer_settings.network_settings.use_global_semantic_cnn
+        )
         oracle_mode_count = sum(
             int(mode)
             for mode in (
@@ -254,6 +266,14 @@ class TorchPOCAOptimizer(TorchOptimizer):
             self._validate_oracle_ego_state28_compact_contract()
         if self._use_cnn_exact_state28:
             self._validate_cnn_exact_state28_contract()
+        if self._use_semantic_state28:
+            self._validate_semantic_state28_contract()
+        if self._use_semantic_relative_state28:
+            self._validate_semantic_relative_state28_contract()
+        if self._use_agent_centric_semantic:
+            self._validate_agent_centric_semantic_contract()
+        if self._use_global_semantic_cnn:
+            self._validate_global_semantic_cnn_contract()
         if self._use_position_state_features:
             if not self._visual_position_probe_path:
                 raise UnityTrainerException(
@@ -307,6 +327,14 @@ class TorchPOCAOptimizer(TorchOptimizer):
             + list(self.critic.parameters())
             if parameter.requires_grad
         ]
+        self._global_semantic_cnn_initial_parameters = {
+            name: parameter.detach().clone()
+            for name, parameter in self.policy.actor.named_parameters()
+            if self._use_global_semantic_cnn
+            and "processor" in name
+            and parameter.requires_grad
+        }
+        self._global_semantic_cnn_update_logged = False
 
         self.hyperparameters: POCASettings = cast(
             POCASettings, trainer_settings.hyperparameters
@@ -385,6 +413,206 @@ class TorchPOCAOptimizer(TorchOptimizer):
             "manual_state=17; fused_policy_input=28; raw_latent=false; "
             "identity_consumed=true; grid_quantized_positions=true; "
             "camera_half_size=5.75; ray_sensors=0; lstm=false"
+        )
+
+    def _validate_semantic_state28_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException("Semantic State28 requires memory=null")
+        if not network_settings.normalize:
+            raise UnityTrainerException("Semantic State28 requires normalize=true")
+        if (
+            self._visual_checkpoint is not None
+            or self._visual_position_probe_path is not None
+            or self._freeze_visual_encoder
+            or self._use_navigation_probe_features
+            or self._use_position_state_features
+            or self._use_cnn_exact_state28
+        ):
+            raise UnityTrainerException(
+                "Semantic State28 cannot load RGB encoders/probes or another "
+                "visual feature mode"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_SemanticMap", (9, 16, 16)),
+            ("VectorSensor_size17", (17,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "Semantic State28 observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "Semantic State28 requires exactly two continuous actions"
+            )
+        logger.info(
+            "Deterministic semantic reconstructed-State28 audit: "
+            "semantic_map=9x16x16; position_channels=Self,Other,Onion,Dish,Pot,Counter; "
+            "position_features=12; manual_state=17; fused_state=28; "
+            "bilinear_soft_positions=true; raw_rgb=false; "
+            "trainable_perception_parameters=0; lstm=false"
+        )
+
+    def _validate_semantic_relative_state28_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException(
+                "Semantic Relative-State28 requires memory=null"
+            )
+        if not network_settings.normalize:
+            raise UnityTrainerException(
+                "Semantic Relative-State28 requires normalize=true"
+            )
+        if self._use_semantic_state28:
+            raise UnityTrainerException(
+                "Semantic State28 modes are mutually exclusive"
+            )
+        if (
+            self._visual_checkpoint is not None
+            or self._visual_position_probe_path is not None
+            or self._freeze_visual_encoder
+            or self._use_navigation_probe_features
+            or self._use_position_state_features
+            or self._use_cnn_exact_state28
+            or self._use_agent_centric_semantic
+        ):
+            raise UnityTrainerException(
+                "Semantic Relative-State28 cannot load RGB encoders/probes or "
+                "another visual feature mode"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_SemanticRelativeMap", (9, 16, 16)),
+            ("VectorSensor_size17", (17,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "Semantic Relative-State28 observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "Semantic Relative-State28 requires exactly two continuous actions"
+            )
+        logger.info(
+            "Certified deterministic semantic Relative-State28 audit: "
+            "semantic_map=9x16x16; position_channels=Self,Other,Onion,Dish,Pot,Counter; "
+            "position_features=12; manual_state=17; fused_state=28; "
+            "other,pot,onion,dish,counter=relative_to_self; "
+            "bilinear_soft_positions=true; raw_rgb=false; cnn=false; probe=false; "
+            "trainable_perception_parameters=0; lstm=false"
+        )
+
+    def _validate_agent_centric_semantic_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException(
+                "Agent-centric semantic CNN requires memory=null"
+            )
+        if self._use_semantic_state28 or self._use_semantic_relative_state28:
+            raise UnityTrainerException(
+                "Agent-centric semantic CNN and Semantic State28 modes are mutually exclusive"
+            )
+        if (
+            self._visual_checkpoint is not None
+            or self._visual_position_probe_path is not None
+            or self._freeze_visual_encoder
+            or self._use_navigation_probe_features
+            or self._use_position_state_features
+            or self._use_cnn_exact_state28
+        ):
+            raise UnityTrainerException(
+                "Agent-centric semantic CNN cannot load RGB encoders/probes or another "
+                "visual feature mode"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_AgentCentricSemanticMap", (9, 31, 31)),
+            ("VectorSensor_size17", (17,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "Agent-centric semantic CNN observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "Agent-centric semantic CNN requires exactly two continuous actions"
+            )
+        logger.info(
+            "Agent-centric semantic CNN audit: semantic_map=9x31x31; self_cell=(15,15); "
+            "full_relative_range=true; manual_state=17; trainable_cnn=true; "
+            "deterministic_position_readout=false; raw_rgb=false; lstm=false"
+        )
+
+    def _validate_global_semantic_cnn_contract(self) -> None:
+        network_settings = self.trainer_settings.network_settings
+        if network_settings.memory is not None:
+            raise UnityTrainerException("Global semantic CNN requires memory=null")
+        if network_settings.vis_encode_type.value != "resnet":
+            raise UnityTrainerException("Global semantic CNN requires vis_encode_type=resnet")
+        if (
+            self._visual_checkpoint is not None
+            or self._visual_position_probe_path is not None
+            or self._freeze_visual_encoder
+            or self._use_navigation_probe_features
+            or self._use_position_state_features
+            or self._use_cnn_exact_state28
+            or self._use_semantic_state28
+            or self._use_semantic_relative_state28
+            or self._use_agent_centric_semantic
+        ):
+            raise UnityTrainerException(
+                "Global semantic CNN cannot load/freeze a visual encoder, use a probe, "
+                "or enable a deterministic semantic readout mode"
+            )
+        observation_contract = [
+            (spec.name, spec.shape)
+            for spec in self.policy.behavior_spec.observation_specs
+        ]
+        expected_contract = [
+            ("01_SemanticMap", (9, 16, 16)),
+            ("VectorSensor_size17", (17,)),
+        ]
+        if observation_contract != expected_contract:
+            raise UnityTrainerException(
+                "Global semantic CNN observation contract mismatch: "
+                f"expected {expected_contract}, got {observation_contract}"
+            )
+        action_spec = self.policy.behavior_spec.action_spec
+        if action_spec.continuous_size != 2 or action_spec.discrete_size != 0:
+            raise UnityTrainerException(
+                "Global semantic CNN requires exactly two continuous actions"
+            )
+        trainable_visual_parameters = sum(
+            parameter.numel()
+            for name, parameter in self.policy.actor.named_parameters()
+            if "processor" in name and parameter.requires_grad
+        )
+        if trainable_visual_parameters <= 0:
+            raise UnityTrainerException(
+                "Global semantic CNN did not expose trainable visual-processor parameters"
+            )
+        logger.info(
+            "Global semantic CNN audit: semantic_map=9x16x16; manual_state=17; "
+            "encoder=resnet; latent_size=512; trainable_cnn=true; "
+            f"trainable_visual_parameters={trainable_visual_parameters}; "
+            "deterministic_position_readout=false; decoded_coordinates=false; "
+            "probe=false; raw_rgb=false; lstm=false"
         )
 
     def _validate_oracle_geometry_contract(self) -> None:
@@ -830,6 +1058,25 @@ class TorchPOCAOptimizer(TorchOptimizer):
         loss.backward()
 
         self.optimizer.step()
+        if (
+            self._use_global_semantic_cnn
+            and not self._global_semantic_cnn_update_logged
+        ):
+            maximum_parameter_change = max(
+                (
+                    parameter.detach()
+                    - self._global_semantic_cnn_initial_parameters[name]
+                ).abs().max().item()
+                for name, parameter in self.policy.actor.named_parameters()
+                if name in self._global_semantic_cnn_initial_parameters
+            )
+            if maximum_parameter_change > 0.0:
+                self._global_semantic_cnn_update_logged = True
+                logger.info(
+                    "Global semantic CNN update audit: "
+                    f"max_visual_parameter_change={maximum_parameter_change:.6e}; "
+                    "gradient_update_verified=true"
+                )
         update_stats = {
             # NOTE: abs() is not technically correct, but matches the behavior in TensorFlow.
             # TODO: After PyTorch is default, change to something more correct.

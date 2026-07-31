@@ -209,6 +209,42 @@ class OracleEgoState28CompactInput(VectorInput):
         super().__init__(self.INPUT_SIZE, normalize)
 
 
+class SemanticPositionInput(nn.Module):
+    """Read six ego-centric grid positions from a 9x16x16 semantic map."""
+
+    CHANNELS = 9
+    HEIGHT = 16
+    WIDTH = 16
+    OUTPUT_SIZE = 12
+
+    def __init__(self):
+        super().__init__()
+        self.register_buffer(
+            "position_channels",
+            torch.tensor([7, 8, 3, 4, 5, 6], dtype=torch.long),
+        )
+        self.register_buffer(
+            "grid_x",
+            torch.arange(self.WIDTH, dtype=torch.float32)
+            .repeat(self.HEIGHT)
+            .div(self.WIDTH - 1),
+        )
+        self.register_buffer(
+            "grid_y",
+            torch.arange(self.HEIGHT, dtype=torch.float32)
+            .repeat_interleave(self.WIDTH)
+            .div(self.HEIGHT - 1),
+        )
+
+    def forward(self, inputs: torch.Tensor) -> torch.Tensor:
+        selected = torch.index_select(inputs, 1, self.position_channels)
+        flattened = selected.reshape(selected.shape[0], 6, -1)
+        mass = flattened.sum(dim=2).clamp_min(1e-6)
+        x = (flattened * self.grid_x).sum(dim=2) / mass
+        y = (flattened * self.grid_y).sum(dim=2) / mass
+        return torch.stack([x, y], dim=2).reshape(inputs.shape[0], self.OUTPUT_SIZE)
+
+
 class FullyConnectedVisualEncoder(nn.Module):
     def __init__(
         self, height: int, width: int, initial_channels: int, output_size: int
